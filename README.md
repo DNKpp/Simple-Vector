@@ -1,12 +1,12 @@
-# Simple-Iterator C++20 library
+# Simple-Vector C++20 library
 
 |windows msvc | windows clang-cl | ubuntu clang | ubuntu gcc|
 -------------|------------------|--------------|--------------
-| ![Build & Test - MSVC](https://github.com/DNKpp/Simple-Iterator/workflows/Build%20&%20Test%20-%20MSVC/badge.svg) | ![Build & Test - Clang-Cl](https://github.com/DNKpp/Simple-Iterator/workflows/Build%20&%20Test%20-%20Clang-Cl/badge.svg) | ![Build & Test - Clang-10](https://github.com/DNKpp/Simple-Iterator/workflows/Build%20&%20Test%20-%20Clang-10/badge.svg) | ![Build & Test - GCC-10](https://github.com/DNKpp/Simple-Iterator/workflows/Build%20&%20Test%20-%20GCC-10/badge.svg) |
-|			|					| ![Build & Test - Clang-11](https://github.com/DNKpp/Simple-Iterator/actions/workflows/build_and_test-Clang-11.yml/badge.svg) | ![Build & Test - GCC-11](https://github.com/DNKpp/Simple-Iterator/actions/workflows/build_and_test-GCC-11.yml/badge.svg) |
-|			|					| ![Build & Test - Clang-12](https://github.com/DNKpp/Simple-Iterator/actions/workflows/build_and_test-Clang-12.yml/badge.svg) |	|
+| ![MSVC](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20MSVC/badge.svg) | ![Clang-Cl](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20Clang-Cl/badge.svg) | ![Clang-10](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20Clang-10/badge.svg) | ![GCC-10](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20GCC-10/badge.svg) |
+|			|					| ![Clang-11](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-Clang-11.yml/badge.svg) | ![GCC-11](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-GCC-11.yml/badge.svg) |
+|			|					| ![Clang-12](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-Clang-12.yml/badge.svg) |	|
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f6464e1b3fce49f193baeaf2acfd0b58)](https://www.codacy.com/gh/DNKpp/Simple-Iterator/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DNKpp/Simple-Iterator&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f6464e1b3fce49f193baeaf2acfd0b58)](https://www.codacy.com/gh/DNKpp/Simple-Vector/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DNKpp/Simple-Vector&amp;utm_campaign=Badge_Grade)
 
 ## Author
 Dominic Koepke  
@@ -24,9 +24,7 @@ Mail: [DNKpp2011@gmail.com](mailto:dnkpp2011@gmail.com)
 ```
 
 ## Description
-This library provides easy to use ``c++20`` iterator like classes, one for most of the std iterator categories (currently excluding output_iterator). Even with ``c++20`` it is rather tedious to write custom iterator classes,
-thus this library aims to take over the boilerplate, but opens up various customization points for the users. Be aware that many clang and gcc versions doesn't finally support all used ``c++20`` features.
-Have a look at the badges on top, to get an idea which one might fit.
+This library provides easy an implementation of a simple to use but versatile mathematically vector class.
 
 
 ## Installation with CMake
@@ -36,12 +34,12 @@ This library can easily be integrated into your project via CMake target_link_li
 target_link_libraries(
 	<your_target_name>
 	PRIVATE
-	simple_iterator
+	Simple_Vector
 )
 ```
-This will add the the include path "<simple_iterator_install_dir>/include", thus you are able to include the headers via
+This will add the the include path "<simple_vector_install_dir>/include", thus you are able to include the headers via
 ```cpp
-#include <Simple-Iterator/input_iterator.hpp>
+#include <Simple-Vector/Vector.hpp>
 ```
 
 ### FetchContent
@@ -55,14 +53,14 @@ project(<your_project_name>)
 include(FetchContent)
 
 FetchContent_Declare(
-	simple_iterator
-	GIT_REPOSITORY	https://github.com/DNKpp/Simple-Iterator
+	Simple_Vector
+	GIT_REPOSITORY	https://github.com/DNKpp/Simple-Vector
 	GIT_TAG		origin/master
 )
-FetchContent_MakeAvailable(simple_iterator)
+FetchContent_MakeAvailable(Simple_Vector)
 
 target_link_libraries(
 	<your_target_name>
-	PRIVATE simple_iterator
+	PRIVATE Simple_Vector
 )
 ```
