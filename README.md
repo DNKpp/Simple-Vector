@@ -26,7 +26,6 @@ Mail: [DNKpp2011@gmail.com](mailto:dnkpp2011@gmail.com)
 ## Description
 This library provides easy an implementation of a simple to use but versatile mathematically vector class.
 
-
 ## Installation with CMake
 This library can easily be integrated into your project via CMake target_link_libraries command.
 
