@@ -45,8 +45,8 @@ namespace sl::vec
 		{
 		}
 
-		template <std::convertible_to T2>
-			requires !std::same_as<T2, T>
+		template <std::convertible_to<T> T2>
+			requires (!std::same_as<T2, T>)
 		explicit constexpr Vector(const Vector<T2, dimensions>& other) noexcept
 		{
 			std::transform
