@@ -33,12 +33,6 @@ namespace sl::vec
 		constexpr Vector(const Vector&) noexcept = default;
 		constexpr Vector(Vector&&) noexcept = default;
 
-		constexpr Vector& operator =(const Vector&) noexcept = default;
-		constexpr Vector& operator =(Vector&&) noexcept = default;
-
-		[[nodiscard]]
-		constexpr bool operator ==(const Vector&) const noexcept = default;
-
 		template <class... TArgs>
 			requires (sizeof...(TArgs) == dimensions && (std::convertible_to<TArgs, T> && ...))
 		constexpr Vector(TArgs&&...args) noexcept :
@@ -59,6 +53,12 @@ namespace sl::vec
 				[](T2 value) { return static_cast<T>(value); }
 			);
 		}
+
+		constexpr Vector& operator =(const Vector&) noexcept = default;
+		constexpr Vector& operator =(Vector&&) noexcept = default;
+
+		[[nodiscard]]
+		constexpr bool operator ==(const Vector&) const noexcept = default;
 
 		[[nodiscard]]
 		constexpr static Vector make(const T& value) noexcept
