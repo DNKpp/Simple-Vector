@@ -6,7 +6,7 @@
 |			|					| ![Clang-11](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-Clang-11.yml/badge.svg) | ![GCC-11](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-GCC-11.yml/badge.svg) |
 |			|					| ![Clang-12](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-Clang-12.yml/badge.svg) |	|
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f6464e1b3fce49f193baeaf2acfd0b58)](https://www.codacy.com/gh/DNKpp/Simple-Vector/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DNKpp/Simple-Vector&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ba448bbe4bc04b6289e24d302b68ef44)](https://www.codacy.com/gh/DNKpp/Simple-Vector/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DNKpp/Simple-Vector&amp;utm_campaign=Badge_Grade)
 
 ## Author
 Dominic Koepke  
