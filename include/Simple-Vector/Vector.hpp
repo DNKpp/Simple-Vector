@@ -32,15 +32,15 @@ namespace sl::vec
 
 		constexpr ~Vector() noexcept = default;
 
-		constexpr Vector(const Vector&) noexcept = default;
+		constexpr         Vector(const Vector&) noexcept = default;
 		constexpr Vector& operator =(const Vector&) noexcept = default;
 
-		constexpr Vector(Vector&&) noexcept = default;
+		constexpr         Vector(Vector&&) noexcept = default;
 		constexpr Vector& operator =(Vector&&) noexcept = default;
 
 		template <class... TArgs>
 			requires (sizeof...(TArgs) == dimensions && (std::convertible_to<TArgs, T> && ...))
-		constexpr Vector(TArgs&&... args) noexcept :
+		constexpr Vector(TArgs&&...args) noexcept :
 			m_Values{ static_cast<T>(args)... }
 		{
 		}
@@ -50,13 +50,13 @@ namespace sl::vec
 		explicit constexpr Vector(const Vector<T2, dimensions>& other) noexcept
 		{
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(other),
 				std::cend(other),
 				std::begin(m_Values),
 				[](T2 value) { return static_cast<T>(value); }
-				);
+			);
 		}
 
 		[[nodiscard]]
@@ -68,10 +68,7 @@ namespace sl::vec
 		}
 
 		[[nodiscard]]
-		constexpr static Vector zero() noexcept
-		{
-			return make({});
-		}
+		constexpr static Vector zero() noexcept { return make({}); }
 
 		[[nodiscard]]
 		constexpr const value_type& operator [](dim_desc_type index) const noexcept
@@ -90,50 +87,32 @@ namespace sl::vec
 		template <dim_desc_type VDimensions2 = VDimensions>
 			requires (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr const value_type& x() const noexcept
-		{
-			return m_Values[0];
-		}
+		constexpr const value_type& x() const noexcept { return m_Values[0]; }
 
 		template <dim_desc_type VDimensions2 = VDimensions>
 			requires (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr value_type& x() noexcept
-		{
-			return m_Values[0];
-		}
+		constexpr value_type& x() noexcept { return m_Values[0]; }
 
 		template <dim_desc_type VDimensions2 = VDimensions>
 			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr const value_type& y() const noexcept
-		{
-			return m_Values[1];
-		}
+		constexpr const value_type& y() const noexcept { return m_Values[1]; }
 
 		template <dim_desc_type VDimensions2 = VDimensions>
 			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr value_type& y() noexcept
-		{
-			return m_Values[1];
-		}
+		constexpr value_type& y() noexcept { return m_Values[1]; }
 
 		template <dim_desc_type VDimensions2 = VDimensions>
 			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr const value_type& z() const noexcept
-		{
-			return m_Values[2];
-		}
+		constexpr const value_type& z() const noexcept { return m_Values[2]; }
 
 		template <dim_desc_type VDimensions2 = VDimensions>
 			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr value_type& z() noexcept
-		{
-			return m_Values[2];
-		}
+		constexpr value_type& z() noexcept { return m_Values[2]; }
 
 		[[nodiscard]]
 		constexpr bool operator ==(const Vector&) const noexcept = default;
@@ -142,14 +121,14 @@ namespace sl::vec
 		constexpr Vector& operator +=(const Vector<T2, dimensions>& other) noexcept
 		{
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::cbegin(other.m_Values),
 				std::begin(m_Values),
 				[](const auto& lhs, const auto& rhs) { return lhs + static_cast<T>(rhs); }
-				);
+			);
 			return *this;
 		}
 
@@ -157,14 +136,14 @@ namespace sl::vec
 		constexpr Vector& operator -=(const Vector<T2, dimensions>& other) noexcept
 		{
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::cbegin(other.m_Values),
 				std::begin(m_Values),
 				[](const auto& lhs, const auto& rhs) { return lhs - static_cast<T>(rhs); }
-				);
+			);
 			return *this;
 		}
 
@@ -172,13 +151,13 @@ namespace sl::vec
 		constexpr Vector& operator +=(const T2& value) noexcept
 		{
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::end(m_Values),
 				[&value](const auto& lhs) { return lhs + static_cast<T>(value); }
-				);
+			);
 			return *this;
 		}
 
@@ -186,13 +165,13 @@ namespace sl::vec
 		constexpr Vector& operator -=(const T2& value) noexcept
 		{
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::end(m_Values),
 				[&value](const auto& lhs) { return lhs - static_cast<T>(value); }
-				);
+			);
 			return *this;
 		}
 
@@ -200,13 +179,13 @@ namespace sl::vec
 		constexpr Vector& operator *=(const T2& value) noexcept
 		{
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::end(m_Values),
 				[&value](const auto& lhs) { return lhs * static_cast<T>(value); }
-				);
+			);
 			return *this;
 		}
 
@@ -216,13 +195,13 @@ namespace sl::vec
 			assert(value != 0 && "division by 0 is undefined.");
 
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::end(m_Values),
 				[&value](const auto& lhs) { return lhs / static_cast<T>(value); }
-				);
+			);
 			return *this;
 		}
 
@@ -233,13 +212,13 @@ namespace sl::vec
 			assert(value != 0 && "division by 0 is undefined.");
 
 			std::transform
-				(
+			(
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::end(m_Values),
 				[&value](const auto& lhs) { return lhs % static_cast<T>(value); }
-				);
+			);
 			return *this;
 		}
 
@@ -294,76 +273,40 @@ namespace sl::vec
 		}
 
 		[[nodiscard]]
-		constexpr auto begin() noexcept
-		{
-			return std::begin(m_Values);
-		}
+		constexpr auto begin() noexcept { return std::begin(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto begin() const noexcept
-		{
-			return std::begin(m_Values);
-		}
+		constexpr auto begin() const noexcept { return std::begin(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto cbegin() const noexcept
-		{
-			return std::cbegin(m_Values);
-		}
+		constexpr auto cbegin() const noexcept { return std::cbegin(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto end() noexcept
-		{
-			return std::end(m_Values);
-		}
+		constexpr auto end() noexcept { return std::end(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto end() const noexcept
-		{
-			return std::end(m_Values);
-		}
+		constexpr auto end() const noexcept { return std::end(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto cend() const noexcept
-		{
-			return std::cend(m_Values);
-		}
+		constexpr auto cend() const noexcept { return std::cend(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto rbegin() noexcept
-		{
-			return std::rbegin(m_Values);
-		}
+		constexpr auto rbegin() noexcept { return std::rbegin(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto rbegin() const noexcept
-		{
-			return std::rbegin(m_Values);
-		}
+		constexpr auto rbegin() const noexcept { return std::rbegin(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto crbegin() const noexcept
-		{
-			return std::crbegin(m_Values);
-		}
+		constexpr auto crbegin() const noexcept { return std::crbegin(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto rend() noexcept
-		{
-			return std::rend(m_Values);
-		}
+		constexpr auto rend() noexcept { return std::rend(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto rend() const noexcept
-		{
-			return std::rend(m_Values);
-		}
+		constexpr auto rend() const noexcept { return std::rend(m_Values); }
 
 		[[nodiscard]]
-		constexpr auto crend() const noexcept
-		{
-			return std::crend(m_Values);
-		}
+		constexpr auto crend() const noexcept { return std::crend(m_Values); }
 
 	private:
 		storage_type m_Values{};

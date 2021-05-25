@@ -19,13 +19,14 @@ TEST_CASE("Vector types should be default constructible", "[Vector][construction
 	REQUIRE(std::cmp_equal(vec[2], 0));
 }
 
-TEMPLATE_TEST_CASE_SIG(
-						"Vector types should be constructible by direct initialization",
-						"[Vector][construction]",
-						((auto... V), V...),
-						(1, 2, 3),
-						(4, 3, 2.f, 1.)
-					)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector types should be constructible by direct initialization",
+	"[Vector][construction]",
+	((auto... V), V...),
+	(1, 2, 3),
+	(4, 3, 2.f, 1.)
+)
 {
 	Vector vec{ V... };
 	REQUIRE(std::cmp_equal(vec.dimensions, sizeof...(V)));
@@ -34,7 +35,7 @@ TEMPLATE_TEST_CASE_SIG(
 TEST_CASE("Vector types should be iteratable", "[Vector][iteration]")
 {
 	constexpr std::size_t dims = 5;
-	Vector<int, dims> vec;
+	Vector<int, dims>     vec;
 
 	REQUIRE(std::cmp_equal(dims, std::ranges::distance(vec)));
 
@@ -53,7 +54,7 @@ TEST_CASE("Vector types should be iteratable", "[Vector][iteration]")
 TEST_CASE("Vector types should be reverse iteratable", "[Vector][iteration]")
 {
 	constexpr std::size_t dims = 5;
-	Vector<int, dims> vec;
+	Vector<int, dims>     vec;
 	std::iota(std::begin(vec), std::end(vec), 1);
 
 	REQUIRE(std::cmp_equal(*std::rbegin(vec), 5));
@@ -69,8 +70,8 @@ TEST_CASE("Vector types should be reverse iteratable", "[Vector][iteration]")
 TEST_CASE("Vector can be created via make function", "[Vector]")
 {
 	constexpr std::size_t dims = 5;
-	constexpr int value = 1337;
-	auto vec = Vector<int, dims>::make(value);
+	constexpr int         value = 1337;
+	auto                  vec = Vector<int, dims>::make(value);
 
 	REQUIRE(std::ranges::all_of(vec, [value](auto v){ return value == v; }));
 }
@@ -78,7 +79,7 @@ TEST_CASE("Vector can be created via make function", "[Vector]")
 TEST_CASE("Vector can be created via zero function", "[Vector]")
 {
 	constexpr std::size_t dims = 5;
-	auto vec = Vector<int, dims>::zero();
+	auto                  vec = Vector<int, dims>::zero();
 
 	REQUIRE(std::ranges::all_of(vec, [](auto v){ return 0 == v; }));
 }
@@ -101,20 +102,21 @@ namespace
 TEST_CASE("Vector has x member function", "[Vector]")
 {
 	constexpr std::size_t dims = 3;
-	Vector<int, dims> vec;
+	Vector<int, dims>     vec;
 	std::iota(std::begin(vec), std::end(vec), 1);
 
 	REQUIRE(vec.x() == 1);
 }
 
-TEMPLATE_TEST_CASE_SIG(
-						"Vector has y member function",
-						"[Vector]",
-						((std::size_t VDims), VDims),
-						(1),
-						(2),
-						(3)
-					)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector has y member function",
+	"[Vector]",
+	((std::size_t VDims), VDims),
+	(1),
+	(2),
+	(3)
+)
 {
 	using Vector_t = Vector<int, VDims>;
 	Vector_t vec;
@@ -127,14 +129,15 @@ TEMPLATE_TEST_CASE_SIG(
 	}
 }
 
-TEMPLATE_TEST_CASE_SIG(
-						"Vector has z member function",
-						"[Vector]",
-						((std::size_t VDims), VDims),
-						(2),
-						(3),
-						(4)
-					)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector has z member function",
+	"[Vector]",
+	((std::size_t VDims), VDims),
+	(2),
+	(3),
+	(4)
+)
 {
 	using Vector_t = Vector<int, VDims>;
 	Vector_t vec;
