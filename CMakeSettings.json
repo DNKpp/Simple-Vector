@@ -136,6 +136,11 @@
 					"name": "CMAKE_C_COMPILER",
 					"value": "C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO/2019/COMMUNITY/VC/Tools/Llvm/x64/bin/clang-cl.exe",
 					"type": "STRING"
+				},
+				{
+					"name": "CMAKE_CXX_COMPILER",
+					"value": "C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO/2019/COMMUNITY/VC/Tools/Llvm/x64/bin/clang-cl.exe",
+					"type": "FILEPATH"
 				}
 			]
 		},
