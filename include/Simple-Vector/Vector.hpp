@@ -29,14 +29,15 @@ namespace sl::vec
 		using value_type = std::remove_reference_t<T>;
 
 		constexpr Vector() noexcept = default;
-
 		constexpr ~Vector() noexcept = default;
+		constexpr Vector(const Vector&) noexcept = default;
+		constexpr Vector(Vector&&) noexcept = default;
 
-		constexpr         Vector(const Vector&) noexcept = default;
 		constexpr Vector& operator =(const Vector&) noexcept = default;
-
-		constexpr         Vector(Vector&&) noexcept = default;
 		constexpr Vector& operator =(Vector&&) noexcept = default;
+
+		[[nodiscard]]
+		constexpr bool operator ==(const Vector&) const noexcept = default;
 
 		template <class... TArgs>
 			requires (sizeof...(TArgs) == dimensions && (std::convertible_to<TArgs, T> && ...))
@@ -113,9 +114,6 @@ namespace sl::vec
 			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
 		constexpr value_type& z() noexcept { return m_Values[2]; }
-
-		[[nodiscard]]
-		constexpr bool operator ==(const Vector&) const noexcept = default;
 
 		template <std::convertible_to<T> T2>
 		constexpr Vector& operator +=(const Vector<T2, dimensions>& other) noexcept

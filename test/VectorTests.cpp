@@ -35,7 +35,7 @@ TEMPLATE_TEST_CASE_SIG
 TEST_CASE("Vector types should be iteratable", "[Vector][iteration]")
 {
 	constexpr std::size_t dims = 5;
-	Vector<int, dims>     vec;
+	Vector<int, dims> vec;
 
 	REQUIRE(std::cmp_equal(dims, std::ranges::distance(vec)));
 
@@ -54,7 +54,7 @@ TEST_CASE("Vector types should be iteratable", "[Vector][iteration]")
 TEST_CASE("Vector types should be reverse iteratable", "[Vector][iteration]")
 {
 	constexpr std::size_t dims = 5;
-	Vector<int, dims>     vec;
+	Vector<int, dims> vec;
 	std::iota(std::begin(vec), std::end(vec), 1);
 
 	REQUIRE(std::cmp_equal(*std::rbegin(vec), 5));
@@ -70,8 +70,8 @@ TEST_CASE("Vector types should be reverse iteratable", "[Vector][iteration]")
 TEST_CASE("Vector can be created via make function", "[Vector]")
 {
 	constexpr std::size_t dims = 5;
-	constexpr int         value = 1337;
-	auto                  vec = Vector<int, dims>::make(value);
+	constexpr int value = 1337;
+	auto vec = Vector<int, dims>::make(value);
 
 	REQUIRE(std::ranges::all_of(vec, [value](auto v){ return value == v; }));
 }
@@ -79,7 +79,7 @@ TEST_CASE("Vector can be created via make function", "[Vector]")
 TEST_CASE("Vector can be created via zero function", "[Vector]")
 {
 	constexpr std::size_t dims = 5;
-	auto                  vec = Vector<int, dims>::zero();
+	auto vec = Vector<int, dims>::zero();
 
 	REQUIRE(std::ranges::all_of(vec, [](auto v){ return 0 == v; }));
 }
@@ -102,7 +102,7 @@ namespace
 TEST_CASE("Vector has x member function", "[Vector]")
 {
 	constexpr std::size_t dims = 3;
-	Vector<int, dims>     vec;
+	Vector<int, dims> vec;
 	std::iota(std::begin(vec), std::end(vec), 1);
 
 	REQUIRE(vec.x() == 1);
