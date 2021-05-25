@@ -1,0 +1,27 @@
+name: Build & Test - Clang-11
+
+on: [push]
+
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.7
+      with:
+        cmake-version: '3.19.x'
+
+    - uses: seanmiddleditch/gha-setup-ninja@master
+    - name: Install Clang-11
+      run: |
+        echo "deb http://mirrors.kernel.org/ubuntu hirsute main universe" | sudo tee -a /etc/apt/sources.list
+        sudo apt-get update
+        sudo apt install clang-11
+    - name: Configure & Build
+      run: |
+        cmake . -Bbuild_clang -DCMAKE_C_COMPILER=$(which clang-11) -DCMAKE_CXX_COMPILER=$(which clang++-11)
+        cmake --build build_clang
+    - name: Test
+      run:
+        cmake --build build_clang --target test
