@@ -19,6 +19,16 @@ TEST_CASE("Vector types should be default constructible", "[Vector][construction
 	REQUIRE(std::cmp_equal(vec[2], 0));
 }
 
+#pragma warning(disable: 26444)
+#if __cpp_nontype_template_args < 201911L
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector types should be constructible by direct initialization",
+	"[Vector][construction]",
+	((auto... V), V...),
+	(1, 2, 3)
+)
+#else
 TEMPLATE_TEST_CASE_SIG
 (
 	"Vector types should be constructible by direct initialization",
@@ -27,6 +37,8 @@ TEMPLATE_TEST_CASE_SIG
 	(1, 2, 3),
 	(4, 3, 2.f, 1.)
 )
+#endif
+#pragma warning(default: 26444)
 {
 	Vector vec{ V... };
 	REQUIRE(std::cmp_equal(vec.dimensions, sizeof...(V)));
@@ -108,6 +120,7 @@ TEST_CASE("Vector has x member function", "[Vector]")
 	REQUIRE(vec.x() == 1);
 }
 
+#pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
 	"Vector has y member function",
@@ -117,6 +130,7 @@ TEMPLATE_TEST_CASE_SIG
 	(2),
 	(3)
 )
+#pragma warning(default: 26444)
 {
 	using Vector_t = Vector<int, VDims>;
 	Vector_t vec;
@@ -129,6 +143,7 @@ TEMPLATE_TEST_CASE_SIG
 	}
 }
 
+#pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
 	"Vector has z member function",
@@ -138,6 +153,7 @@ TEMPLATE_TEST_CASE_SIG
 	(3),
 	(4)
 )
+#pragma warning(default: 26444)
 {
 	using Vector_t = Vector<int, VDims>;
 	Vector_t vec;
