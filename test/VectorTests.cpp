@@ -9,6 +9,17 @@
 
 using namespace sl::vec;
 
+namespace
+{
+	template <class TValueType, std::size_t VDims>
+	constexpr Vector<TValueType, VDims> make_iota_vector(TValueType begin)
+	{
+		Vector<TValueType, VDims> vec;
+		std::iota(std::begin(vec), std::end(vec), begin);
+		return vec;
+	}
+}
+
 TEST_CASE("Vector types should be default constructible", "[Vector][construction]")
 {
 	Vector<int, 3> vec;
@@ -47,11 +58,9 @@ TEMPLATE_TEST_CASE_SIG
 TEST_CASE("Vector types should be iteratable", "[Vector][iteration]")
 {
 	constexpr std::size_t dims = 5;
-	Vector<int, dims> vec;
+	auto vec = make_iota_vector<int, 5>(1);
 
 	REQUIRE(std::cmp_equal(dims, std::ranges::distance(vec)));
-
-	std::iota(std::begin(vec), std::end(vec), 1);
 
 	REQUIRE(std::cmp_equal(vec[0], 1));
 	REQUIRE(std::cmp_equal(vec[1], 2));
@@ -65,9 +74,7 @@ TEST_CASE("Vector types should be iteratable", "[Vector][iteration]")
 
 TEST_CASE("Vector types should be reverse iteratable", "[Vector][iteration]")
 {
-	constexpr std::size_t dims = 5;
-	Vector<int, dims> vec;
-	std::iota(std::begin(vec), std::end(vec), 1);
+	auto vec = make_iota_vector<int, 5>(1);
 
 	REQUIRE(std::cmp_equal(*std::rbegin(vec), 5));
 	REQUIRE(std::cmp_equal(*(std::rbegin(vec) + 1), 4));
@@ -81,17 +88,15 @@ TEST_CASE("Vector types should be reverse iteratable", "[Vector][iteration]")
 
 TEST_CASE("Vector can be created via make function", "[Vector]")
 {
-	constexpr std::size_t dims = 5;
 	constexpr int value = 1337;
-	auto vec = Vector<int, dims>::make(value);
+	auto vec = Vector<int, 5>::make(value);
 
 	REQUIRE(std::ranges::all_of(vec, [value](auto v){ return value == v; }));
 }
 
 TEST_CASE("Vector can be created via zero function", "[Vector]")
 {
-	constexpr std::size_t dims = 5;
-	auto vec = Vector<int, dims>::zero();
+	auto vec = Vector<int, 5>::zero();
 
 	REQUIRE(std::ranges::all_of(vec, [](auto v){ return 0 == v; }));
 }
@@ -113,9 +118,7 @@ namespace
 
 TEST_CASE("Vector has x member function", "[Vector]")
 {
-	constexpr std::size_t dims = 3;
-	Vector<int, dims> vec;
-	std::iota(std::begin(vec), std::end(vec), 1);
+	auto vec = make_iota_vector<int, 3>(1);
 
 	REQUIRE(vec.x() == 1);
 }
@@ -132,9 +135,8 @@ TEMPLATE_TEST_CASE_SIG
 )
 #pragma warning(default: 26444)
 {
-	using Vector_t = Vector<int, VDims>;
-	Vector_t vec;
-	std::iota(std::begin(vec), std::end(vec), 1);
+	auto vec = make_iota_vector<int, VDims>(1);
+	using Vector_t = decltype(vec);
 
 	if constexpr (has_y_function<Vector_t>)
 	{
@@ -155,9 +157,8 @@ TEMPLATE_TEST_CASE_SIG
 )
 #pragma warning(default: 26444)
 {
-	using Vector_t = Vector<int, VDims>;
-	Vector_t vec;
-	std::iota(std::begin(vec), std::end(vec), 1);
+	auto vec = make_iota_vector<int, VDims>(1);
+	using Vector_t = decltype(vec);
 
 	if constexpr (has_z_function<Vector_t>)
 	{
