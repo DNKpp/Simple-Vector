@@ -222,7 +222,7 @@ namespace sl::vec
 		}
 
 		template <concepts::add_assignable<Vector> T2>
-		friend Vector operator +(Vector rhs, const T2& lhs) noexcept
+		friend Vector operator +(Vector lhs, const T2& rhs) noexcept
 		{
 			lhs += rhs;
 			return lhs;
@@ -244,7 +244,7 @@ namespace sl::vec
 		}
 
 		template <concepts::mul_assignable<Vector> T2>
-		friend Vector operator *(Vector rhs, const T2& lhs) noexcept
+		friend Vector operator *(Vector lhs, const T2& rhs) noexcept
 		{
 			lhs *= rhs;
 			return lhs;
