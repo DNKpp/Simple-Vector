@@ -18,15 +18,14 @@
 
 namespace sl::vec
 {
-	template <concepts::value_type T, auto VDimensions, std::integral TDimDescriptor = int>
+	template <concepts::value_type T, auto VDimensions>
 		requires concepts::cardinality<VDimensions, std::size_t>
 	class Vector
 	{
 	public:
 		constexpr static auto dimensions{ VDimensions };
-		using storage_type = std::array<T, dimensions>;
-		using dim_desc_type = std::remove_cvref_t<TDimDescriptor>;
-		using value_type = std::remove_reference_t<T>;
+		using value_type = std::remove_cvref_t<T>;
+		using storage_type = std::array<value_type, dimensions>;
 
 		constexpr Vector() noexcept = default;
 		constexpr ~Vector() noexcept = default;
@@ -71,46 +70,48 @@ namespace sl::vec
 		[[nodiscard]]
 		constexpr static Vector zero() noexcept { return make({}); }
 
+		template <std::integral TIndex>
 		[[nodiscard]]
-		constexpr const value_type& operator [](dim_desc_type index) const noexcept
+		constexpr const value_type& operator [](TIndex index) const noexcept
 		{
 			assert(std::in_range<std::size_t>(index) && "index must be in range of type std::size_t");
 			return m_Values[static_cast<std::size_t>(index)];
 		}
 
+		template <std::integral TIndex>
 		[[nodiscard]]
-		constexpr value_type& operator [](dim_desc_type index) noexcept
+		constexpr const value_type& operator [](TIndex index) noexcept
 		{
 			assert(std::in_range<std::size_t>(index) && "index must be in range of type std::size_t");
 			return m_Values[static_cast<std::size_t>(index)];
 		}
 
-		template <dim_desc_type VDimensions2 = VDimensions>
+		template <auto VDimensions2 = VDimensions>
 			requires (VDimensions2 == VDimensions)
 		[[nodiscard]]
 		constexpr const value_type& x() const noexcept { return m_Values[0]; }
 
-		template <dim_desc_type VDimensions2 = VDimensions>
+		template <auto VDimensions2 = VDimensions>
 			requires (VDimensions2 == VDimensions)
 		[[nodiscard]]
 		constexpr value_type& x() noexcept { return m_Values[0]; }
 
-		template <dim_desc_type VDimensions2 = VDimensions>
+		template <auto VDimensions2 = VDimensions>
 			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
 		constexpr const value_type& y() const noexcept { return m_Values[1]; }
 
-		template <dim_desc_type VDimensions2 = VDimensions>
+		template <auto VDimensions2 = VDimensions>
 			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
 		constexpr value_type& y() noexcept { return m_Values[1]; }
 
-		template <dim_desc_type VDimensions2 = VDimensions>
+		template <auto VDimensions2 = VDimensions>
 			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
 		constexpr const value_type& z() const noexcept { return m_Values[2]; }
 
-		template <dim_desc_type VDimensions2 = VDimensions>
+		template <auto VDimensions2 = VDimensions>
 			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
 		constexpr value_type& z() noexcept { return m_Values[2]; }
@@ -221,7 +222,7 @@ namespace sl::vec
 		}
 
 		template <concepts::add_assignable<Vector> T2>
-		friend Vector operator *(Vector rhs, const T2& lhs) noexcept
+		friend Vector operator +(Vector rhs, const T2& lhs) noexcept
 		{
 			lhs += rhs;
 			return lhs;
@@ -229,7 +230,7 @@ namespace sl::vec
 
 		template <concepts::add_assignable<Vector> T2>
 			requires std::same_as<T2, Vector>
-		friend Vector operator *(const T2& lhs, Vector rhs) noexcept
+		friend Vector operator +(const T2& lhs, Vector rhs) noexcept
 		{
 			rhs += lhs;
 			return rhs;
