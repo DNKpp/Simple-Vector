@@ -166,3 +166,23 @@ TEMPLATE_TEST_CASE_SIG
 		REQUIRE(vec.z() == 3);
 	}
 }
+
+TEST_CASE("Vector should be equality comparable.", "[vector]")
+{
+	constexpr std::size_t dims = 2;
+	const auto [firstBegin, secBegin, expected] = GENERATE
+	(
+		table<int,
+		int,
+		bool>({
+			{ 1, 1, true}
+			})
+	);
+
+	const auto vec1 = make_iota_vector<int, dims>(firstBegin);
+	const auto vec2 = make_iota_vector<int, dims>(secBegin);
+	const auto eqResult = vec1 == vec2;
+	const auto neqResult = vec1 != vec2;
+	REQUIRE(eqResult == expected);
+	REQUIRE(neqResult != expected);
+}
