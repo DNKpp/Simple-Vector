@@ -7,12 +7,14 @@
 
 #include "Simple-Vector/Vector.hpp"
 
+#include <ranges>
+
 using namespace sl::vec;
 
 namespace
 {
 	template <class TValueType, std::size_t VDims>
-	constexpr Vector<TValueType, VDims> make_iota_vector(TValueType begin)
+	constexpr Vector<TValueType, VDims> make_iota_vector(TValueType begin) noexcept
 	{
 		Vector<TValueType, VDims> vec;
 		std::iota(std::begin(vec), std::end(vec), begin);
@@ -185,4 +187,179 @@ TEST_CASE("Vector should be equality comparable.", "[vector]")
 	const auto neqResult = vec1 != vec2;
 	REQUIRE(eqResult == expected);
 	REQUIRE(neqResult != expected);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector should be addable with types equally or convertible to its value_type.",
+	"[vector][arithmetic]",
+	((class T, std::size_t VDims), T, VDims),
+	(int, 1),
+	(int, 2),
+	(int, 3),
+	(unsigned int, 4),
+	(unsigned int, 5),
+	(unsigned int, 6),
+	(float, 7),
+	(float, 8),
+	(float, 9)
+)
+#pragma warning(default: 26444)
+{
+	const Vector vec = make_iota_vector<int, VDims>(1);
+	const auto value = GENERATE(as<T>{}, 0, 1, 5, -1, -2);
+	const Vector sum = vec + value;
+
+	REQUIRE
+	(
+		std::ranges::equal
+		(
+			std::ranges::transform_view{ vec, [value](auto v){ return v + static_cast<int>(value); } },
+			sum
+		)
+	);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector should be subtractable with types equally or convertible to its value_type.",
+	"[vector][arithmetic]",
+	((class T, std::size_t VDims), T, VDims),
+	(int, 1),
+	(int, 2),
+	(int, 3),
+	(unsigned int, 4),
+	(unsigned int, 5),
+	(unsigned int, 6),
+	(float, 7),
+	(float, 8),
+	(float, 9)
+)
+#pragma warning(default: 26444)
+{
+	const Vector vec = make_iota_vector<int, VDims>(1);
+	const auto value = GENERATE(as<T>{}, 0, 1, 5, -1, -2);
+	const Vector diff = vec - value;
+
+	REQUIRE(diff + value == vec);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector should be commutatively multiplyable with types equally or convertible to its value_type.",
+	"[vector][arithmetic]",
+	((class T, std::size_t VDims), T, VDims),
+	(int, 1),
+	(int, 2),
+	(int, 3),
+	(unsigned int, 4),
+	(unsigned int, 5),
+	(unsigned int, 6),
+	(float, 7),
+	(float, 8),
+	(float, 9)
+)
+#pragma warning(default: 26444)
+{
+	const Vector vec = make_iota_vector<int, VDims>(1);
+	auto value = GENERATE(as<T>{}, 0, 1, 5, -1, -2);
+	const Vector product = vec * value;
+	const Vector commutativeProduct = value * vec;
+
+	REQUIRE
+	(
+		std::ranges::equal
+		(
+			std::ranges::transform_view{ vec, [value](auto v){ return static_cast<int>(v * value); } },
+			product
+		)
+	);
+	REQUIRE(product == commutativeProduct);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector should be dividable with types equally or convertible to its value_type.",
+	"[vector][arithmetic]",
+	((class T, std::size_t VDims), T, VDims),
+	(int, 1),
+	(int, 2),
+	(int, 3),
+	(unsigned int, 4),
+	(unsigned int, 5),
+	(unsigned int, 6),
+	(float, 7),
+	(float, 8),
+	(float, 9)
+)
+#pragma warning(default: 26444)
+{
+	const Vector vec = make_iota_vector<int, VDims>(1);
+	const auto value = GENERATE(as<T>{}, 1, 5, -1, -2);
+	const Vector fraction = vec / value;
+
+	REQUIRE
+	(
+		std::ranges::equal
+		(
+			fraction,
+			std::ranges::transform_view{ vec, [value](auto v){ return static_cast<int>(v / value); } }
+		)
+	);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector should be addable by Vectors, whichs value_types are equally or convertible to the targets value_type.",
+	"[vector][arithmetic]",
+	((class T, std::size_t VDims), T, VDims),
+	(int, 1),
+	(int, 2),
+	(int, 3),
+	(unsigned int, 4),
+	(unsigned int, 5),
+	(unsigned int, 6),
+	(float, 7),
+	(float, 8),
+	(float, 9)
+)
+#pragma warning(default: 26444)
+{
+	const auto vec1 = make_iota_vector<int, VDims>(1);
+	const auto vec2 = make_iota_vector<T, VDims>(1);
+
+	const Vector sum = vec1 + vec2;
+
+	REQUIRE(sum == 2 * vec1);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector should be subtractable by Vectors, whichs value_types are equally or convertible to the targets value_type.",
+	"[vector][arithmetic]",
+	((class T, std::size_t VDims), T, VDims),
+	(int, 1),
+	(int, 2),
+	(int, 3),
+	(unsigned int, 4),
+	(unsigned int, 5),
+	(unsigned int, 6),
+	(float, 7),
+	(float, 8),
+	(float, 9)
+)
+#pragma warning(default: 26444)
+{
+	const auto vec1 = make_iota_vector<int, VDims>(1);
+	const auto vec2 = make_iota_vector<T, VDims>(1);
+
+	const Vector sub = vec1 - vec2;
+
+	REQUIRE(sub == Vector<int, VDims>::zero());
 }
