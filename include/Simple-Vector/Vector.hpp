@@ -362,43 +362,23 @@ namespace sl::vec
 	[[nodiscard]]
 	constexpr auto length(const TVector& vector) noexcept { return std::sqrt(length_sq(vector)); }
 
-	//{
-	//	using T = typename TVector::ValueType;
-	//	return std::reduce(
-	//						std::cbegin(Vector),
-	//						std::cend(Vector),
-	//						typename TVector::ValueType{},
-	//						[](T value, T element) { return value + element * element; }
-	//					);
-	//}
-
-	//template <VectorObject TVector1, VectorObject TVector2>
-	//	requires ConstForwardIteratable<TVector1> && ConstForwardIteratable<TVector2> &&
-	//			(TVector1::dimensions == TVector2::dimensions) &&
-	//			Multiplicable<typename TVector1::ValueType, typename TVector2::ValueType>
-	//[[nodiscard]] constexpr typename TVector1::ValueType scalarProduct(const TVector1& lhs, const TVector2& rhs) noexcept
-	//{
-	//	return std::transform_reduce(
-	//								std::cbegin(lhs),
-	//								std::cend(lhs),
-	//								std::cbegin(rhs),
-	//								typename TVector1::ValueType{},
-	//								std::plus<>(),
-	//								std::multiplies<>()
-	//								);
-	//}
-
-	//template <VectorObject TVector>
-	//[[nodiscard]] constexpr typename TVector::ValueType length(const TVector& Vector) noexcept
-	//{
-	//	return static_cast<typename TVector::ValueType>(std::sqrt(lengthSq(Vector)));
-	//}
-
-	//template <class T2, VectorObject TVector>
-	//[[nodiscard]] constexpr T2 length(const TVector& Vector) noexcept
-	//{
-	//	return static_cast<T2>(std::sqrt(lengthSq(Vector)));
-	//}
+	template <vectorial TVector>
+	[[nodiscard]]
+	constexpr vector_value_t<TVector> dot_product(const TVector& lhs, const vectorial auto& rhs)
+		requires concepts::mulable<vector_value_t<decltype(rhs)>, vector_value_t<TVector>>
+	{
+		using T = vector_value_t<TVector>;
+		return std::transform_reduce
+		(
+			std::execution::unseq,
+			std::cbegin(lhs),
+			std::cend(lhs),
+			std::cbegin(rhs),
+			T{},
+			std::plus<>{},
+			[](T el1, auto el2) { return static_cast<T>(el1 * el2); }
+		);
+	}
 
 	//template <VectorObject TVector>
 	//	requires std::floating_point<typename TVector::ValueType>
