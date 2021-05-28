@@ -315,6 +315,39 @@ TEMPLATE_TEST_CASE_SIG
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
+	"Vector should be modable with types equally or convertible to its value_type.",
+	"[vector][arithmetic]",
+	((class T, std::size_t VDims), T, VDims),
+	(int, 1),
+	(int, 2),
+	(int, 3),
+	(unsigned int, 4),
+	(unsigned int, 5),
+	(unsigned int, 6),
+	(float, 7),
+	(float, 8),
+	(float, 9)
+)
+#pragma warning(default: 26444)
+{
+	const Vector vec = make_iota_vector<int, VDims>(1);
+	const auto value = GENERATE(as<T>{}, 1, 5, -1, -2);
+
+	const Vector remainder = vec % value;
+
+	REQUIRE
+	(
+		std::ranges::equal
+		(
+			remainder,
+			std::views::transform(vec, [value](auto v){ return v % static_cast<int>(value); })
+		)
+	);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
 	"Vector should be addable by Vectors, whichs value_types are equally or convertible to the targets value_type.",
 	"[vector][arithmetic]",
 	((class T, std::size_t VDims), T, VDims),
