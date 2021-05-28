@@ -396,3 +396,43 @@ TEMPLATE_TEST_CASE_SIG
 
 	REQUIRE(sub == Vector<int, VDims>::zero());
 }
+
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"length_sq should calculate the squared length of given vectors",
+	"[vector][algorithm]",
+	((std::size_t VDims, int VExpected), VDims, VExpected),
+	(1, 1),
+	(2, 5),
+	(3, 14)
+)
+#pragma warning(default: 26444)
+{
+	const auto vec = make_iota_vector<int, VDims>(1);
+
+	const auto length_sq = sl::vec::length_sq(vec);
+	
+	REQUIRE(VExpected == length_sq);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"length should calculate the length of given vectors",
+	"[vector][algorithm]",
+	((std::size_t VDims, int VExpectedSq), VDims, VExpectedSq),
+	(1, 1),
+	(2, 5),
+	(3, 14)
+)
+#pragma warning(default: 26444)
+{
+	const auto vec = make_iota_vector<int, VDims>(1);
+
+	const auto length = sl::vec::length(vec);
+	
+	REQUIRE(length == Approx(std::sqrt(VExpectedSq)));
+}
+
