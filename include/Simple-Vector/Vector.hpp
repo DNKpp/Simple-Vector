@@ -338,6 +338,25 @@ namespace sl::vec
 	template <class T>
 	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
 
+	template <vectorial TVector>
+	[[nodiscard]]
+	constexpr vector_value_t<TVector> length_sq(const TVector& vector) noexcept
+	{
+		using T = vector_value_t<TVector>;
+		return std::reduce
+		(
+			std::execution::unseq,
+			std::ranges::cbegin(vector),
+			std::ranges::cend(vector),
+			T{},
+			[](T val, T el) { return val + el * el; }
+		);
+	}
+
+	template <vectorial TVector>
+	[[nodiscard]]
+	constexpr auto length(const TVector& vector) noexcept { return std::sqrt(length_sq(vector)); }
+
 	//{
 	//	using T = typename TVector::ValueType;
 	//	return std::reduce(
