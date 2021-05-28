@@ -400,7 +400,6 @@ TEMPLATE_TEST_CASE_SIG
 	REQUIRE(sub == Vector<int, VDims>::zero());
 }
 
-
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
@@ -416,7 +415,7 @@ TEMPLATE_TEST_CASE_SIG
 	const auto vec = make_iota_vector<int, VDims>(1);
 
 	const auto length_sq = sl::vec::length_sq(vec);
-	
+
 	REQUIRE(VExpected == length_sq);
 }
 
@@ -435,7 +434,6 @@ TEMPLATE_TEST_CASE_SIG
 	const auto vec = make_iota_vector<int, VDims>(1);
 
 	const auto length = sl::vec::length(vec);
-	
+
 	REQUIRE(length == Approx(std::sqrt(VExpectedSq)));
 }
-
