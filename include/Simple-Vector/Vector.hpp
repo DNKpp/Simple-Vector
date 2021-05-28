@@ -15,6 +15,7 @@
 #include <cassert>
 #include <concepts>
 #include <execution>
+#include <ranges>
 
 namespace sl::vec
 {
@@ -124,7 +125,7 @@ namespace sl::vec
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
-				std::cbegin(other.m_Values),
+				std::cbegin(other),
 				std::begin(m_Values),
 				[](const auto& lhs, const auto& rhs) { return lhs + static_cast<T>(rhs); }
 			);
@@ -139,7 +140,7 @@ namespace sl::vec
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
-				std::cbegin(other.m_Values),
+				std::cbegin(other),
 				std::begin(m_Values),
 				[](const auto& lhs, const auto& rhs) { return lhs - static_cast<T>(rhs); }
 			);
@@ -154,7 +155,7 @@ namespace sl::vec
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
-				std::end(m_Values),
+				std::begin(m_Values),
 				[&value](const auto& lhs) { return lhs + static_cast<T>(value); }
 			);
 			return *this;
@@ -168,7 +169,7 @@ namespace sl::vec
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
-				std::end(m_Values),
+				std::begin(m_Values),
 				[&value](const auto& lhs) { return lhs - static_cast<T>(value); }
 			);
 			return *this;
@@ -182,8 +183,8 @@ namespace sl::vec
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
-				std::end(m_Values),
-				[&value](const auto& lhs) { return lhs * static_cast<T>(value); }
+				std::begin(m_Values),
+				[&value](const auto& lhs) { return static_cast<T>(lhs * value); }
 			);
 			return *this;
 		}
@@ -198,8 +199,8 @@ namespace sl::vec
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
-				std::end(m_Values),
-				[&value](const auto& lhs) { return lhs / static_cast<T>(value); }
+				std::begin(m_Values),
+				[&value](const auto& lhs) { return static_cast<T>(lhs / value); }
 			);
 			return *this;
 		}
@@ -215,7 +216,7 @@ namespace sl::vec
 				std::execution::unseq,
 				std::cbegin(m_Values),
 				std::cend(m_Values),
-				std::end(m_Values),
+				std::begin(m_Values),
 				[&value](const auto& lhs) { return lhs % static_cast<T>(value); }
 			);
 			return *this;
@@ -228,30 +229,23 @@ namespace sl::vec
 			return lhs;
 		}
 
-		template <concepts::add_assignable<Vector> T2>
-			requires std::same_as<T2, Vector>
-		friend Vector operator +(const T2& lhs, Vector rhs) noexcept
-		{
-			rhs += lhs;
-			return rhs;
-		}
-
 		template <concepts::sub_assignable<Vector> T2>
-		friend Vector operator /(Vector lhs, const T2& rhs) noexcept
+		friend Vector operator -(Vector lhs, const T2& rhs) noexcept
 		{
 			lhs -= rhs;
 			return lhs;
 		}
 
 		template <concepts::mul_assignable<Vector> T2>
-		friend Vector operator *(Vector lhs, const T2& rhs) noexcept
+		friend constexpr Vector operator *(Vector lhs, T2 rhs) noexcept
 		{
 			lhs *= rhs;
 			return lhs;
 		}
 
 		template <concepts::mul_assignable<Vector> T2>
-		friend Vector operator *(const T2& lhs, Vector rhs) noexcept
+			requires (!std::same_as<T2, Vector>) // disable ambiguity due to commutative operator +
+		friend constexpr Vector operator *(T2 lhs, Vector rhs) noexcept
 		{
 			rhs *= lhs;
 			return rhs;
