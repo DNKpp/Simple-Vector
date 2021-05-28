@@ -469,3 +469,26 @@ TEMPLATE_TEST_CASE_SIG
 
 	REQUIRE(length == Approx(std::sqrt(VExpectedSq)));
 }
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"dot_product should calculate the dot product of the two given vectors",
+	"[vector][algorithm]",
+	((class TOther, std::size_t VDims, int VExpected), TOther, VDims, VExpected),
+	(int, 1, 2),
+	(int, 2, 8),
+	(int, 3, 20),
+	(float, 1, 2),
+	(float, 2, 8),
+	(float, 3, 20)
+)
+#pragma warning(default: 26444)
+{
+	const auto vec1 = make_iota_vector<int, VDims>(1);
+	const auto vec2 = make_iota_vector<TOther, VDims>(2);
+
+	const int dotProd = sl::vec::dot_product(vec1, vec2);
+
+	REQUIRE(dotProd == VExpected);
+}
