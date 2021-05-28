@@ -317,10 +317,15 @@ namespace sl::vec
 	struct vector_traits<Vector<T, VDimensions>>
 	{
 		using value_type = typename Vector<T, VDimensions>::value_type;
+
+		static constexpr auto dimensions = Vector<T, VDimensions>::dimensions;
 	};
 
 	template <class T>
 	using vector_value_t = typename vector_traits<std::remove_cvref_t<T>>::value_type;
+
+	template <class T>
+	constexpr auto vector_dims_v = vector_traits<std::remove_cvref_t<T>>::dimensions;
 
 	template <class T>
 	struct is_vectorial : std::false_type
