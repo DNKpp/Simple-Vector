@@ -128,7 +128,7 @@ namespace sl::vec
 				std::cend(m_Values),
 				std::cbegin(other),
 				std::begin(m_Values),
-				[](const auto& lhs, const auto& rhs) { return lhs + static_cast<T>(rhs); }
+				[](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs + rhs); }
 			);
 			return *this;
 		}
@@ -143,13 +143,13 @@ namespace sl::vec
 				std::cend(m_Values),
 				std::cbegin(other),
 				std::begin(m_Values),
-				[](const auto& lhs, const auto& rhs) { return lhs - static_cast<T>(rhs); }
+				[](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs - rhs); }
 			);
 			return *this;
 		}
 
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator +=(const T2& value) noexcept
+		constexpr Vector& operator +=(T2&& value) noexcept
 		{
 			std::transform
 			(
@@ -157,13 +157,13 @@ namespace sl::vec
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::begin(m_Values),
-				[&value](const auto& lhs) { return lhs + static_cast<T>(value); }
+				[&value](const auto& lhs) { return static_cast<T>(lhs + std::forward<T2>(value)); }
 			);
 			return *this;
 		}
 
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator -=(const T2& value) noexcept
+		constexpr Vector& operator -=(T2&& value) noexcept
 		{
 			std::transform
 			(
@@ -171,13 +171,13 @@ namespace sl::vec
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::begin(m_Values),
-				[&value](const auto& lhs) { return lhs - static_cast<T>(value); }
+				[&value](const auto& lhs) { return static_cast<T>(lhs - std::forward<T2>(value)); }
 			);
 			return *this;
 		}
 
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator *=(const T2& value) noexcept
+		constexpr Vector& operator *=(T2&& value) noexcept
 		{
 			std::transform
 			(
@@ -185,13 +185,13 @@ namespace sl::vec
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::begin(m_Values),
-				[&value](const auto& lhs) { return static_cast<T>(lhs * value); }
+				[&value](const auto& lhs) { return static_cast<T>(lhs * std::forward<T2>(value)); }
 			);
 			return *this;
 		}
 
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator /=(const T2& value) noexcept
+		constexpr Vector& operator /=(T2&& value) noexcept
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
@@ -201,14 +201,14 @@ namespace sl::vec
 				std::cbegin(m_Values),
 				std::cend(m_Values),
 				std::begin(m_Values),
-				[&value](const auto& lhs) { return static_cast<T>(lhs / value); }
+				[&value](const auto& lhs) { return static_cast<T>(lhs / std::forward<T2>(value)); }
 			);
 			return *this;
 		}
 
 		template <std::convertible_to<T> T2>
 			requires concepts::modable<T>
-		constexpr Vector& operator %=(const T2& value) noexcept
+		constexpr Vector& operator %=(T2&& value) noexcept
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
@@ -221,48 +221,6 @@ namespace sl::vec
 				[&value](const auto& lhs) { return lhs % static_cast<T>(value); }
 			);
 			return *this;
-		}
-
-		template <concepts::add_assignable<Vector> T2>
-		friend Vector operator +(Vector lhs, const T2& rhs) noexcept
-		{
-			lhs += rhs;
-			return lhs;
-		}
-
-		template <concepts::sub_assignable<Vector> T2>
-		friend Vector operator -(Vector lhs, const T2& rhs) noexcept
-		{
-			lhs -= rhs;
-			return lhs;
-		}
-
-		template <concepts::mul_assignable<Vector> T2>
-		friend constexpr Vector operator *(Vector lhs, T2 rhs) noexcept
-		{
-			lhs *= rhs;
-			return lhs;
-		}
-
-		template <concepts::mul_assignable<Vector> T2>
-		friend constexpr Vector operator *(T2 lhs, Vector rhs) noexcept
-		{
-			rhs *= lhs;
-			return rhs;
-		}
-
-		template <concepts::div_assignable<Vector> T2>
-		friend Vector operator /(Vector lhs, const T2& rhs) noexcept
-		{
-			lhs /= rhs;
-			return lhs;
-		}
-
-		template <concepts::mod_assignable<Vector> T2>
-		friend Vector operator %(Vector lhs, const T2& rhs) noexcept
-		{
-			lhs %= rhs;
-			return lhs;
 		}
 
 		[[nodiscard]]
@@ -342,6 +300,48 @@ namespace sl::vec
 
 	template <class T>
 	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
+
+	template <vectorial TVector, concepts::add_assignable<TVector> T2>
+	constexpr TVector operator +(TVector lhs, T2&& rhs) noexcept
+	{
+		lhs += std::forward<T2>(rhs);
+		return lhs;
+	}
+
+	template <vectorial TVector, concepts::sub_assignable<TVector> T2>
+	constexpr TVector operator -(TVector lhs, T2&& rhs) noexcept
+	{
+		lhs -= std::forward<T2>(rhs);
+		return lhs;
+	}
+
+	template <vectorial TVector, concepts::mul_assignable<TVector> T2>
+	constexpr TVector operator *(TVector lhs, T2&& rhs) noexcept
+	{
+		lhs *= std::forward<T2>(rhs);
+		return lhs;
+	}
+
+	template <vectorial TVector, concepts::mul_assignable<TVector> T2>
+	constexpr TVector operator *(T2&& lhs, TVector rhs) noexcept
+	{
+		rhs *= std::forward<T2>(lhs);
+		return rhs;
+	}
+
+	template <vectorial TVector, concepts::div_assignable<TVector> T2>
+	constexpr TVector operator /(TVector lhs, T2&& rhs) noexcept
+	{
+		lhs /= std::forward<T2>(rhs);
+		return lhs;
+	}
+
+	template <vectorial TVector, concepts::mod_assignable<TVector> T2>
+	constexpr TVector operator %(TVector lhs, T2&& rhs) noexcept
+	{
+		lhs %= std::forward<T2>(rhs);
+		return lhs;
+	}
 
 	template <vectorial TVector>
 	[[nodiscard]]
