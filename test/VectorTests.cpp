@@ -177,7 +177,10 @@ TEST_CASE("Vector should be equality comparable.", "[vector]")
 		table<int,
 		int,
 		bool>({
-			{ 1, 1, true}
+			{ 1, 1, true},
+			{ 1, 0, false},
+			{ -2, -2, true},
+			{ -4, 4, false}
 			})
 	);
 
