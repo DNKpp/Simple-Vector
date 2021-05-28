@@ -80,11 +80,11 @@ namespace sl::vec::concepts
 	concept invocable_r = std::is_invocable_r_v<R, TFn, TArgs...>;
 
 	template <class T>
-	concept value_type = std::regular<T> &&
-						addable<T> &&
-						subable<T> &&
-						mulable<T> &&
-						divable<T>;
+	concept value_type = std::regular<std::remove_cvref_t<T>> &&
+						addable<std::remove_cvref_t<T>> &&
+						subable<std::remove_cvref_t<T>> &&
+						mulable<std::remove_cvref_t<T>> &&
+						divable<std::remove_cvref_t<T>>;
 
 	template <auto V, class TSizeType>
 	concept cardinality = std::integral<TSizeType> && implicit_convertible_to<decltype(V), TSizeType> && 0 < V;
