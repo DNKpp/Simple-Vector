@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <cmath>
 #include <concepts>
 #include <execution>
 #include <ranges>
@@ -307,9 +308,36 @@ namespace sl::vec
 	template <class... T>
 	Vector(T&&...) -> Vector<std::common_type_t<T...>, sizeof...(T)>;
 
-	//template <VectorObject TVector>
-	//	requires ConstForwardIteratable<TVector>
-	//[[nodiscard]] constexpr typename TVector::ValueType lengthSq(const TVector& Vector) noexcept
+	template <class T>
+	struct vector_traits
+	{
+	};
+
+	template <concepts::value_type T, auto VDimensions>
+	struct vector_traits<Vector<T, VDimensions>>
+	{
+		using value_type = typename Vector<T, VDimensions>::value_type;
+	};
+
+	template <class T>
+	using vector_value_t = typename vector_traits<std::remove_cvref_t<T>>::value_type;
+
+	template <class T>
+	struct is_vectorial : std::false_type
+	{
+	};
+
+	template <concepts::value_type T, auto VDimensions>
+	struct is_vectorial<Vector<T, VDimensions>> : std::true_type
+	{
+	};
+
+	template <class T>
+	constexpr bool is_vectorial_v = is_vectorial<T>::value;
+
+	template <class T>
+	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
+
 	//{
 	//	using T = typename TVector::ValueType;
 	//	return std::reduce(
