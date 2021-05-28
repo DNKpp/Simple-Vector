@@ -82,7 +82,7 @@ namespace sl::vec
 
 		template <std::integral TIndex>
 		[[nodiscard]]
-		constexpr const value_type& operator [](TIndex index) noexcept
+		constexpr value_type& operator [](TIndex index) noexcept
 		{
 			assert(std::in_range<std::size_t>(index) && "index must be in range of type std::size_t");
 			return m_Values[static_cast<std::size_t>(index)];
