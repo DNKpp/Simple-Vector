@@ -244,7 +244,6 @@ namespace sl::vec
 		}
 
 		template <concepts::mul_assignable<Vector> T2>
-			requires (!std::same_as<T2, Vector>) // disable ambiguity due to commutative operator +
 		friend constexpr Vector operator *(T2 lhs, Vector rhs) noexcept
 		{
 			rhs *= lhs;
