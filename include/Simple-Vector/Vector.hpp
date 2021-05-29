@@ -286,64 +286,70 @@ namespace sl::vec
 	constexpr auto vector_dims_v = vector_traits<std::remove_cvref_t<T>>::dimensions;
 
 	template <class T>
-	struct is_vectorial : std::false_type
+	struct is_vector : std::false_type
 	{
 	};
 
 	template <concepts::value_type T, auto VDimensions>
-	struct is_vectorial<Vector<T, VDimensions>> : std::true_type
+	struct is_vector<Vector<T, VDimensions>> : std::true_type
 	{
 	};
 
 	template <class T>
-	constexpr bool is_vectorial_v = is_vectorial<T>::value;
+	constexpr bool is_vector_v = is_vector<T>::value;
+}
 
+namespace sl::vec::concepts
+{
 	template <class T>
-	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
+	concept vector = is_vector_v<std::remove_cvref_t<T>>;
+}
 
-	template <vectorial TVector, concepts::add_assignable<TVector> T2>
+namespace sl::vec
+{
+	template <concepts::vector TVector, concepts::add_assignable<TVector> T2>
 	constexpr TVector operator +(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs += std::forward<T2>(rhs);
 		return lhs;
 	}
 
-	template <vectorial TVector, concepts::sub_assignable<TVector> T2>
+	template <concepts::vector TVector, concepts::sub_assignable<TVector> T2>
 	constexpr TVector operator -(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs -= std::forward<T2>(rhs);
 		return lhs;
 	}
 
-	template <vectorial TVector, concepts::mul_assignable<TVector> T2>
+	template <concepts::vector TVector, concepts::mul_assignable<TVector> T2>
 	constexpr TVector operator *(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs *= std::forward<T2>(rhs);
 		return lhs;
 	}
 
-	template <vectorial TVector, concepts::mul_assignable<TVector> T2>
+	template <concepts::vector TVector, concepts::mul_assignable<TVector> T2>
 	constexpr TVector operator *(T2&& lhs, TVector rhs) noexcept
 	{
 		rhs *= std::forward<T2>(lhs);
 		return rhs;
 	}
 
-	template <vectorial TVector, concepts::div_assignable<TVector> T2>
+	template <concepts::vector TVector, concepts::div_assignable<TVector> T2>
 	constexpr TVector operator /(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs /= std::forward<T2>(rhs);
 		return lhs;
 	}
 
-	template <vectorial TVector, concepts::mod_assignable<TVector> T2>
+	template <concepts::vector TVector, concepts::mod_assignable<TVector> T2>
 	constexpr TVector operator %(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs %= std::forward<T2>(rhs);
 		return lhs;
 	}
 
-	template <vectorial TVector>
+	template <concepts::vector TVector>
 	[[nodiscard]]
 	constexpr vector_value_t<TVector> length_sq(const TVector& vector) noexcept
 	{
@@ -358,13 +364,13 @@ namespace sl::vec
 		);
 	}
 
-	template <vectorial TVector>
+	template <concepts::vector TVector>
 	[[nodiscard]]
 	constexpr auto length(const TVector& vector) noexcept { return std::sqrt(length_sq(vector)); }
 
-	template <vectorial TVector>
+	template <concepts::vector TVector>
 	[[nodiscard]]
-	constexpr vector_value_t<TVector> dot_product(const TVector& lhs, const vectorial auto& rhs)
+	constexpr vector_value_t<TVector> dot_product(const TVector& lhs, const concepts::vector auto& rhs)
 		requires concepts::mulable<vector_value_t<decltype(rhs)>, vector_value_t<TVector>>
 	{
 		using T = vector_value_t<TVector>;
