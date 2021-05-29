@@ -477,3 +477,23 @@ TEMPLATE_TEST_CASE_SIG
 
 	REQUIRE(dotProd == VExpected);
 }
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"normalize should scale vectors to length of 1.",
+	"[vector][algorithm]",
+	((std::size_t VDims), VDims),
+	(1),
+	(2),
+	(3)
+)
+#pragma warning(default: 26444)
+{
+	const auto iotaBegin = GENERATE(as<float>{}, 1, 3, 10);
+	const auto vec = make_iota_vector<float, VDims>(iotaBegin);
+
+	const auto normalized = normalize(vec);
+
+	REQUIRE(sl::vec::length(normalized) == Approx(1));
+}

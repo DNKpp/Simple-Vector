@@ -375,15 +375,15 @@ namespace sl::vec
 		);
 	}
 
-	//template <VectorObject TVector>
-	//	requires std::floating_point<typename TVector::ValueType>
-	//[[nodiscard]] constexpr TVector normalize(TVector Vector) noexcept
-	//{
-	//	assert(Vector != TVector::zero());
+	template <concepts::vector TVector>
+		requires std::floating_point<vector_value_t<TVector>>
+	[[nodiscard]]
+	constexpr TVector normalize(TVector vec) noexcept
+	{
+		assert(vec != TVector{});
 
-	//	auto length = georithm::length(Vector);
-	//	return Vector /= length;
-	//}
+		return vec /= length(vec);
+	}
 
 	//// unfortunately there already exists a namespace called transform
 	//template <VectorObject TVector, invocable_r<typename TVector::ValueType, typename TVector::ValueType> TUnaryOp>
