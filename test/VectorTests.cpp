@@ -22,6 +22,7 @@ namespace
 	}
 }
 
+#pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE
 (
 	"vector_value_t should the same result as value_type of Vector.",
@@ -32,12 +33,14 @@ TEMPLATE_TEST_CASE
 	const int,
 	int&&
 )
+#pragma warning(default: 26444)
 {
 	using vector_t = Vector<TestType, 1>;
 
 	REQUIRE(std::same_as<typename vector_t::value_type, vector_value_t<vector_t>>);
 }
 
+#pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
 	"vector_dims_v should the same result as dimensions of Vector.",
@@ -47,6 +50,7 @@ TEMPLATE_TEST_CASE_SIG
 	(2),
 	(3)
 )
+#pragma warning(default: 26444)
 {
 	using vector_t = Vector<int, VDims>;
 
