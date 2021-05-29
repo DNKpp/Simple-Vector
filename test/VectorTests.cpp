@@ -54,7 +54,7 @@ TEMPLATE_TEST_CASE_SIG
 	REQUIRE(vector_t::dimensions == vector_dims_v<vector_t>);
 }
 
-TEST_CASE("Vector types should be default constructible", "[Vector][construction]")
+TEST_CASE("Vector types should be default constructible with zeros", "[Vector][construction]")
 {
 	Vector<int, 3> vec;
 
@@ -118,21 +118,6 @@ TEST_CASE("Vector types should be reverse iteratable", "[Vector][iteration]")
 
 	REQUIRE(std::equal(std::rbegin(vec), std::rend(vec), std::rbegin(std::as_const(vec)), std::rend(std::as_const(vec))));
 	REQUIRE(std::equal(std::rbegin(vec), std::rend(vec), std::crbegin(vec), std::crend(vec)));
-}
-
-TEST_CASE("Vector can be created via make function", "[Vector]")
-{
-	constexpr int value = 1337;
-	auto vec = Vector<int, 5>::make(value);
-
-	REQUIRE(std::ranges::all_of(vec, [value](auto v){ return value == v; }));
-}
-
-TEST_CASE("Vector can be created via zero function", "[Vector]")
-{
-	auto vec = Vector<int, 5>::zero();
-
-	REQUIRE(std::ranges::all_of(vec, [](auto v){ return 0 == v; }));
 }
 
 namespace
@@ -429,7 +414,7 @@ TEMPLATE_TEST_CASE_SIG
 
 	const Vector sub = vec1 - vec2;
 
-	REQUIRE(sub == Vector<int, VDims>::zero());
+	REQUIRE(sub == Vector<int, VDims>{});
 }
 
 #pragma warning(disable: 26444)

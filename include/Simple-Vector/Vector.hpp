@@ -36,7 +36,7 @@ namespace sl::vec
 
 		template <class... TArgs>
 			requires (sizeof...(TArgs) == dimensions && (std::convertible_to<TArgs, T> && ...))
-		constexpr Vector(TArgs&&...args) noexcept :
+		constexpr explicit Vector(TArgs&&...args) noexcept :
 			m_Values{ static_cast<T>(args)... }
 		{
 		}
@@ -60,17 +60,6 @@ namespace sl::vec
 
 		[[nodiscard]]
 		constexpr bool operator ==(const Vector&) const noexcept = default;
-
-		[[nodiscard]]
-		constexpr static Vector make(const T& value) noexcept
-		{
-			Vector tmp;
-			tmp.m_Values.fill(value);
-			return tmp;
-		}
-
-		[[nodiscard]]
-		constexpr static Vector zero() noexcept { return make({}); }
 
 		template <std::integral TIndex>
 		[[nodiscard]]
