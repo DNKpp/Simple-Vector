@@ -13,9 +13,6 @@
 
 namespace sl::vec::concepts
 {
-	template <class TFrom, class TTo>
-	concept implicit_convertible_to = std::is_convertible_v<TFrom, TTo>;
-
 	template <class TFrom, class TTo = TFrom>
 	concept add_assignable = requires(TTo lhs, TFrom rhs)
 	{
@@ -87,7 +84,7 @@ namespace sl::vec::concepts
 						divable<std::remove_cvref_t<T>>;
 
 	template <auto V, class TSizeType>
-	concept cardinality = std::integral<TSizeType> && implicit_convertible_to<decltype(V), TSizeType> && 0 < V;
+	concept cardinality = std::integral<TSizeType> && std::is_convertible_v<decltype(V), TSizeType> && 0 < V;
 }
 
 #endif
