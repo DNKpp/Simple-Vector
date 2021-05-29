@@ -11,7 +11,7 @@
 #include <concepts>
 #include <type_traits>
 
-namespace sl::vec::concepts
+namespace sl::vec
 {
 	template <class TFrom, class TTo = TFrom>
 	concept add_assignable = requires(TTo lhs, TFrom rhs)
