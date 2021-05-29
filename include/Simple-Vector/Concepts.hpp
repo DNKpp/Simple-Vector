@@ -73,9 +73,6 @@ namespace sl::vec::concepts
 		{ lhs % rhs } -> std::convertible_to<TTo>;
 	};
 
-	template <class TFn, class R, class... TArgs>
-	concept invocable_r = std::is_invocable_r_v<R, TFn, TArgs...>;
-
 	template <class T>
 	concept value_type = std::regular<std::remove_cvref_t<T>> &&
 						addable<std::remove_cvref_t<T>> &&
