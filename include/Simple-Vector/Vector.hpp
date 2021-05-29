@@ -360,7 +360,7 @@ namespace sl::vec
 			std::ranges::cbegin(vector),
 			std::ranges::cend(vector),
 			T{},
-			[](T val, T el) { return val + el * el; }
+			[](const T& val, const T& el) { return val + el * el; }
 		);
 	}
 
@@ -368,12 +368,12 @@ namespace sl::vec
 	[[nodiscard]]
 	constexpr auto length(const TVector& vector) noexcept { return std::sqrt(length_sq(vector)); }
 
-	template <concepts::vector TVector>
+	template <concepts::vector TVector1, concepts::vector TVector2>
+		requires concepts::mulable<vector_value_t<TVector2>, vector_value_t<TVector1>>
 	[[nodiscard]]
-	constexpr vector_value_t<TVector> dot_product(const TVector& lhs, const concepts::vector auto& rhs)
-		requires concepts::mulable<vector_value_t<decltype(rhs)>, vector_value_t<TVector>>
+	constexpr vector_value_t<TVector1> dot_product(const TVector1& lhs, const TVector2& rhs)
 	{
-		using T = vector_value_t<TVector>;
+		using T = vector_value_t<TVector1>;
 		return std::transform_reduce
 		(
 			std::execution::unseq,
@@ -382,7 +382,7 @@ namespace sl::vec
 			std::cbegin(rhs),
 			T{},
 			std::plus<>{},
-			[](T el1, auto el2) { return static_cast<T>(el1 * el2); }
+			[](const T& el1, const auto& el2) { return static_cast<T>(el1 * el2); }
 		);
 	}
 
