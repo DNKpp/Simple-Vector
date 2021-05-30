@@ -497,7 +497,7 @@ TEMPLATE_TEST_CASE_SIG
 	const auto iotaBegin = GENERATE(as<float>{}, 1, 3, 10);
 	const auto vec = make_iota_vector<float, VDims>(iotaBegin);
 
-	const auto normalized = normalized(vec);
+	const auto normalizedVec = normalized(vec);
 
-	REQUIRE(sl::vec::length(normalized) == Approx(1));
+	REQUIRE(sl::vec::length(normalizedVec) == Approx(1));
 }
