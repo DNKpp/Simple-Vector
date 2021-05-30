@@ -33,7 +33,7 @@
 			"variables": [
 				{
 					"name": "CMAKE_C_COMPILER",
-					"value": "/usr/bin/cc",
+					"value": "/usr/bin/gcc-11",
 					"type": "FILEPATH"
 				},
 				{
