@@ -462,7 +462,6 @@ namespace sl::vec
 	template <class... T>
 	Vector(T&&...) -> Vector<std::common_type_t<T...>, sizeof...(T)>;
 
-
 	/**
 	 * \brief Uniform interface to Vector types.
 	 * \tparam T type of interest
@@ -690,7 +689,7 @@ namespace sl::vec
 	template <vectorial TVector>
 		requires std::floating_point<vector_value_t<TVector>>
 	[[nodiscard]]
-	constexpr TVector normalize(TVector vec) noexcept
+	constexpr TVector normalized(TVector vec) noexcept
 	{
 		assert(vec != TVector{});
 
