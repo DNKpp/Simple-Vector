@@ -20,13 +20,19 @@
 
 namespace sl::vec
 {
+	/** \addtogroup Vector
+	 * @{
+	 */
+
 	/**
 	 * \brief A mathematically vector implementation
 	 * \tparam T The value type
 	 * \tparam VDimensions Amount of dimensions. Must be implicitly convertible to std::size_t.
 	 */
 	template <value_type T, auto VDimensions>
+	/** \cond Requires */
 		requires cardinality<VDimensions, std::size_t>
+	/** \endcond */
 	class Vector
 	{
 	public:
@@ -45,7 +51,7 @@ namespace sl::vec
 
 		/**
 		 * \brief Default constructor.
-		 * \detail Default initializes all elements via uniform initialization, thus all arithmetic types will defaulted to 0.
+		 * \details Default initializes all elements via uniform initialization, thus all arithmetic types will defaulted to 0.
 		 */
 		constexpr Vector() noexcept = default;
 		/**
@@ -69,7 +75,9 @@ namespace sl::vec
 		 * \details This constructor directly initializes the internal storage with the given arguments. The amount of args must be equal to the amount of dimensions. 
 		 */
 		template <class... TArgs>
+		/** \cond Requires */
 			requires (sizeof...(TArgs) == dimensions && (std::convertible_to<TArgs, T> && ...))
+		/** \endcond */
 		constexpr explicit Vector(TArgs&&...args) noexcept :
 			m_Values{ static_cast<T>(args)... }
 		{
@@ -83,7 +91,9 @@ namespace sl::vec
 		 * \details Casts all elements from other Vector to T and initializes the storage.
 		 */
 		template <std::convertible_to<T> T2>
+		/** \cond Requires */
 			requires (!std::same_as<T2, T>)
+		/** \endcond */
 		explicit constexpr Vector(const Vector<T2, dimensions>& other) noexcept
 		{
 			std::transform
@@ -154,7 +164,9 @@ namespace sl::vec
 		 * \return const reference to the first element
 		 */
 		template <auto VDimensions2 = VDimensions>
+		/** \cond Requires */
 			requires (VDimensions2 == VDimensions)
+		/** \endcond */
 		[[nodiscard]]
 		constexpr const value_type& x() const noexcept { return m_Values[0]; }
 
@@ -164,7 +176,9 @@ namespace sl::vec
 		 * \return reference to the first element
 		 */
 		template <auto VDimensions2 = VDimensions>
+		/** \cond Requires */
 			requires (VDimensions2 == VDimensions)
+		/** \endcond */
 		[[nodiscard]]
 		constexpr value_type& x() noexcept { return m_Values[0]; }
 
@@ -176,7 +190,9 @@ namespace sl::vec
 		 * \remarks This functions is only available, if Vector has 1 or more dimension.
 		 */
 		template <auto VDimensions2 = VDimensions>
+		/** \cond Requires */
 			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
+		/** \endcond */
 		[[nodiscard]]
 		constexpr const value_type& y() const noexcept { return m_Values[1]; }
 
@@ -188,7 +204,9 @@ namespace sl::vec
 		 * \remarks This functions is only available, if Vector has 1 or more dimension.
 		 */
 		template <auto VDimensions2 = VDimensions>
+		/** \cond Requires */
 			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
+		/** \endcond */
 		[[nodiscard]]
 		constexpr value_type& y() noexcept { return m_Values[1]; }
 
@@ -200,7 +218,9 @@ namespace sl::vec
 		 * \remarks This functions is only available, if Vector has 2 or more dimension.
 		 */
 		template <auto VDimensions2 = VDimensions>
+		/** \cond Requires */
 			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
+		/** \endcond */
 		[[nodiscard]]
 		constexpr const value_type& z() const noexcept { return m_Values[2]; }
 
@@ -212,7 +232,9 @@ namespace sl::vec
 		 * \remarks This functions is only available, if Vector has 2 or more dimension.
 		 */
 		template <auto VDimensions2 = VDimensions>
+		/** \cond Requires */
 			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
+		/** \endcond */
 		[[nodiscard]]
 		constexpr value_type& z() noexcept { return m_Values[2]; }
 
@@ -351,7 +373,9 @@ namespace sl::vec
 		 * \remarks Division by 0 is undefined.
 		 */
 		template <std::convertible_to<T> T2>
+		/** \cond Requires */
 			requires modable<T>
+		/** \endcond */
 		constexpr Vector& operator %=(T2&& value) noexcept
 		{
 			assert(value != 0 && "division by 0 is undefined.");
@@ -462,6 +486,11 @@ namespace sl::vec
 	template <class... T>
 	Vector(T&&...) -> Vector<std::common_type_t<T...>, sizeof...(T)>;
 
+	/** @}*/
+
+	/** \addtogroup TypeTraits
+	 * @{
+	 */
 	/**
 	 * \brief Uniform interface to Vector types.
 	 * \tparam T type of interest
@@ -524,12 +553,24 @@ namespace sl::vec
 	template <class T>
 	constexpr bool is_vectorial_v = is_vectorial<T>::value;
 
+	/** @}*/
+
+	/** \addtogroup Concepts
+	 * @{
+	 */
+
 	/**
 	 * \brief Concept checking for vectorial types
 	 * \tparam T A type to check
 	 */
 	template <class T>
 	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
+
+	/** @}*/
+
+	/** \addtogroup Vector
+	 * @{
+	 */
 
 	/**
 	 * \brief Sum operator
@@ -540,6 +581,7 @@ namespace sl::vec
 	 * \return newly constructed Vector
 	 */
 	template <vectorial TVector, add_assignable<TVector> T2>
+	[[nodiscard]]
 	constexpr TVector operator +(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs += std::forward<T2>(rhs);
@@ -555,6 +597,7 @@ namespace sl::vec
 	 * \return newly constructed Vector
 	 */
 	template <vectorial TVector, sub_assignable<TVector> T2>
+	[[nodiscard]]
 	constexpr TVector operator -(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs -= std::forward<T2>(rhs);
@@ -570,6 +613,7 @@ namespace sl::vec
 	 * \return newly constructed Vector
 	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
+	[[nodiscard]]
 	constexpr TVector operator *(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs *= std::forward<T2>(rhs);
@@ -585,6 +629,7 @@ namespace sl::vec
 	 * \return newly constructed Vector
 	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
+	[[nodiscard]]
 	constexpr TVector operator *(T2&& lhs, TVector rhs) noexcept
 	{
 		rhs *= std::forward<T2>(lhs);
@@ -600,6 +645,7 @@ namespace sl::vec
 	 * \return newly constructed Vector
 	 */
 	template <vectorial TVector, div_assignable<TVector> T2>
+	[[nodiscard]]
 	constexpr TVector operator /(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs /= std::forward<T2>(rhs);
@@ -615,6 +661,7 @@ namespace sl::vec
 	 * \return newly constructed Vector
 	 */
 	template <vectorial TVector, mod_assignable<TVector> T2>
+	[[nodiscard]]
 	constexpr TVector operator %(TVector lhs, T2&& rhs) noexcept
 	{
 		lhs %= std::forward<T2>(rhs);
@@ -663,7 +710,9 @@ namespace sl::vec
 	 * \return scalar value
 	 */
 	template <vectorial TVector1, vectorial TVector2>
+	/** \cond Requires */
 		requires mulable<vector_value_t<TVector2>, vector_value_t<TVector1>>
+	/** \endcond */
 	[[nodiscard]]
 	constexpr vector_value_t<TVector1> dot_product(const TVector1& lhs, const TVector2& rhs)
 	{
@@ -687,7 +736,9 @@ namespace sl::vec
 	 * \return newly constructed Vector
 	 */
 	template <vectorial TVector>
+	/** \cond Requires */
 		requires std::floating_point<vector_value_t<TVector>>
+	/** \endcond */
 	[[nodiscard]]
 	constexpr TVector normalized(TVector vec) noexcept
 	{
@@ -695,6 +746,8 @@ namespace sl::vec
 
 		return vec /= length(vec);
 	}
+
+	/** @}*/
 }
 
 #endif

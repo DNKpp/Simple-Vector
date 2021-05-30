@@ -13,6 +13,10 @@
 
 namespace sl::vec
 {
+	/** \addtogroup Concepts
+	 * @{
+	 */
+
 	template <class TFrom, class TTo = TFrom>
 	concept add_assignable = requires(TTo lhs, TFrom rhs)
 	{
@@ -82,6 +86,8 @@ namespace sl::vec
 
 	template <auto V, class TSizeType>
 	concept cardinality = std::integral<TSizeType> && std::is_convertible_v<decltype(V), TSizeType> && 0 < V;
+
+	/** @}*/
 }
 
 #endif
