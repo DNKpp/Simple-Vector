@@ -455,14 +455,28 @@ namespace sl::vec
 		storage_type m_Values{};
 	};
 
+	/**
+	 * \brief Vector deduction guide to make aggregate-like construction easier.
+	 * \tparam T Variadic types
+	 */
 	template <class... T>
 	Vector(T&&...) -> Vector<std::common_type_t<T...>, sizeof...(T)>;
 
+
+	/**
+	 * \brief Uniform interface to Vector types.
+	 * \tparam T type of interest
+	 */
 	template <class T>
 	struct vector_traits
 	{
 	};
 
+	/**
+	 * \brief Specialization for Vector
+	 * \tparam T value_type of Vector
+	 * \tparam VDimensions dimensions of Vector
+	 */
 	template <value_type T, auto VDimensions>
 	struct vector_traits<Vector<T, VDimensions>>
 	{
@@ -471,28 +485,61 @@ namespace sl::vec
 		static constexpr auto dimensions = Vector<T, VDimensions>::dimensions;
 	};
 
+	/**
+	 * \brief Convenience alias type to the value_type of Vectors
+	 * \tparam T type of interest
+	 */
 	template <class T>
 	using vector_value_t = typename vector_traits<std::remove_cvref_t<T>>::value_type;
 
+	/**
+	 * \brief Convenience constant to the dimensions of Vectors
+	 * \tparam T type of interest
+	 */
 	template <class T>
 	constexpr auto vector_dims_v = vector_traits<std::remove_cvref_t<T>>::dimensions;
 
+	/**
+	 * \brief Checks whether T is a vector type.
+	 * \tparam T a type to check
+	 */
 	template <class T>
 	struct is_vectorial : std::false_type
 	{
 	};
 
+	/**
+	 * \brief Specialization for Vector which registers Vector with all its template variations as vectorial.
+	 * \tparam T value_type of Vector
+	 * \tparam VDimensions dimensions of Vector
+	 */
 	template <value_type T, auto VDimensions>
 	struct is_vectorial<Vector<T, VDimensions>> : std::true_type
 	{
 	};
 
+	/**
+	 * \brief Shortcut checking for vectorial classes
+	 * \tparam T A type to check
+	 */
 	template <class T>
 	constexpr bool is_vectorial_v = is_vectorial<T>::value;
 
+	/**
+	 * \brief Concept checking for vectorial types
+	 * \tparam T A type to check
+	 */
 	template <class T>
 	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
 
+	/**
+	 * \brief Sum operator
+	 * \tparam TVector A vectorial type
+	 * \tparam T2 A type, which is add-assignable to TVector
+	 * \param lhs left-hand-side of sum
+	 * \param rhs right-hand-side of sum
+	 * \return newly constructed Vector
+	 */
 	template <vectorial TVector, add_assignable<TVector> T2>
 	constexpr TVector operator +(TVector lhs, T2&& rhs) noexcept
 	{
@@ -500,6 +547,14 @@ namespace sl::vec
 		return lhs;
 	}
 
+	/**
+	 * \brief Minus operator
+	 * \tparam TVector A vectorial type
+	 * \tparam T2 A type, which is subtract-assignable to TVector
+	 * \param lhs left-hand-side of subtraction
+	 * \param rhs right-hand-side of subtraction
+	 * \return newly constructed Vector
+	 */
 	template <vectorial TVector, sub_assignable<TVector> T2>
 	constexpr TVector operator -(TVector lhs, T2&& rhs) noexcept
 	{
@@ -507,6 +562,14 @@ namespace sl::vec
 		return lhs;
 	}
 
+	/**
+	 * \brief Multiplication operator
+	 * \tparam TVector A vectorial type
+	 * \tparam T2 A type, which is multiplication-assignable to TVector
+	 * \param lhs left-hand-side of multiplication
+	 * \param rhs right-hand-side of multiplication
+	 * \return newly constructed Vector
+	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
 	constexpr TVector operator *(TVector lhs, T2&& rhs) noexcept
 	{
@@ -514,6 +577,14 @@ namespace sl::vec
 		return lhs;
 	}
 
+	/**
+	 * \brief Commutative multiplication operator
+	 * \tparam TVector A vectorial type
+	 * \tparam T2 A type, which is multiplication-assignable to TVector
+	 * \param lhs left-hand-side of multiplication
+	 * \param rhs right-hand-side of multiplication
+	 * \return newly constructed Vector
+	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
 	constexpr TVector operator *(T2&& lhs, TVector rhs) noexcept
 	{
@@ -521,6 +592,14 @@ namespace sl::vec
 		return rhs;
 	}
 
+	/**
+	 * \brief Division operator
+	 * \tparam TVector A vectorial type
+	 * \tparam T2 A type, which is division-assignable to TVector
+	 * \param lhs left-hand-side of division
+	 * \param rhs right-hand-side of division
+	 * \return newly constructed Vector
+	 */
 	template <vectorial TVector, div_assignable<TVector> T2>
 	constexpr TVector operator /(TVector lhs, T2&& rhs) noexcept
 	{
@@ -528,6 +607,14 @@ namespace sl::vec
 		return lhs;
 	}
 
+	/**
+	 * \brief Modulo operator
+	 * \tparam TVector A vectorial type
+	 * \tparam T2 A type, which is modulo-assignable to TVector
+	 * \param lhs left-hand-side of modulo
+	 * \param rhs right-hand-side of modulo
+	 * \return newly constructed Vector
+	 */
 	template <vectorial TVector, mod_assignable<TVector> T2>
 	constexpr TVector operator %(TVector lhs, T2&& rhs) noexcept
 	{
@@ -535,6 +622,12 @@ namespace sl::vec
 		return lhs;
 	}
 
+	/**
+	 * \brief Calculates the squared length of a Vector
+	 * \tparam TVector A vectorial type
+	 * \param vector Vector to be calculated from
+	 * \return scalar value
+	 */
 	template <vectorial TVector>
 	[[nodiscard]]
 	constexpr vector_value_t<TVector> length_sq(const TVector& vector) noexcept
@@ -550,10 +643,26 @@ namespace sl::vec
 		);
 	}
 
+	/**
+	 * \brief Calculates the length of a Vector
+	 * \tparam TVector A vectorial type
+	 * \param vector Vector to be calculated from
+	 * \return scalar value
+	 *
+	 * \remarks Due to std::sqrt, this function will always return a floating point type.
+	 */
 	template <vectorial TVector>
 	[[nodiscard]]
 	constexpr auto length(const TVector& vector) noexcept { return std::sqrt(length_sq(vector)); }
 
+	/**
+	 * \brief Calculates the dot product of to Vectors
+	 * \tparam TVector1 A vectorial type
+	 * \tparam TVector2 Another vectorial type
+	 * \param lhs left-hand-side of calculation
+	 * \param rhs left-hand-side of calculation
+	 * \return scalar value
+	 */
 	template <vectorial TVector1, vectorial TVector2>
 		requires mulable<vector_value_t<TVector2>, vector_value_t<TVector1>>
 	[[nodiscard]]
@@ -572,6 +681,12 @@ namespace sl::vec
 		);
 	}
 
+	/**
+	 * \brief Calculates the normalization of a Vector
+	 * \tparam TVector A vectorial type
+	 * \param vec Vector to be calculated from
+	 * \return newly constructed Vector
+	 */
 	template <vectorial TVector>
 		requires std::floating_point<vector_value_t<TVector>>
 	[[nodiscard]]
