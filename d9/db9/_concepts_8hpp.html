@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Simple-Vector
-   &#160;<span id="projectnumber">v1.0</span>
+   &#160;<span id="projectnumber">v1.0.1</span>
    </div>
   </td>
  </tr>
@@ -83,7 +83,9 @@ $(document).ready(function(){initNavTree('d9/db9/_concepts_8hpp.html','../../');
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Concepts.hpp File Reference</div>  </div>
@@ -94,12 +96,28 @@ $(document).ready(function(){initNavTree('d9/db9/_concepts_8hpp.html','../../');
 </div>
 <p><a href="../../d9/db9/_concepts_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3c/structsl_1_1vec_1_1vector__traits.html">sl::vec::vector_traits&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uniform interface to <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> types.  <a href="../../d8/d3c/structsl_1_1vec_1_1vector__traits.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de6/structsl_1_1vec_1_1is__vectorial.html">sl::vec::is_vectorial&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether T is a vector type.  <a href="../../dc/de6/structsl_1_1vec_1_1is__vectorial.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:dd/d2c/namespacesl"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2c/namespacesl.html">sl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:d1/d17/namespacesl_1_1vec"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d17/namespacesl_1_1vec.html">sl::vec</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga665271e3c6d337f71fc0cefbb50d9a84"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga665271e3c6d337f71fc0cefbb50d9a84"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">sl::vec::vector_value_t</a> = typename vector_traits&lt; std::remove_cvref_t&lt; T &gt; &gt;::value_type</td></tr>
+<tr class="memdesc:ga665271e3c6d337f71fc0cefbb50d9a84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience alias type to the value_type of Vectors.  <a href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">More...</a><br /></td></tr>
+<tr class="separator:ga665271e3c6d337f71fc0cefbb50d9a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -139,6 +157,18 @@ Variables</h2></td></tr>
 <tr class="memitem:gadb76d9f4e10e4a6e6ba2fa415805894e"><td class="memTemplParams" colspan="2">template&lt;auto V, class TSizeType &gt; </td></tr>
 <tr class="memitem:gadb76d9f4e10e4a6e6ba2fa415805894e"><td class="memTemplItemLeft" align="right" valign="top">concept&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dd/db9/group___concepts.html#gadb76d9f4e10e4a6e6ba2fa415805894e">sl::vec::cardinality</a> = std::integral&lt;TSizeType&gt; &amp;&amp; std::is_convertible_v&lt;decltype(V), TSizeType&gt; &amp;&amp; 0 &lt; V</td></tr>
 <tr class="separator:gadb76d9f4e10e4a6e6ba2fa415805894e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad33f15ca2a3805724c77485a481ee595"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:gad33f15ca2a3805724c77485a481ee595"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/de6/group___type_traits.html#gad33f15ca2a3805724c77485a481ee595">sl::vec::vector_dims_v</a> = vector_traits&lt;std::remove_cvref_t&lt;T&gt;&gt;::dimensions</td></tr>
+<tr class="memdesc:gad33f15ca2a3805724c77485a481ee595"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience constant to the dimensions of Vectors.  <a href="../../d7/de6/group___type_traits.html#gad33f15ca2a3805724c77485a481ee595">More...</a><br /></td></tr>
+<tr class="separator:gad33f15ca2a3805724c77485a481ee595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga382e0fe0224cd1bb857c2c622d297f19"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga382e0fe0224cd1bb857c2c622d297f19"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d7/de6/group___type_traits.html#ga382e0fe0224cd1bb857c2c622d297f19">sl::vec::is_vectorial_v</a> = is_vectorial&lt;T&gt;::value</td></tr>
+<tr class="memdesc:ga382e0fe0224cd1bb857c2c622d297f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shortcut checking for vectorial classes.  <a href="../../d7/de6/group___type_traits.html#ga382e0fe0224cd1bb857c2c622d297f19">More...</a><br /></td></tr>
+<tr class="separator:ga382e0fe0224cd1bb857c2c622d297f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga428745ddc080d2e88842ae6dacffede4"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga428745ddc080d2e88842ae6dacffede4"><td class="memTemplItemLeft" align="right" valign="top">concept&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../dd/db9/group___concepts.html#ga428745ddc080d2e88842ae6dacffede4">sl::vec::vectorial</a> = is_vectorial_v&lt;std::remove_cvref_t&lt;T&gt;&gt;</td></tr>
+<tr class="memdesc:ga428745ddc080d2e88842ae6dacffede4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept checking for vectorial types.  <a href="../../dd/db9/group___concepts.html#ga428745ddc080d2e88842ae6dacffede4">More...</a><br /></td></tr>
+<tr class="separator:ga428745ddc080d2e88842ae6dacffede4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

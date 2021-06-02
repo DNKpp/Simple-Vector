@@ -1,18 +1,18 @@
 var _vector_8hpp =
 [
-    [ "vector_value_t", "db/d20/_vector_8hpp.html#ga665271e3c6d337f71fc0cefbb50d9a84", null ],
     [ "dot_product", "db/d20/_vector_8hpp.html#ga93c9bc6c92625a71719b720117647c42", null ],
-    [ "length", "db/d20/_vector_8hpp.html#gad5e3d0ef326d191177937eaa5840af73", null ],
-    [ "length_sq", "db/d20/_vector_8hpp.html#ga6d2a0e40aee5b79cde57b8da43d6eb00", null ],
-    [ "normalized", "db/d20/_vector_8hpp.html#gafa8c0a00390e2eff122e0b3cdd23eccf", null ],
-    [ "operator%", "db/d20/_vector_8hpp.html#ga460180db4c802372bb3f1735304a1930", null ],
-    [ "operator*", "db/d20/_vector_8hpp.html#gaa4111ebc8b70d2e6734bd1c0ee331977", null ],
-    [ "operator*", "db/d20/_vector_8hpp.html#ga75021a00aed410b2f8fee61fe26b91ce", null ],
-    [ "operator+", "db/d20/_vector_8hpp.html#ga97e1871d956cc7f62d89409646658635", null ],
-    [ "operator-", "db/d20/_vector_8hpp.html#ga3d8c4f65e2635db66282e782fe0107a0", null ],
-    [ "operator/", "db/d20/_vector_8hpp.html#ga0860686fc3eccfdabb64d034bb51c8ab", null ],
-    [ "Vector", "db/d20/_vector_8hpp.html#gaa431e7db3b0957e9d4784f47a2d3798f", null ],
-    [ "is_vectorial_v", "db/d20/_vector_8hpp.html#ga382e0fe0224cd1bb857c2c622d297f19", null ],
-    [ "vector_dims_v", "db/d20/_vector_8hpp.html#gad33f15ca2a3805724c77485a481ee595", null ],
-    [ "vectorial", "db/d20/_vector_8hpp.html#ga428745ddc080d2e88842ae6dacffede4", null ]
+    [ "length", "db/d20/_vector_8hpp.html#ga601a2f886d2a92c01bbc99cac50e57a7", null ],
+    [ "length_sq", "db/d20/_vector_8hpp.html#ga4f96cfc793f7ea533db3e4c0c1b58cf2", null ],
+    [ "normalized", "db/d20/_vector_8hpp.html#gaee726b2ac1c998aada265af6a4d4cdd7", null ],
+    [ "operator%", "db/d20/_vector_8hpp.html#ga75a45fcf2c522356e30941f2dc720362", null ],
+    [ "operator*", "db/d20/_vector_8hpp.html#ga6c26c115dbf4d90f4a3190f3e2a99dfb", null ],
+    [ "operator*", "db/d20/_vector_8hpp.html#gab65fd0b6684d5fd5b9d8c10552f07a0a", null ],
+    [ "operator+", "db/d20/_vector_8hpp.html#gaeb90b4fa2156b804a938b62ef70efd1a", null ],
+    [ "operator-", "db/d20/_vector_8hpp.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0", null ],
+    [ "operator/", "db/d20/_vector_8hpp.html#gaa826e57202f17512e33643189818cb21", null ],
+    [ "transform_unseq", "db/d20/_vector_8hpp.html#ga2a818780d1d2e8d324fe9cfc4a91c224", null ],
+    [ "transform_unseq", "db/d20/_vector_8hpp.html#gaeb89deb5f4a5738c455dbff7ebc4c220", null ],
+    [ "transformed_unseq", "db/d20/_vector_8hpp.html#gab72ee388a22aa457487bad1cb2bcb628", null ],
+    [ "transformed_unseq", "db/d20/_vector_8hpp.html#ga00144b85909156a8c1c5bcdaa0099ab1", null ],
+    [ "Vector", "db/d20/_vector_8hpp.html#gaa431e7db3b0957e9d4784f47a2d3798f", null ]
 ];
