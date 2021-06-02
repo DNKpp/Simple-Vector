@@ -124,7 +124,7 @@ namespace sl::vec
 		/** \cond Requires */
 			requires (!std::same_as<T2, T>)
 		/** \endcond */
-		explicit constexpr Vector(const Vector<T2, dimensions>& other) noexcept
+		explicit constexpr Vector(const Vector<T2, dimensions>& other)
 		{
 			m_Values = transformed_unseq(other, [](const T2& value) { return static_cast<T>(value); }).m_Values;
 		}
@@ -268,7 +268,7 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator +=(const Vector<T2, dimensions>& other) noexcept
+		constexpr Vector& operator +=(const Vector<T2, dimensions>& other)
 		{
 			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs + rhs); });
 			return *this;
@@ -281,7 +281,7 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator -=(const Vector<T2, dimensions>& other) noexcept
+		constexpr Vector& operator -=(const Vector<T2, dimensions>& other)
 		{
 			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs - rhs); });
 			return *this;
@@ -294,7 +294,7 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator +=(const T2& value) noexcept
+		constexpr Vector& operator +=(const T2& value)
 		{
 			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs + value); });
 			return *this;
@@ -307,7 +307,7 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator -=(const T2& value) noexcept
+		constexpr Vector& operator -=(const T2& value)
 		{
 			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs - value); });
 			return *this;
@@ -320,7 +320,7 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator *=(const T2& value) noexcept
+		constexpr Vector& operator *=(const T2& value)
 		{
 			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs * value); });
 			return *this;
@@ -335,7 +335,7 @@ namespace sl::vec
 		 * \remarks Division by 0 is undefined.
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator /=(const T2& value) noexcept
+		constexpr Vector& operator /=(const T2& value)
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
@@ -355,7 +355,7 @@ namespace sl::vec
 		/** \cond Requires */
 			requires modable<T>
 		/** \endcond */
-		constexpr Vector& operator %=(const T2& value) noexcept
+		constexpr Vector& operator %=(const T2& value)
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
@@ -628,7 +628,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, add_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator +(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator +(TVector lhs, T2&& rhs)
 	{
 		lhs += std::forward<T2>(rhs);
 		return lhs;
@@ -644,7 +644,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, sub_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator -(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator -(TVector lhs, T2&& rhs)
 	{
 		lhs -= std::forward<T2>(rhs);
 		return lhs;
@@ -660,7 +660,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator *(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator *(TVector lhs, T2&& rhs)
 	{
 		lhs *= std::forward<T2>(rhs);
 		return lhs;
@@ -676,7 +676,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator *(T2&& lhs, TVector rhs) noexcept
+	constexpr TVector operator *(T2&& lhs, TVector rhs)
 	{
 		rhs *= std::forward<T2>(lhs);
 		return rhs;
@@ -692,7 +692,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, div_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator /(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator /(TVector lhs, T2&& rhs)
 	{
 		lhs /= std::forward<T2>(rhs);
 		return lhs;
@@ -708,7 +708,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, mod_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator %(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator %(TVector lhs, T2&& rhs)
 	{
 		lhs %= std::forward<T2>(rhs);
 		return lhs;
@@ -722,7 +722,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
-	constexpr vector_value_t<TVector> length_sq(const TVector& vector) noexcept
+	constexpr vector_value_t<TVector> length_sq(const TVector& vector)
 	{
 		using T = vector_value_t<TVector>;
 		return std::reduce
@@ -745,7 +745,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
-	constexpr auto length(const TVector& vector) noexcept { return std::sqrt(length_sq(vector)); }
+	constexpr auto length(const TVector& vector) { return std::sqrt(length_sq(vector)); }
 
 	/**
 	 * \brief Calculates the dot product of to Vectors
@@ -804,7 +804,7 @@ namespace sl::vec
 		requires std::floating_point<vector_value_t<TVector>>
 	/** \endcond */
 	[[nodiscard]]
-	constexpr TVector normalized(TVector vec) noexcept
+	constexpr TVector normalized(TVector vec)
 	{
 		assert(vec != TVector{});
 
