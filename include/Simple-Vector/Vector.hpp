@@ -719,12 +719,28 @@ namespace sl::vec
 	 * \tparam TVector A vectorial type
 	 * \param vector Vector to be calculated from
 	 * \return scalar value
+	 * 
+	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
+	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
 	constexpr vector_value_t<TVector> length_sq(const TVector& vector)
 	{
 		using T = vector_value_t<TVector>;
+
+		if (std::is_constant_evaluated())
+		{
+			return std::reduce
+			(
+				std::ranges::cbegin(vector),
+				std::ranges::cend(vector),
+				T{},
+				[](const T& val, const T& el) { return val + el * el; }
+			);
+		}
+
+		// ReSharper disable once CppUnreachableCode
 		return std::reduce
 		(
 			std::execution::unseq,

@@ -591,6 +591,25 @@ TEMPLATE_TEST_CASE_SIG
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
+	"constexpr length_sq should calculate the squared length of given vectors",
+	"[vector][algorithm][constexpr]",
+	((std::size_t VDims, int VExpected), VDims, VExpected),
+	(1, 1),
+	(2, 5),
+	(3, 14)
+)
+#pragma warning(default: 26444)
+{
+	constexpr auto vec = make_iota_vector<int, VDims>(1);
+
+	constexpr auto length_sq = sl::vec::length_sq(vec);
+
+	REQUIRE(VExpected == length_sq);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
 	"length_sq should calculate the squared length of given vectors",
 	"[vector][algorithm]",
 	((std::size_t VDims, int VExpected), VDims, VExpected),
@@ -602,7 +621,7 @@ TEMPLATE_TEST_CASE_SIG
 {
 	const auto vec = make_iota_vector<int, VDims>(1);
 
-	const auto length_sq = sl::vec::length_sq(vec);
+	auto length_sq = sl::vec::length_sq(vec);
 
 	REQUIRE(VExpected == length_sq);
 }
