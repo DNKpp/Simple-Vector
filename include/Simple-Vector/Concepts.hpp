@@ -88,6 +88,65 @@ namespace sl::vec
 	concept cardinality = std::integral<TSizeType> && std::is_convertible_v<decltype(V), TSizeType> && 0 < V;
 
 	/** @}*/
+
+	/** \addtogroup TypeTraits
+	 * @{
+	 */
+
+	/**
+	 * \brief Uniform interface to Vector types.
+	 * \tparam T type of interest
+	 */
+	template <class T>
+	struct vector_traits
+	{
+	};
+
+	/**
+	 * \brief Convenience alias type to the value_type of Vectors
+	 * \tparam T type of interest
+	 */
+	template <class T>
+	using vector_value_t = typename vector_traits<std::remove_cvref_t<T>>::value_type;
+
+	/**
+	 * \brief Convenience constant to the dimensions of Vectors
+	 * \tparam T type of interest
+	 */
+	template <class T>
+	constexpr auto vector_dims_v = vector_traits<std::remove_cvref_t<T>>::dimensions;
+
+	/**
+	 * \brief Checks whether T is a vector type.
+	 * \tparam T a type to check
+	 */
+	template <class T>
+	struct is_vectorial : std::false_type
+	{
+	};
+
+	/**
+	 * \brief Shortcut checking for vectorial classes
+	 * \tparam T A type to check
+	 */
+	template <class T>
+	constexpr bool is_vectorial_v = is_vectorial<T>::value;
+
+	/** @}*/
+
+	/** \addtogroup Concepts
+	 * @{
+	 */
+
+	/**
+	 * \concept vectorial
+	 * \brief Concept checking for vectorial types
+	 * \tparam T A type to check
+	 */
+	template <class T>
+	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
+
+	/** @}*/
 }
 
 #endif

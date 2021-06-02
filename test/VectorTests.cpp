@@ -14,12 +14,47 @@ using namespace sl::vec;
 namespace
 {
 	template <class TValueType, std::size_t VDims>
-	constexpr Vector<TValueType, VDims> make_iota_vector(TValueType begin) noexcept
+	constexpr Vector<TValueType, VDims> make_iota_vector(TValueType begin = {}) noexcept
 	{
 		Vector<TValueType, VDims> vec;
 		std::iota(std::begin(vec), std::end(vec), begin);
 		return vec;
 	}
+
+	template <class TValueType, std::size_t VDims>
+	constexpr Vector<TValueType, VDims> make_filled_vector(TValueType value = {}) noexcept
+	{
+		Vector<TValueType, VDims> vec;
+		std::fill(std::begin(vec), std::end(vec), value);
+		return vec;
+	}
+
+	template <class TFunc = std::identity>
+	class InvocationCounter
+	{
+	public:
+		constexpr InvocationCounter(int& counter) :
+			m_Counter{ std::addressof(counter) }
+		{
+		}
+
+		constexpr InvocationCounter(TFunc&& func, int& counter) :
+			m_Func{ std::forward<TFunc>(func) },
+			m_Counter{ std::addressof(counter) }
+		{
+		}
+
+		template <class... TArgs>
+		constexpr auto operator ()(TArgs&&... args)
+		{
+			++*m_Counter;
+			return std::invoke(m_Func, std::forward<TArgs>(args)...);
+		}
+
+	private:
+		TFunc m_Func{};
+		int* m_Counter = nullptr;
+	};
 }
 
 #pragma warning(disable: 26444)
@@ -211,6 +246,138 @@ TEST_CASE("Vector should be equality comparable.", "[vector]")
 	const auto neqResult = vec1 != vec2;
 	REQUIRE(eqResult == expected);
 	REQUIRE(neqResult != expected);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"constexpr unary transform_unseq should invoke function for each element of Vector.",
+	"[vector][algorithm][constexpr]",
+	((std::size_t VDims), VDims),
+	(1),
+	(3),
+	(10)
+)
+{
+	constexpr int invocations = []
+	{
+		Vector<int, VDims> vec;
+		int counter = 0;
+		transform_unseq(vec, InvocationCounter{ counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VDims);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"unary transform_unseq should invoke function for each element of Vector.",
+	"[vector][algorithm]",
+	((std::size_t VDims), VDims),
+	(1),
+	(3),
+	(10)
+)
+{
+	int invocations = []
+	{
+		Vector<int, VDims> vec;
+		int counter = 0;
+		transform_unseq(vec, InvocationCounter{ counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VDims);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"constexpr binary transform_unseq should invoke function for each element of Vector.",
+	"[vector][algorithm][constexpr]",
+	((std::size_t VDims), VDims),
+	(1),
+	(3),
+	(10)
+)
+{
+	constexpr int invocations = []
+	{
+		auto vec = make_filled_vector<int, VDims>();
+		int counter = 0;
+		transform_unseq(vec, vec, InvocationCounter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VDims);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"binary transform_unseq should invoke function for each element of Vector.",
+	"[vector][algorithm]",
+	((std::size_t VDims), VDims),
+	(1),
+	(3),
+	(10)
+)
+{
+	int invocations = []
+	{
+		auto vec = make_filled_vector<int, VDims>();
+		int counter = 0;
+		transform_unseq(vec, vec, InvocationCounter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VDims);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"unary transformed_unseq should invoke function for each element of Vector.",
+	"[vector][algorithm]",
+	((std::size_t VDims), VDims),
+	(1),
+	(3),
+	(10)
+)
+{
+	int invocations = []
+	{
+		Vector<int, VDims> vec;
+		int counter = 0;
+		vec = transformed_unseq(vec, InvocationCounter{ counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VDims);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"binary transformed_unseq should invoke function for each element of Vector.",
+	"[vector][algorithm]",
+	((std::size_t VDims), VDims),
+	(1),
+	(3),
+	(10)
+)
+{
+	int invocations = []
+	{
+		auto vec = make_filled_vector<int, VDims>();
+		int counter = 0;
+		vec = transformed_unseq(vec, vec, InvocationCounter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VDims);
 }
 
 #pragma warning(disable: 26444)
@@ -462,6 +629,29 @@ TEMPLATE_TEST_CASE_SIG
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
+	"constexpr dot_product should calculate the dot product of the two given vectors",
+	"[vector][algorithm][constexpr]",
+	((class TOther, std::size_t VDims, int VExpected), TOther, VDims, VExpected),
+	(int, 1, 2),
+	(int, 2, 8),
+	(int, 3, 20),
+	(float, 1, 2),
+	(float, 2, 8),
+	(float, 3, 20)
+)
+#pragma warning(default: 26444)
+{
+	constexpr auto vec1 = make_iota_vector<int, VDims>(1);
+	constexpr auto vec2 = make_iota_vector<TOther, VDims>(2);
+
+	constexpr int dotProd = sl::vec::dot_product(vec1, vec2);
+
+	REQUIRE(dotProd == VExpected);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
 	"dot_product should calculate the dot product of the two given vectors",
 	"[vector][algorithm]",
 	((class TOther, std::size_t VDims, int VExpected), TOther, VDims, VExpected),
@@ -477,7 +667,7 @@ TEMPLATE_TEST_CASE_SIG
 	const auto vec1 = make_iota_vector<int, VDims>(1);
 	const auto vec2 = make_iota_vector<TOther, VDims>(2);
 
-	const int dotProd = sl::vec::dot_product(vec1, vec2);
+	int dotProd = sl::vec::dot_product(vec1, vec2);
 
 	REQUIRE(dotProd == VExpected);
 }
