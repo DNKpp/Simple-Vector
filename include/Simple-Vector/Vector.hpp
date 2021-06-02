@@ -24,6 +24,36 @@ namespace sl::vec
 	 * @{
 	 */
 
+	/** \cond fwd */
+	template <vectorial TVector, std::invocable<vector_value_t<TVector>> TUnaryOperation>
+		requires std::convertible_to<std::invoke_result_t<TUnaryOperation, vector_value_t<TVector>>, vector_value_t<TVector>>
+	constexpr void transform_unseq(TVector& vec, TUnaryOperation&& unaryOp);
+
+	template <vectorial TVector1, vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+		requires std::convertible_to
+		<
+			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			vector_value_t<TVector1>
+		>
+	constexpr void transform_unseq(TVector1& vec1, const TVector2& vec2, TBinaryOperation&& binaryOp);
+
+	template <vectorial TVector, std::invocable<vector_value_t<TVector>> TUnaryOperation>
+		requires std::convertible_to<std::invoke_result_t<TUnaryOperation, vector_value_t<TVector>>, vector_value_t<TVector>>
+	[[nodiscard]]
+	constexpr TVector transformed_unseq(TVector vec, TUnaryOperation&& unaryOp);
+
+	template <vectorial TVector1, vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+		requires std::convertible_to
+		<
+			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			vector_value_t<TVector1>
+		>
+	[[nodiscard]]
+	constexpr TVector1 transformed_unseq(TVector1 vec1, const TVector2& vec, TBinaryOperation&& binaryOp);
+	/** \endcond */
+
 	/**
 	 * \brief A mathematically vector implementation
 	 * \tparam T The value type
@@ -94,16 +124,9 @@ namespace sl::vec
 		/** \cond Requires */
 			requires (!std::same_as<T2, T>)
 		/** \endcond */
-		explicit constexpr Vector(const Vector<T2, dimensions>& other) noexcept
+		explicit constexpr Vector(const Vector<T2, dimensions>& other)
 		{
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(other),
-				std::cend(other),
-				std::begin(m_Values),
-				[](T2 value) { return static_cast<T>(value); }
-			);
+			m_Values = transformed_unseq(other, [](const T2& value) { return static_cast<T>(value); }).m_Values;
 		}
 
 		/**
@@ -245,17 +268,9 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator +=(const Vector<T2, dimensions>& other) noexcept
+		constexpr Vector& operator +=(const Vector<T2, dimensions>& other)
 		{
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(m_Values),
-				std::cend(m_Values),
-				std::cbegin(other),
-				std::begin(m_Values),
-				[](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs + rhs); }
-			);
+			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs + rhs); });
 			return *this;
 		}
 
@@ -266,17 +281,9 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator -=(const Vector<T2, dimensions>& other) noexcept
+		constexpr Vector& operator -=(const Vector<T2, dimensions>& other)
 		{
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(m_Values),
-				std::cend(m_Values),
-				std::cbegin(other),
-				std::begin(m_Values),
-				[](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs - rhs); }
-			);
+			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs - rhs); });
 			return *this;
 		}
 
@@ -287,16 +294,9 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator +=(T2&& value) noexcept
+		constexpr Vector& operator +=(const T2& value)
 		{
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(m_Values),
-				std::cend(m_Values),
-				std::begin(m_Values),
-				[&value](const auto& lhs) { return static_cast<T>(lhs + std::forward<T2>(value)); }
-			);
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs + value); });
 			return *this;
 		}
 
@@ -307,16 +307,9 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator -=(T2&& value) noexcept
+		constexpr Vector& operator -=(const T2& value)
 		{
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(m_Values),
-				std::cend(m_Values),
-				std::begin(m_Values),
-				[&value](const auto& lhs) { return static_cast<T>(lhs - std::forward<T2>(value)); }
-			);
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs - value); });
 			return *this;
 		}
 
@@ -327,16 +320,9 @@ namespace sl::vec
 		 * \return reference to this
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator *=(T2&& value) noexcept
+		constexpr Vector& operator *=(const T2& value)
 		{
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(m_Values),
-				std::cend(m_Values),
-				std::begin(m_Values),
-				[&value](const auto& lhs) { return static_cast<T>(lhs * std::forward<T2>(value)); }
-			);
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs * value); });
 			return *this;
 		}
 
@@ -349,18 +335,11 @@ namespace sl::vec
 		 * \remarks Division by 0 is undefined.
 		 */
 		template <std::convertible_to<T> T2>
-		constexpr Vector& operator /=(T2&& value) noexcept
+		constexpr Vector& operator /=(const T2& value)
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(m_Values),
-				std::cend(m_Values),
-				std::begin(m_Values),
-				[&value](const auto& lhs) { return static_cast<T>(lhs / std::forward<T2>(value)); }
-			);
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs / value); });
 			return *this;
 		}
 
@@ -376,18 +355,11 @@ namespace sl::vec
 		/** \cond Requires */
 			requires modable<T>
 		/** \endcond */
-		constexpr Vector& operator %=(T2&& value) noexcept
+		constexpr Vector& operator %=(const T2& value)
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
-			std::transform
-			(
-				std::execution::unseq,
-				std::cbegin(m_Values),
-				std::cend(m_Values),
-				std::begin(m_Values),
-				[&value](const auto& lhs) { return lhs % static_cast<T>(value); }
-			);
+			transform_unseq(*this, [&value](const auto& lhs) { return lhs % static_cast<T>(value); });
 			return *this;
 		}
 
@@ -491,14 +463,6 @@ namespace sl::vec
 	/** \addtogroup TypeTraits
 	 * @{
 	 */
-	/**
-	 * \brief Uniform interface to Vector types.
-	 * \tparam T type of interest
-	 */
-	template <class T>
-	struct vector_traits
-	{
-	};
 
 	/**
 	 * \brief Specialization for Vector
@@ -514,29 +478,6 @@ namespace sl::vec
 	};
 
 	/**
-	 * \brief Convenience alias type to the value_type of Vectors
-	 * \tparam T type of interest
-	 */
-	template <class T>
-	using vector_value_t = typename vector_traits<std::remove_cvref_t<T>>::value_type;
-
-	/**
-	 * \brief Convenience constant to the dimensions of Vectors
-	 * \tparam T type of interest
-	 */
-	template <class T>
-	constexpr auto vector_dims_v = vector_traits<std::remove_cvref_t<T>>::dimensions;
-
-	/**
-	 * \brief Checks whether T is a vector type.
-	 * \tparam T a type to check
-	 */
-	template <class T>
-	struct is_vectorial : std::false_type
-	{
-	};
-
-	/**
 	 * \brief Specialization for Vector which registers Vector with all its template variations as vectorial.
 	 * \tparam T value_type of Vector
 	 * \tparam VDimensions dimensions of Vector
@@ -546,31 +487,136 @@ namespace sl::vec
 	{
 	};
 
-	/**
-	 * \brief Shortcut checking for vectorial classes
-	 * \tparam T A type to check
-	 */
-	template <class T>
-	constexpr bool is_vectorial_v = is_vectorial<T>::value;
-
-	/** @}*/
-
-	/** \addtogroup Concepts
-	 * @{
-	 */
-
-	/**
-	 * \brief Concept checking for vectorial types
-	 * \tparam T A type to check
-	 */
-	template <class T>
-	concept vectorial = is_vectorial_v<std::remove_cvref_t<T>>;
-
 	/** @}*/
 
 	/** \addtogroup Vector
 	 * @{
 	 */
+
+	/**
+	 * \brief Applies the given unary operation to each element and writes the result back into the Vector.
+	 * \tparam TVector Type of Vector
+	 * \tparam TUnaryOperation Type of unary operation
+	 * \param vec target of transformation
+	 * \param unaryOp unary operation applied to each element
+	 *
+	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
+	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
+	 */
+	template <vectorial TVector, std::invocable<vector_value_t<TVector>> TUnaryOperation>
+	/** \cond Requires */
+		requires std::convertible_to<std::invoke_result_t<TUnaryOperation, vector_value_t<TVector>>, vector_value_t<TVector>>
+	/** \endcond */
+	constexpr void transform_unseq(TVector& vec, TUnaryOperation&& unaryOp)
+	{
+		if (std::is_constant_evaluated())
+		{
+			std::ranges::transform(vec, std::begin(vec), std::forward<TUnaryOperation>(unaryOp));
+		}
+		else // ReSharper disable once CppUnreachableCode
+		{
+			std::transform
+			(
+				std::execution::unseq,
+				std::cbegin(vec),
+				std::cend(vec),
+				std::begin(vec),
+				std::forward<TUnaryOperation>(unaryOp)
+			);
+		}
+	}
+
+	/**
+	 * \brief Applies the given binary operation to each pair of elements of both vectors and writes the result back into the first Vector.
+	 * \tparam TVector1 Type of first Vector
+	 * \tparam TVector2 Type of second Vector
+	 * \tparam TBinaryOperation Type of binary operation
+	 * \param vec1 Left-hand-side of operation
+	 * \param vec2 Right-hand-side of operation
+	 * \param binaryOp binary operation applied to each pair of elements
+	 *
+	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
+	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
+	 */
+	template <vectorial TVector1, vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	/** \cond Requires */
+		requires std::convertible_to
+		<
+			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			vector_value_t<TVector1>
+		>
+	/** \endcond */
+	constexpr void transform_unseq(TVector1& vec1, const TVector2& vec2, TBinaryOperation&& binaryOp)
+	{
+		if (std::is_constant_evaluated())
+		{
+			std::ranges::transform(vec1, vec2, std::begin(vec1), std::forward<TBinaryOperation>(binaryOp));
+		}
+		else // ReSharper disable once CppUnreachableCode
+		{
+			std::transform
+			(
+				std::execution::unseq,
+				std::cbegin(vec1),
+				std::cend(vec1),
+				std::cbegin(vec2),
+				std::begin(vec1),
+				std::forward<TBinaryOperation>(binaryOp)
+			);
+		}
+	}
+
+	/**
+	 * \brief Applies the given  unary operation to each element and stores the result in a newly constructed one.
+	 * \tparam TVector Type of Vector
+	 * \tparam TUnaryOperation Type of unary operation
+	 * \param vec target of transformation
+	 * \param unaryOp unary operation applied to each element
+	 * \return newly constructed Vector
+	 *
+	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
+	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
+	 */
+	template <vectorial TVector, std::invocable<vector_value_t<TVector>> TUnaryOperation>
+	/** \cond Requires */
+		requires std::convertible_to<std::invoke_result_t<TUnaryOperation, vector_value_t<TVector>>, vector_value_t<TVector>>
+	/** \endcond */
+	[[nodiscard]]
+	constexpr TVector transformed_unseq(TVector vec, TUnaryOperation&& unaryOp)
+	{
+		transform_unseq(vec, std::forward<TUnaryOperation>(unaryOp));
+		return vec;
+	}
+
+	/**
+	 * \brief Applies the given binary operation to each pair of elements of both vectors and stores the result in a newly constructed one.
+	 * \tparam TVector1 Type of first Vector
+	 * \tparam TVector2 Type of second Vector
+	 * \tparam TBinaryOperation Type of binary operation
+	 * \param vec1 Left-hand-side of operation
+	 * \param vec2 Right-hand-side of operation
+	 * \param binaryOp binary operation applied to each pair of elements
+	 * \return newly constructed Vector
+	 * 
+	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
+	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
+	 */
+	template <vectorial TVector1, vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	/** \cond Requires */
+		requires std::convertible_to
+		<
+			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			vector_value_t<TVector1>
+		>
+	/** \endcond */
+	[[nodiscard]]
+	constexpr TVector1 transformed_unseq(TVector1 vec1, const TVector2& vec2, TBinaryOperation&& binaryOp)
+	{
+		transform_unseq(vec1, vec2, std::forward<TBinaryOperation>(binaryOp));
+		return vec1;
+	}
 
 	/**
 	 * \brief Sum operator
@@ -582,7 +628,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, add_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator +(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator +(TVector lhs, T2&& rhs)
 	{
 		lhs += std::forward<T2>(rhs);
 		return lhs;
@@ -598,7 +644,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, sub_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator -(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator -(TVector lhs, T2&& rhs)
 	{
 		lhs -= std::forward<T2>(rhs);
 		return lhs;
@@ -614,7 +660,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator *(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator *(TVector lhs, T2&& rhs)
 	{
 		lhs *= std::forward<T2>(rhs);
 		return lhs;
@@ -630,7 +676,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, mul_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator *(T2&& lhs, TVector rhs) noexcept
+	constexpr TVector operator *(T2&& lhs, TVector rhs)
 	{
 		rhs *= std::forward<T2>(lhs);
 		return rhs;
@@ -646,7 +692,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, div_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator /(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator /(TVector lhs, T2&& rhs)
 	{
 		lhs /= std::forward<T2>(rhs);
 		return lhs;
@@ -662,7 +708,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector, mod_assignable<TVector> T2>
 	[[nodiscard]]
-	constexpr TVector operator %(TVector lhs, T2&& rhs) noexcept
+	constexpr TVector operator %(TVector lhs, T2&& rhs)
 	{
 		lhs %= std::forward<T2>(rhs);
 		return lhs;
@@ -673,12 +719,28 @@ namespace sl::vec
 	 * \tparam TVector A vectorial type
 	 * \param vector Vector to be calculated from
 	 * \return scalar value
+	 * 
+	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
+	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
-	constexpr vector_value_t<TVector> length_sq(const TVector& vector) noexcept
+	constexpr vector_value_t<TVector> length_sq(const TVector& vector)
 	{
 		using T = vector_value_t<TVector>;
+
+		if (std::is_constant_evaluated())
+		{
+			return std::reduce
+			(
+				std::ranges::cbegin(vector),
+				std::ranges::cend(vector),
+				T{},
+				[](const T& val, const T& el) { return val + el * el; }
+			);
+		}
+
+		// ReSharper disable once CppUnreachableCode
 		return std::reduce
 		(
 			std::execution::unseq,
@@ -699,7 +761,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
-	constexpr auto length(const TVector& vector) noexcept { return std::sqrt(length_sq(vector)); }
+	constexpr auto length(const TVector& vector) { return std::sqrt(length_sq(vector)); }
 
 	/**
 	 * \brief Calculates the dot product of to Vectors
@@ -708,6 +770,9 @@ namespace sl::vec
 	 * \param lhs left-hand-side of calculation
 	 * \param rhs left-hand-side of calculation
 	 * \return scalar value
+	 *
+	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
+	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
 	template <vectorial TVector1, vectorial TVector2>
 	/** \cond Requires */
@@ -717,6 +782,21 @@ namespace sl::vec
 	constexpr vector_value_t<TVector1> dot_product(const TVector1& lhs, const TVector2& rhs)
 	{
 		using T = vector_value_t<TVector1>;
+		constexpr auto multiply = [](const T& el1, const auto& el2) { return static_cast<T>(el1 * el2); };
+		if (std::is_constant_evaluated())
+		{
+			return std::transform_reduce
+			(
+				std::cbegin(lhs),
+				std::cend(lhs),
+				std::cbegin(rhs),
+				T{},
+				std::plus<>{},
+				multiply
+			);
+		}
+
+		// ReSharper disable once CppUnreachableCode
 		return std::transform_reduce
 		(
 			std::execution::unseq,
@@ -725,7 +805,7 @@ namespace sl::vec
 			std::cbegin(rhs),
 			T{},
 			std::plus<>{},
-			[](const T& el1, const auto& el2) { return static_cast<T>(el1 * el2); }
+			multiply
 		);
 	}
 
@@ -740,7 +820,7 @@ namespace sl::vec
 		requires std::floating_point<vector_value_t<TVector>>
 	/** \endcond */
 	[[nodiscard]]
-	constexpr TVector normalized(TVector vec) noexcept
+	constexpr TVector normalized(TVector vec)
 	{
 		assert(vec != TVector{});
 
