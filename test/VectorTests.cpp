@@ -95,7 +95,7 @@ TEMPLATE_TEST_CASE_SIG
 
 TEST_CASE("Vector types should be default constructible with zeros", "[Vector][construction]")
 {
-	Vector<int, 3> vec;
+	constexpr Vector<int, 3> vec;
 
 	REQUIRE(std::cmp_equal(vec.dimensions, 3));
 	REQUIRE(std::cmp_equal(vec[0], 0));
@@ -124,7 +124,8 @@ TEMPLATE_TEST_CASE_SIG
 #endif
 #pragma warning(default: 26444)
 {
-	Vector vec{ V... };
+	constexpr Vector vec{ V... };
+	
 	REQUIRE(std::cmp_equal(vec.dimensions, sizeof...(V)));
 }
 
@@ -179,6 +180,7 @@ TEST_CASE("Vector has x member function", "[Vector]")
 	auto vec = make_iota_vector<int, 3>(1);
 
 	REQUIRE(vec.x() == 1);
+	REQUIRE(std::as_const(vec).x() == 1);
 }
 
 #pragma warning(disable: 26444)
@@ -200,6 +202,7 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		REQUIRE(std::cmp_less_equal(2, Vector_t::dimensions));
 		REQUIRE(vec.y() == 2);
+		REQUIRE(std::as_const(vec).y() == 2);
 	}
 }
 
@@ -221,7 +224,7 @@ TEMPLATE_TEST_CASE_SIG
 	if constexpr (has_z_function<Vector_t>)
 	{
 		REQUIRE(std::cmp_less_equal(3, Vector_t::dimensions));
-		REQUIRE(vec.z() == 3);
+		REQUIRE(std::as_const(vec).z() == 3);
 	}
 }
 
