@@ -123,17 +123,34 @@ namespace sl::vec
 		/**
 		 * \brief Conversion constructor.
 		 * \tparam T2 T of other Vector
+		 * \tparam VOtherDimensions dimensions of other Vector
 		 * \param other Vector which will be used for initialization
 		 *
-		 * \details Casts all elements from other Vector to T and initializes the storage.
+		 * \details Casts all elements from other Vector to value_type and initializes the storage.
+		 * If the target Vector has less dimensions than source all values beyond will be ignored.
+		 * If the source Vector has less dimensions than the  target, missing elements will be default initialized.
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<T> T2, auto VOtherDimensions>
 		/** \cond Requires */
-			requires (!std::same_as<T2, T>)
+			requires (!std::same_as<T2, T> || dimensions != VOtherDimensions)
 		/** \endcond */
-		explicit constexpr Vector(const Vector<T2, dimensions>& other)
+		explicit constexpr Vector(const Vector<T2, VOtherDimensions>& other)
 		{
-			transform_unseq(*this, other, [](const auto&, const T2& rhs) { return static_cast<value_type>(rhs); });
+			constexpr auto convert = [](const auto&, const T2& rhs) { return static_cast<value_type>(rhs); };
+			if constexpr (dimensions <= VOtherDimensions)
+			{
+				transform_unseq(*this, other, convert);
+			}
+			else
+			{
+				std::ranges::transform
+				(
+					m_Values | std::views::take(VOtherDimensions),
+					other,
+					std::begin(m_Values),
+					convert
+				);
+			}
 		}
 
 		/**
