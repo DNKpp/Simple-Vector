@@ -40,18 +40,38 @@
 			"variables": [
 				{
 					"name": "CMAKE_C_COMPILER",
-					"value": "/usr/bin/gcc-11",
+					"value": "/usr/bin/gcc",
 					"type": "FILEPATH"
 				},
 				{
 					"name": "CMAKE_CXX_COMPILER",
-					"value": "/usr/bin/g++-11",
+					"value": "/usr/bin/g++",
 					"type": "FILEPATH"
 				},
 				{
 					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
 					"value": "True",
 					"type": "BOOL"
+				},
+				{
+					"name": "CMAKE_C_COMPILER_RANLIB",
+					"value": "/usr/bin/gcc-ranlib",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_C_COMPILER_AR",
+					"value": "/usr/bin/gcc-ar",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_CXX_COMPILER_AR",
+					"value": "/usr/bin/gcc-ar",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_CXX_COMPILER_RANLIB",
+					"value": "/usr/bin/gcc-ranlib",
+					"type": "FILEPATH"
 				}
 			]
 		},

@@ -23,8 +23,7 @@ namespace
 		}
 		else
 		{
-			const auto casted = static_cast<int>(begin);
-			return static_cast<Vector<TValueType, VDims>>(Vector<int, VDims>{ gen::iota{ casted } });
+			return static_cast<Vector<TValueType, VDims>>(Vector<int, VDims>{ gen::iota<int>{ static_cast<int>(begin) } });
 		}
 	}
 
