@@ -130,6 +130,31 @@ namespace sl::vec
 		}
 
 		/**
+		 * \brief Initializes each element with invocation results of the given generator.
+		 * \tparam TGenerator Type of generator
+		 * \param generator used generator
+		 *
+		 * \details This constructor can be used to hand over invokable an object with the following signature:
+		 * \code{.cpp}
+		 * value_type()
+		 * \endcode
+		 * The library already offers some \ref Generators "generators".
+		 */
+		template <std::invocable TGenerator>
+		/** \cond Requires */
+			requires std::convertible_to<std::invoke_result_t<TGenerator&>, value_type>
+		/** \endcond */
+		explicit constexpr Vector(TGenerator generator)
+		{
+			std::ranges::generate_n
+			(
+				std::begin(m_Values),
+				dimensions,
+				std::move(generator)
+			);
+		}
+
+		/**
 		 * \brief Default copy-assign-operator
 		 * \return reference to this
 		 */
@@ -607,7 +632,7 @@ namespace sl::vec
 	/** \cond Requires */
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	/** \endcond */

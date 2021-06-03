@@ -5,6 +5,7 @@
 
 #include <catch2/catch.hpp>
 
+#include "Simple-Vector/Generators.hpp"
 #include "Simple-Vector/Vector.hpp"
 
 #include <ranges>
@@ -16,17 +17,20 @@ namespace
 	template <class TValueType, std::size_t VDims>
 	constexpr Vector<TValueType, VDims> make_iota_vector(TValueType begin = {}) noexcept
 	{
-		Vector<TValueType, VDims> vec;
-		std::iota(std::begin(vec), std::end(vec), begin);
-		return vec;
+		if constexpr (std::integral<TValueType>)
+		{
+			return Vector<TValueType, VDims>{ gen::iota{ begin } };
+		}
+		else
+		{
+			return static_cast<Vector<TValueType, VDims>>(Vector<int, VDims>{ gen::iota{ static_cast<int>(begin) } });
+		}
 	}
 
 	template <class TValueType, std::size_t VDims>
 	constexpr Vector<TValueType, VDims> make_filled_vector(TValueType value = {}) noexcept
 	{
-		Vector<TValueType, VDims> vec;
-		std::fill(std::begin(vec), std::end(vec), value);
-		return vec;
+		return Vector<TValueType, VDims>{ gen::fill{ value } };
 	}
 
 	template <class TFunc = std::identity>
@@ -60,7 +64,7 @@ namespace
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE
 (
-	"vector_value_t should the same result as value_type of Vector.",
+	"vector_value_t should yield the same result as value_type of Vector.",
 	"[vector][traits]",
 	int,
 	float,
@@ -78,7 +82,7 @@ TEMPLATE_TEST_CASE
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
-	"vector_dims_v should the same result as dimensions of Vector.",
+	"vector_dims_v should yield the same result as dimensions of Vector.",
 	"[vector][traits]",
 	((std::size_t VDims), VDims),
 	(1),
@@ -103,6 +107,14 @@ TEST_CASE("Vector types should be default constructible with zeros", "[Vector][c
 	REQUIRE(std::cmp_equal(vec[2], 0));
 }
 
+TEST_CASE("Vector types should be constructible via generator", "[vector][construction]")
+{
+	constexpr int value = 42;
+	constexpr Vector<int, 3> vec{ gen::fill{ value } };
+
+	REQUIRE(std::ranges::all_of(vec, [](auto val) { return val == value; }));
+}
+
 #pragma warning(disable: 26444)
 #if __cpp_nontype_template_args < 201911L
 TEMPLATE_TEST_CASE_SIG
@@ -125,7 +137,7 @@ TEMPLATE_TEST_CASE_SIG
 #pragma warning(default: 26444)
 {
 	constexpr Vector vec{ V... };
-	
+
 	REQUIRE(std::cmp_equal(vec.dimensions, sizeof...(V)));
 }
 
