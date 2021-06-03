@@ -130,9 +130,9 @@ namespace sl::vec
 		 * If the target Vector has less dimensions than source all values beyond will be ignored.
 		 * If the source Vector has less dimensions than the  target, missing elements will be default initialized.
 		 */
-		template <std::convertible_to<T> T2, auto VOtherDimensions>
+		template <std::convertible_to<value_type> T2, auto VOtherDimensions>
 		/** \cond Requires */
-			requires (!std::same_as<T2, T> || dimensions != VOtherDimensions)
+			requires (!std::same_as<T2, value_type> || dimensions != VOtherDimensions)
 		/** \endcond */
 		explicit constexpr Vector(const Vector<T2, VOtherDimensions>& other)
 		{
@@ -316,10 +316,10 @@ namespace sl::vec
 		 * \param other other Vector
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator +=(const Vector<T2, dimensions>& other)
 		{
-			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs + rhs); });
+			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<value_type>(lhs + rhs); });
 			return *this;
 		}
 
@@ -329,10 +329,10 @@ namespace sl::vec
 		 * \param other other Vector
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator -=(const Vector<T2, dimensions>& other)
 		{
-			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs - rhs); });
+			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<value_type>(lhs - rhs); });
 			return *this;
 		}
 
@@ -342,10 +342,10 @@ namespace sl::vec
 		 * \param value Value to be added
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator +=(const T2& value)
 		{
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs + value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs + value); });
 			return *this;
 		}
 
@@ -355,10 +355,10 @@ namespace sl::vec
 		 * \param value Value to be subtracted
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator -=(const T2& value)
 		{
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs - value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs - value); });
 			return *this;
 		}
 
@@ -368,10 +368,10 @@ namespace sl::vec
 		 * \param value Value each element will be multiplied by
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator *=(const T2& value)
 		{
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs * value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs * value); });
 			return *this;
 		}
 
@@ -383,12 +383,12 @@ namespace sl::vec
 		 *
 		 * \remarks Division by 0 is undefined.
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator /=(const T2& value)
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs / value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs / value); });
 			return *this;
 		}
 
@@ -400,7 +400,7 @@ namespace sl::vec
 		 *
 		 * \remarks Division by 0 is undefined.
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		/** \cond Requires */
 			requires modable<T>
 		/** \endcond */
@@ -408,7 +408,7 @@ namespace sl::vec
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
-			transform_unseq(*this, [&value](const auto& lhs) { return lhs % static_cast<T>(value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return lhs % static_cast<value_type>(value); });
 			return *this;
 		}
 
