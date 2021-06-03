@@ -28,12 +28,15 @@ namespace sl::vec
 	template <vectorial TVector, std::invocable<vector_value_t<TVector>> TUnaryOperation>
 		requires std::convertible_to<std::invoke_result_t<TUnaryOperation, vector_value_t<TVector>>, vector_value_t<TVector>>
 	constexpr void transform_unseq(TVector& vec, TUnaryOperation&& unaryOp);
-
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	constexpr void transform_unseq(TVector1& vec1, const TVector2& vec2, TBinaryOperation&& binaryOp);
@@ -43,11 +46,15 @@ namespace sl::vec
 	[[nodiscard]]
 	constexpr TVector transformed_unseq(TVector vec, TUnaryOperation&& unaryOp);
 
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	[[nodiscard]]
@@ -126,7 +133,7 @@ namespace sl::vec
 		/** \endcond */
 		explicit constexpr Vector(const Vector<T2, dimensions>& other)
 		{
-			m_Values = transformed_unseq(other, [](const T2& value) { return static_cast<T>(value); }).m_Values;
+			transform_unseq(*this, other, [](const auto&, const T2& rhs) { return static_cast<value_type>(rhs); });
 		}
 
 		/**
@@ -563,12 +570,16 @@ namespace sl::vec
 	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
 	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 	/** \cond Requires */
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	/** \endcond */
@@ -627,8 +638,12 @@ namespace sl::vec
 	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
 	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 	/** \cond Requires */
 		requires std::convertible_to
 		<
