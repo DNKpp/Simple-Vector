@@ -5,6 +5,7 @@
 
 #include <catch2/catch.hpp>
 
+#include "Simple-Vector/Generators.hpp"
 #include "Simple-Vector/Vector.hpp"
 
 #include <ranges>
@@ -16,17 +17,20 @@ namespace
 	template <class TValueType, std::size_t VDims>
 	constexpr Vector<TValueType, VDims> make_iota_vector(TValueType begin = {}) noexcept
 	{
-		Vector<TValueType, VDims> vec;
-		std::iota(std::begin(vec), std::end(vec), begin);
-		return vec;
+		if constexpr (std::integral<TValueType>)
+		{
+			return Vector<TValueType, VDims>{ gen::iota{ begin } };
+		}
+		else
+		{
+			return static_cast<Vector<TValueType, VDims>>(Vector<int, VDims>{ gen::iota{ static_cast<int>(begin) } });
+		}
 	}
 
 	template <class TValueType, std::size_t VDims>
 	constexpr Vector<TValueType, VDims> make_filled_vector(TValueType value = {}) noexcept
 	{
-		Vector<TValueType, VDims> vec;
-		std::fill(std::begin(vec), std::end(vec), value);
-		return vec;
+		return Vector<TValueType, VDims>{ gen::fill{ value } };
 	}
 
 	template <class TFunc = std::identity>
@@ -60,7 +64,7 @@ namespace
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE
 (
-	"vector_value_t should the same result as value_type of Vector.",
+	"vector_value_t should yield the same result as value_type of Vector.",
 	"[vector][traits]",
 	int,
 	float,
@@ -78,7 +82,7 @@ TEMPLATE_TEST_CASE
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
-	"vector_dims_v should the same result as dimensions of Vector.",
+	"vector_dims_v should yield the same result as dimensions of Vector.",
 	"[vector][traits]",
 	((std::size_t VDims), VDims),
 	(1),
@@ -95,12 +99,54 @@ TEMPLATE_TEST_CASE_SIG
 
 TEST_CASE("Vector types should be default constructible with zeros", "[Vector][construction]")
 {
-	Vector<int, 3> vec;
+	constexpr Vector<int, 3> vec;
 
 	REQUIRE(std::cmp_equal(vec.dimensions, 3));
 	REQUIRE(std::cmp_equal(vec[0], 0));
 	REQUIRE(std::cmp_equal(vec[1], 0));
 	REQUIRE(std::cmp_equal(vec[2], 0));
+}
+
+TEST_CASE("Vector types should be constructible via generator", "[vector][construction]")
+{
+	constexpr int value = 42;
+	constexpr Vector<int, 3> vec{ gen::fill{ value } };
+
+	REQUIRE(std::ranges::all_of(vec, [](auto val) { return val == value; }));
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_PRODUCT_TEST_CASE
+(
+	"Vector types should be explicitly convertible between different value_types.",
+	"[vector][construction]",
+	std::tuple,
+	((Vector<int, 3>, Vector<std::size_t, 3>),
+		(Vector<std::size_t, 5>, Vector<int, 5>))
+)
+#pragma warning(default: 26444)
+{
+	using Source_t = std::tuple_element_t<0, TestType>;
+	using Target_t = std::tuple_element_t<1, TestType>;
+	constexpr auto result = static_cast<Target_t>(Source_t{ gen::iota{ 1 } });
+
+	REQUIRE(std::ranges::equal(result, std::views::iota(1) | std::views::take(vector_dims_v<Source_t>)));
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"Vector types should be explicitly convertible between different dimension sizes.",
+	"[vector][construction]",
+	((class TSource, class TTarget, auto VExpectedRange), TSource, TTarget, VExpectedRange),
+	(Vector<int, 3>, Vector<int, 2>, std::to_array({ 1, 2 })) /*,
+	(Vector<int, 3>, Vector<int, 5>, std::to_array({ 1, 2, 3, 0, 0 }))*/
+)
+#pragma warning(default: 26444)
+{
+	constexpr auto result = static_cast<TTarget>(TSource{ gen::iota{ 1 } });
+
+	REQUIRE(std::ranges::equal(result, VExpectedRange));
 }
 
 #pragma warning(disable: 26444)
@@ -124,7 +170,8 @@ TEMPLATE_TEST_CASE_SIG
 #endif
 #pragma warning(default: 26444)
 {
-	Vector vec{ V... };
+	constexpr Vector vec{ V... };
+
 	REQUIRE(std::cmp_equal(vec.dimensions, sizeof...(V)));
 }
 
@@ -179,6 +226,7 @@ TEST_CASE("Vector has x member function", "[Vector]")
 	auto vec = make_iota_vector<int, 3>(1);
 
 	REQUIRE(vec.x() == 1);
+	REQUIRE(std::as_const(vec).x() == 1);
 }
 
 #pragma warning(disable: 26444)
@@ -200,6 +248,7 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		REQUIRE(std::cmp_less_equal(2, Vector_t::dimensions));
 		REQUIRE(vec.y() == 2);
+		REQUIRE(std::as_const(vec).y() == 2);
 	}
 }
 
@@ -221,7 +270,7 @@ TEMPLATE_TEST_CASE_SIG
 	if constexpr (has_z_function<Vector_t>)
 	{
 		REQUIRE(std::cmp_less_equal(3, Vector_t::dimensions));
-		REQUIRE(vec.z() == 3);
+		REQUIRE(std::as_const(vec).z() == 3);
 	}
 }
 

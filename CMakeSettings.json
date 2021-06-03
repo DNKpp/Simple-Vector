@@ -9,7 +9,14 @@
 			"installRoot": "${projectDir}\\out\\install\\${name}",
 			"cmakeCommandArgs": "",
 			"buildCommandArgs": "",
-			"ctestCommandArgs": ""
+			"ctestCommandArgs": "",
+			"variables": [
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
+				}
+			]
 		},
 		{
 			"name": "Linux-GCC-Debug",
@@ -33,12 +40,37 @@
 			"variables": [
 				{
 					"name": "CMAKE_C_COMPILER",
-					"value": "/usr/bin/gcc-11",
+					"value": "/usr/bin/gcc",
 					"type": "FILEPATH"
 				},
 				{
 					"name": "CMAKE_CXX_COMPILER",
-					"value": "/usr/bin/g++-11",
+					"value": "/usr/bin/g++",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
+				},
+				{
+					"name": "CMAKE_C_COMPILER_RANLIB",
+					"value": "/usr/bin/gcc-ranlib",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_C_COMPILER_AR",
+					"value": "/usr/bin/gcc-ar",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_CXX_COMPILER_AR",
+					"value": "/usr/bin/gcc-ar",
+					"type": "FILEPATH"
+				},
+				{
+					"name": "CMAKE_CXX_COMPILER_RANLIB",
+					"value": "/usr/bin/gcc-ranlib",
 					"type": "FILEPATH"
 				}
 			]
@@ -61,7 +93,14 @@
 			"rsyncCommandArgs": "-t --delete --delete-excluded",
 			"remoteCopyBuildOutput": false,
 			"remoteCopySourcesMethod": "rsync",
-			"addressSanitizerRuntimeFlags": "detect_leaks=0"
+			"addressSanitizerRuntimeFlags": "detect_leaks=0",
+			"variables": [
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
+				}
+			]
 		},
 		{
 			"name": "x64-Release",
@@ -72,7 +111,14 @@
 			"cmakeCommandArgs": "",
 			"buildCommandArgs": "",
 			"ctestCommandArgs": "",
-			"inheritEnvironments": [ "msvc_x64_x64" ]
+			"inheritEnvironments": [ "msvc_x64_x64" ],
+			"variables": [
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
+				}
+			]
 		},
 		{
 			"name": "Linux-Clang-Debug",
@@ -98,6 +144,11 @@
 					"name": "CMAKE_C_COMPILER",
 					"value": "clang",
 					"type": "FILEPATH"
+				},
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
 				}
 			]
 		},
@@ -119,7 +170,14 @@
 			"rsyncCommandArgs": "-t --delete --delete-excluded",
 			"remoteCopyBuildOutput": false,
 			"remoteCopySourcesMethod": "rsync",
-			"addressSanitizerRuntimeFlags": "detect_leaks=0"
+			"addressSanitizerRuntimeFlags": "detect_leaks=0",
+			"variables": [
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
+				}
+			]
 		},
 		{
 			"name": "x64-Clang-Debug",
@@ -141,6 +199,11 @@
 					"name": "CMAKE_CXX_COMPILER",
 					"value": "C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO/2019/COMMUNITY/VC/Tools/Llvm/x64/bin/clang-cl.exe",
 					"type": "FILEPATH"
+				},
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
 				}
 			]
 		},
@@ -153,7 +216,14 @@
 			"cmakeCommandArgs": "",
 			"buildCommandArgs": "",
 			"ctestCommandArgs": "",
-			"inheritEnvironments": [ "clang_cl_x64_x64" ]
+			"inheritEnvironments": [ "clang_cl_x64_x64" ],
+			"variables": [
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
+				}
+			]
 		},
 		{
 			"name": "x64-ReleaseWithDebInfo",
@@ -164,7 +234,14 @@
 			"cmakeCommandArgs": "",
 			"buildCommandArgs": "",
 			"ctestCommandArgs": "",
-			"inheritEnvironments": [ "msvc_x64_x64" ]
+			"inheritEnvironments": [ "msvc_x64_x64" ],
+			"variables": [
+				{
+					"name": "SIMPLE_VECTOR_BUILD_EXAMPLES",
+					"value": "True",
+					"type": "BOOL"
+				}
+			]
 		}
 	]
 }

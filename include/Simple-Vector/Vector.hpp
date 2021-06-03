@@ -28,12 +28,15 @@ namespace sl::vec
 	template <vectorial TVector, std::invocable<vector_value_t<TVector>> TUnaryOperation>
 		requires std::convertible_to<std::invoke_result_t<TUnaryOperation, vector_value_t<TVector>>, vector_value_t<TVector>>
 	constexpr void transform_unseq(TVector& vec, TUnaryOperation&& unaryOp);
-
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	constexpr void transform_unseq(TVector1& vec1, const TVector2& vec2, TBinaryOperation&& binaryOp);
@@ -43,11 +46,15 @@ namespace sl::vec
 	[[nodiscard]]
 	constexpr TVector transformed_unseq(TVector vec, TUnaryOperation&& unaryOp);
 
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	[[nodiscard]]
@@ -116,17 +123,59 @@ namespace sl::vec
 		/**
 		 * \brief Conversion constructor.
 		 * \tparam T2 T of other Vector
+		 * \tparam VOtherDimensions dimensions of other Vector
 		 * \param other Vector which will be used for initialization
 		 *
-		 * \details Casts all elements from other Vector to T and initializes the storage.
+		 * \details Casts all elements from other Vector to value_type and initializes the storage.
+		 * If the target Vector has less dimensions than source all values beyond will be ignored.
+		 * If the source Vector has less dimensions than the  target, missing elements will be default initialized.
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2, auto VOtherDimensions>
 		/** \cond Requires */
-			requires (!std::same_as<T2, T>)
+			requires (!std::same_as<T2, value_type> || dimensions != VOtherDimensions)
 		/** \endcond */
-		explicit constexpr Vector(const Vector<T2, dimensions>& other)
+		explicit constexpr Vector(const Vector<T2, VOtherDimensions>& other)
 		{
-			m_Values = transformed_unseq(other, [](const T2& value) { return static_cast<T>(value); }).m_Values;
+			constexpr auto convert = [](const auto&, const T2& rhs) { return static_cast<value_type>(rhs); };
+			if constexpr (dimensions <= VOtherDimensions)
+			{
+				transform_unseq(*this, other, convert);
+			}
+			else
+			{
+				std::ranges::transform
+				(
+					m_Values | std::views::take(VOtherDimensions),
+					other,
+					std::begin(m_Values),
+					convert
+				);
+			}
+		}
+
+		/**
+		 * \brief Initializes each element with invocation results of the given generator.
+		 * \tparam TGenerator Type of generator
+		 * \param generator used generator
+		 *
+		 * \details This constructor can be used to hand over invokable an object with the following signature:
+		 * \code{.cpp}
+		 * value_type()
+		 * \endcode
+		 * The library already offers some \ref Generators "generators".
+		 */
+		template <std::invocable TGenerator>
+		/** \cond Requires */
+			requires std::convertible_to<std::invoke_result_t<TGenerator&>, value_type>
+		/** \endcond */
+		explicit constexpr Vector(TGenerator generator)
+		{
+			std::ranges::generate_n
+			(
+				std::begin(m_Values),
+				dimensions,
+				std::move(generator)
+			);
 		}
 
 		/**
@@ -267,10 +316,10 @@ namespace sl::vec
 		 * \param other other Vector
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator +=(const Vector<T2, dimensions>& other)
 		{
-			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs + rhs); });
+			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<value_type>(lhs + rhs); });
 			return *this;
 		}
 
@@ -280,10 +329,10 @@ namespace sl::vec
 		 * \param other other Vector
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator -=(const Vector<T2, dimensions>& other)
 		{
-			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<T>(lhs - rhs); });
+			transform_unseq(*this, other, [](const auto& lhs, const auto& rhs) { return static_cast<value_type>(lhs - rhs); });
 			return *this;
 		}
 
@@ -293,10 +342,10 @@ namespace sl::vec
 		 * \param value Value to be added
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator +=(const T2& value)
 		{
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs + value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs + value); });
 			return *this;
 		}
 
@@ -306,10 +355,10 @@ namespace sl::vec
 		 * \param value Value to be subtracted
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator -=(const T2& value)
 		{
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs - value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs - value); });
 			return *this;
 		}
 
@@ -319,10 +368,10 @@ namespace sl::vec
 		 * \param value Value each element will be multiplied by
 		 * \return reference to this
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator *=(const T2& value)
 		{
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs * value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs * value); });
 			return *this;
 		}
 
@@ -334,12 +383,12 @@ namespace sl::vec
 		 *
 		 * \remarks Division by 0 is undefined.
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		constexpr Vector& operator /=(const T2& value)
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
-			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<T>(lhs / value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return static_cast<value_type>(lhs / value); });
 			return *this;
 		}
 
@@ -351,7 +400,7 @@ namespace sl::vec
 		 *
 		 * \remarks Division by 0 is undefined.
 		 */
-		template <std::convertible_to<T> T2>
+		template <std::convertible_to<value_type> T2>
 		/** \cond Requires */
 			requires modable<T>
 		/** \endcond */
@@ -359,7 +408,7 @@ namespace sl::vec
 		{
 			assert(value != 0 && "division by 0 is undefined.");
 
-			transform_unseq(*this, [&value](const auto& lhs) { return lhs % static_cast<T>(value); });
+			transform_unseq(*this, [&value](const auto& lhs) { return lhs % static_cast<value_type>(value); });
 			return *this;
 		}
 
@@ -538,12 +587,16 @@ namespace sl::vec
 	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
 	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 	/** \cond Requires */
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	/** \endcond */
@@ -602,12 +655,16 @@ namespace sl::vec
 	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
 	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
-	template <vectorial TVector1, vectorial TVector2,
-		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector1>> TBinaryOperation>
+	template
+	<
+		vectorial TVector1,
+		vectorial TVector2,
+		std::invocable<vector_value_t<TVector1>, vector_value_t<TVector2>> TBinaryOperation
+	>
 	/** \cond Requires */
 		requires std::convertible_to
 		<
-			std::invoke_result_t<TBinaryOperation, vector_value_t<TVector1>, vector_value_t<TVector1>>,
+			std::invoke_result_t<TBinaryOperation&, vector_value_t<TVector1>, vector_value_t<TVector2>>,
 			vector_value_t<TVector1>
 		>
 	/** \endcond */

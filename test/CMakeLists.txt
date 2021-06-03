@@ -15,7 +15,8 @@ add_executable(
 	${PROJECT_NAME}
 	"main.cpp"
 	"VectorTests.cpp"
-)
+	"GeneratorTests.cpp"
+ )
 
 target_link_libraries(
 	${PROJECT_NAME}
