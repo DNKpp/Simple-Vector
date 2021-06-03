@@ -38,6 +38,24 @@ TEST_CASE("gen::iota should return contiguously incrementing values on each invo
 	}
 }
 
+TEST_CASE("gen::range should actually store non-borrowed-ranges provided as rvalue-ref or value.", "[generator]")
+{
+	using Range_t = std::vector<int>;
+
+	gen::range gen{ Range_t{} };
+
+	REQUIRE(std::same_as<decltype(gen)::range_type, Range_t>);
+}
+
+TEST_CASE("gen::range should just store the range as provided if it is a borrowed_range.", "[generator]")
+{
+	using Range_t = std::vector<int>;
+	Range_t src{};
+	gen::range gen{ src };
+
+	REQUIRE(std::same_as<decltype(gen)::range_type, std::add_lvalue_reference_t<Range_t>>);
+}
+
 TEST_CASE("gen::range should yield results taken from its source range", "[generator]")
 {
 	std::vector<int> src(10);
