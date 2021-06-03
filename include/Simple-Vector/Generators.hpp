@@ -28,7 +28,7 @@ namespace sl::vec::gen
 	template <value_type T>
 	struct fill
 	{
-		using value_type = T;
+		using value_type = std::remove_cvref_t<T>;
 
 		const value_type value{};
 
@@ -42,6 +42,9 @@ namespace sl::vec::gen
 		}
 	};
 
+	template <value_type T>
+	fill(T) -> fill<T>;
+
 	/**
 	 * \brief Generator which returns incrementing values on each invocation.
 	 * \tparam T value type
@@ -52,7 +55,7 @@ namespace sl::vec::gen
 	/** \endcond */
 	struct iota
 	{
-		using value_type = T;
+		using value_type = std::remove_cvref_t<T>;
 
 		value_type value{};
 
@@ -65,6 +68,9 @@ namespace sl::vec::gen
 			return value++;
 		}
 	};
+
+	template <value_type T>
+	iota(T) -> iota<T>;
 
 	/**
 	 * \brief Generator which retrieves its values out of the given source iterator.
