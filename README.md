@@ -40,7 +40,7 @@ target_link_libraries(
 ```
 This will add the the include path "<simple_vector_install_dir>/include", thus you are able to include the headers via
 ```cpp
-#include <Simple-Vector/Vector.hpp>
+#include <Simple-Vector/Simple-Vector.hpp>
 ```
 
 ### FetchContent
@@ -62,6 +62,6 @@ FetchContent_MakeAvailable(Simple_Vector)
 
 target_link_libraries(
 	<your_target_name>
-	PRIVATE Simple_Vector
+	PUBLIC Simple_Vector
 )
 ```
