@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Simple-Vector
-   &#160;<span id="projectnumber">v1.0.1</span>
+   &#160;<span id="projectnumber">v1.1.0</span>
    </div>
   </td>
  </tr>
@@ -124,10 +124,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad489e053e0c332cf39b04d55a044c5c1"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad489e053e0c332cf39b04d55a044c5c1">Vector</a> (TArgs &amp;&amp;...args) noexcept</td></tr>
 <tr class="memdesc:ad489e053e0c332cf39b04d55a044c5c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aggregate initialization like constructor.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad489e053e0c332cf39b04d55a044c5c1">More...</a><br /></td></tr>
 <tr class="separator:ad489e053e0c332cf39b04d55a044c5c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c2f0785ba5dd6e411c03b6572ebec26"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
-<tr class="memitem:a3c2f0785ba5dd6e411c03b6572ebec26"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a3c2f0785ba5dd6e411c03b6572ebec26">Vector</a> (const <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt; T2, <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a0057bfcde8ddc2f27cbee203bf8b1d8c">dimensions</a> &gt; &amp;other)</td></tr>
-<tr class="memdesc:a3c2f0785ba5dd6e411c03b6572ebec26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversion constructor.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a3c2f0785ba5dd6e411c03b6572ebec26">More...</a><br /></td></tr>
-<tr class="separator:a3c2f0785ba5dd6e411c03b6572ebec26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a820e114eba1e497faba7775fdd2557cf"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2, auto VOtherDimensions&gt; </td></tr>
+<tr class="memitem:a820e114eba1e497faba7775fdd2557cf"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a820e114eba1e497faba7775fdd2557cf">Vector</a> (const <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt; T2, VOtherDimensions &gt; &amp;other)</td></tr>
+<tr class="memdesc:a820e114eba1e497faba7775fdd2557cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversion constructor.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a820e114eba1e497faba7775fdd2557cf">More...</a><br /></td></tr>
+<tr class="separator:a820e114eba1e497faba7775fdd2557cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf1b7543adb60593e2dbde52d1ff51ad"><td class="memTemplParams" colspan="2">template&lt;std::invocable TGenerator&gt; </td></tr>
+<tr class="memitem:adf1b7543adb60593e2dbde52d1ff51ad"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#adf1b7543adb60593e2dbde52d1ff51ad">Vector</a> (TGenerator generator)</td></tr>
+<tr class="memdesc:adf1b7543adb60593e2dbde52d1ff51ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes each element with invocation results of the given generator.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#adf1b7543adb60593e2dbde52d1ff51ad">More...</a><br /></td></tr>
+<tr class="separator:adf1b7543adb60593e2dbde52d1ff51ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b4a30f21d79f2b940764fd12a19904b"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a5b4a30f21d79f2b940764fd12a19904b">operator=</a> (const <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;) noexcept=default</td></tr>
 <tr class="memdesc:a5b4a30f21d79f2b940764fd12a19904b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default copy-assign-operator.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a5b4a30f21d79f2b940764fd12a19904b">More...</a><br /></td></tr>
 <tr class="separator:a5b4a30f21d79f2b940764fd12a19904b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,31 +173,31 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6754f5b8c6da553a580e8f48ae01e3b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a6754f5b8c6da553a580e8f48ae01e3b8">z</a> () noexcept</td></tr>
 <tr class="memdesc:a6754f5b8c6da553a580e8f48ae01e3b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the third element.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a6754f5b8c6da553a580e8f48ae01e3b8">More...</a><br /></td></tr>
 <tr class="separator:a6754f5b8c6da553a580e8f48ae01e3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae90c5cdd8fadd0b1eab886eebd44af8b"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
+<tr class="memitem:ae90c5cdd8fadd0b1eab886eebd44af8b"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </td></tr>
 <tr class="memitem:ae90c5cdd8fadd0b1eab886eebd44af8b"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ae90c5cdd8fadd0b1eab886eebd44af8b">operator+=</a> (const <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt; T2, <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a0057bfcde8ddc2f27cbee203bf8b1d8c">dimensions</a> &gt; &amp;other)</td></tr>
 <tr class="memdesc:ae90c5cdd8fadd0b1eab886eebd44af8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds other <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> element-wise.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ae90c5cdd8fadd0b1eab886eebd44af8b">More...</a><br /></td></tr>
 <tr class="separator:ae90c5cdd8fadd0b1eab886eebd44af8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa60787de845488de145f5796266e69b4"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
+<tr class="memitem:aa60787de845488de145f5796266e69b4"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </td></tr>
 <tr class="memitem:aa60787de845488de145f5796266e69b4"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#aa60787de845488de145f5796266e69b4">operator-=</a> (const <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt; T2, <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a0057bfcde8ddc2f27cbee203bf8b1d8c">dimensions</a> &gt; &amp;other)</td></tr>
 <tr class="memdesc:aa60787de845488de145f5796266e69b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts other <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> element-wise.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#aa60787de845488de145f5796266e69b4">More...</a><br /></td></tr>
 <tr class="separator:aa60787de845488de145f5796266e69b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34d403bdc1456dde7ccb79c3ac518c50"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
+<tr class="memitem:a34d403bdc1456dde7ccb79c3ac518c50"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </td></tr>
 <tr class="memitem:a34d403bdc1456dde7ccb79c3ac518c50"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a34d403bdc1456dde7ccb79c3ac518c50">operator+=</a> (const T2 &amp;value)</td></tr>
 <tr class="memdesc:a34d403bdc1456dde7ccb79c3ac518c50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds value to each element.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a34d403bdc1456dde7ccb79c3ac518c50">More...</a><br /></td></tr>
 <tr class="separator:a34d403bdc1456dde7ccb79c3ac518c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e3e30e5765c00f3a73efdb863d77d12"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
+<tr class="memitem:a5e3e30e5765c00f3a73efdb863d77d12"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </td></tr>
 <tr class="memitem:a5e3e30e5765c00f3a73efdb863d77d12"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a5e3e30e5765c00f3a73efdb863d77d12">operator-=</a> (const T2 &amp;value)</td></tr>
 <tr class="memdesc:a5e3e30e5765c00f3a73efdb863d77d12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts value from each element.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a5e3e30e5765c00f3a73efdb863d77d12">More...</a><br /></td></tr>
 <tr class="separator:a5e3e30e5765c00f3a73efdb863d77d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11163d11ccdcb5c4789e595acc4ebe0a"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
+<tr class="memitem:a11163d11ccdcb5c4789e595acc4ebe0a"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </td></tr>
 <tr class="memitem:a11163d11ccdcb5c4789e595acc4ebe0a"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a11163d11ccdcb5c4789e595acc4ebe0a">operator*=</a> (const T2 &amp;value)</td></tr>
 <tr class="memdesc:a11163d11ccdcb5c4789e595acc4ebe0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies each element.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a11163d11ccdcb5c4789e595acc4ebe0a">More...</a><br /></td></tr>
 <tr class="separator:a11163d11ccdcb5c4789e595acc4ebe0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a988ed10d2b7ca68a8b74dcc346fba263"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
+<tr class="memitem:a988ed10d2b7ca68a8b74dcc346fba263"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </td></tr>
 <tr class="memitem:a988ed10d2b7ca68a8b74dcc346fba263"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a988ed10d2b7ca68a8b74dcc346fba263">operator/=</a> (const T2 &amp;value)</td></tr>
 <tr class="memdesc:a988ed10d2b7ca68a8b74dcc346fba263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Divides each element.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a988ed10d2b7ca68a8b74dcc346fba263">More...</a><br /></td></tr>
 <tr class="separator:a988ed10d2b7ca68a8b74dcc346fba263"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45ab969efb98883ff3087b3e9a5cd9e9"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; T &gt; T2&gt; </td></tr>
+<tr class="memitem:a45ab969efb98883ff3087b3e9a5cd9e9"><td class="memTemplParams" colspan="2">template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </td></tr>
 <tr class="memitem:a45ab969efb98883ff3087b3e9a5cd9e9"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a45ab969efb98883ff3087b3e9a5cd9e9">operator%=</a> (const T2 &amp;value)</td></tr>
 <tr class="memdesc:a45ab969efb98883ff3087b3e9a5cd9e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies modulo on each element.  <a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a45ab969efb98883ff3087b3e9a5cd9e9">More...</a><br /></td></tr>
 <tr class="separator:a45ab969efb98883ff3087b3e9a5cd9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,7 +295,7 @@ template&lt;value_type T, auto VDimensions&gt; </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7615b7e64f37157cecd64f9f7af2d87a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7615b7e64f37157cecd64f9f7af2d87a">&#9670;&nbsp;</a></span>Vector() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7615b7e64f37157cecd64f9f7af2d87a">&#9670;&nbsp;</a></span>Vector() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -350,7 +354,7 @@ template&lt;value_type T, auto VDimensions&gt; </div>
 </div>
 </div>
 <a id="a23108d0162fd80dbdab87152a532f135"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23108d0162fd80dbdab87152a532f135">&#9670;&nbsp;</a></span>Vector() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a23108d0162fd80dbdab87152a532f135">&#9670;&nbsp;</a></span>Vector() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -380,7 +384,7 @@ template&lt;value_type T, auto VDimensions&gt; </div>
 </div>
 </div>
 <a id="a5c2d1fe805c40e79c7b2e32fc8c09119"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c2d1fe805c40e79c7b2e32fc8c09119">&#9670;&nbsp;</a></span>Vector() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c2d1fe805c40e79c7b2e32fc8c09119">&#9670;&nbsp;</a></span>Vector() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -410,7 +414,7 @@ template&lt;value_type T, auto VDimensions&gt; </div>
 </div>
 </div>
 <a id="ad489e053e0c332cf39b04d55a044c5c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad489e053e0c332cf39b04d55a044c5c1">&#9670;&nbsp;</a></span>Vector() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad489e053e0c332cf39b04d55a044c5c1">&#9670;&nbsp;</a></span>Vector() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -454,15 +458,15 @@ template&lt;class... TArgs&gt; </div>
 
 </div>
 </div>
-<a id="a3c2f0785ba5dd6e411c03b6572ebec26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c2f0785ba5dd6e411c03b6572ebec26">&#9670;&nbsp;</a></span>Vector() <span class="overload">[5/5]</span></h2>
+<a id="a820e114eba1e497faba7775fdd2557cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a820e114eba1e497faba7775fdd2557cf">&#9670;&nbsp;</a></span>Vector() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2, auto VOtherDimensions&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -470,7 +474,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
         <tr>
           <td class="memname">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">sl::vec::Vector</a>&lt; T, VDimensions &gt;::<a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt; T2, <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a0057bfcde8ddc2f27cbee203bf8b1d8c">dimensions</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt; T2, VOtherDimensions &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
           <td></td>
         </tr>
@@ -486,6 +490,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T2</td><td>T of other <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> </td></tr>
+    <tr><td class="paramname">VOtherDimensions</td><td>dimensions of other <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -495,7 +500,54 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
   </table>
   </dd>
 </dl>
-<p>Casts all elements from other <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> to T and initializes the storage. </p>
+<p>Casts all elements from other <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> to value_type and initializes the storage. If the target <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> has less dimensions than source all values beyond will be ignored. If the source <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html" title="A mathematically vector implementation.">Vector</a> has less dimensions than the target, missing elements will be default initialized. </p>
+
+</div>
+</div>
+<a id="adf1b7543adb60593e2dbde52d1ff51ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf1b7543adb60593e2dbde52d1ff51ad">&#9670;&nbsp;</a></span>Vector() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;value_type T, auto VDimensions&gt; </div>
+<div class="memtemplate">
+template&lt;std::invocable TGenerator&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">sl::vec::Vector</a>&lt; T, VDimensions &gt;::<a class="el" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a> </td>
+          <td>(</td>
+          <td class="paramtype">TGenerator&#160;</td>
+          <td class="paramname"><em>generator</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes each element with invocation results of the given generator. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TGenerator</td><td>Type of generator </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">generator</td><td>used generator</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This constructor can be used to hand over invokable an object with the following signature: </p><div class="fragment"><div class="line"><a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>()</div>
+<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a712ec2bcdc0cdb3d3e1e24aee2ecad82"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">sl::vec::Vector::value_type</a></div><div class="ttdeci">std::remove_cvref_t&lt; T &gt; value_type</div><div class="ttdoc">Alias for T, but without modifiers.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:83</div></div>
+</div><!-- fragment --><p> The library already offers some <a class="el" href="../../df/d58/group___generators.html">generators</a>. </p>
 
 </div>
 </div>
@@ -748,7 +800,7 @@ template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -794,7 +846,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -839,7 +891,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -884,7 +936,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -929,7 +981,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -974,7 +1026,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1019,7 +1071,7 @@ template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
 <div class="memtemplate">
 template&lt;value_type T, auto VDimensions&gt; </div>
 <div class="memtemplate">
-template&lt;std::convertible_to&lt; T &gt; T2&gt; </div>
+template&lt;std::convertible_to&lt; value_type &gt; T2&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

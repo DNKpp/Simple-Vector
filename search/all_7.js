@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['mod_5fassignable_20',['mod_assignable',['../dd/db9/group___concepts.html#gadc1f86771a30b6a9e17a6e9fb31d7523',1,'sl::vec']]],
-  ['modable_21',['modable',['../dd/db9/group___concepts.html#ga0b4cbe2ab03d17bbc94a7e8c0a69a785',1,'sl::vec']]],
-  ['mul_5fassignable_22',['mul_assignable',['../dd/db9/group___concepts.html#gae4140afd4c1c2791b846ff458e46c74b',1,'sl::vec']]],
-  ['mulable_23',['mulable',['../dd/db9/group___concepts.html#gacac0e5d5a1265fa954a3ff42c4c5589e',1,'sl::vec']]]
+  ['iota_19',['iota',['../df/d58/group___generators.html#ga7ca789dfbf8bb5bae97efbaad51baabc',1,'sl::vec::gen::iota(T) -&gt; iota&lt; T &gt;'],['../d3/d7a/structsl_1_1vec_1_1gen_1_1iota.html',1,'sl::vec::gen::iota&lt; T &gt;']]],
+  ['is_5fvectorial_20',['is_vectorial',['../dc/de6/structsl_1_1vec_1_1is__vectorial.html',1,'sl::vec']]],
+  ['is_5fvectorial_3c_20vector_3c_20t_2c_20vdimensions_20_3e_20_3e_21',['is_vectorial&lt; Vector&lt; T, VDimensions &gt; &gt;',['../d6/d08/structsl_1_1vec_1_1is__vectorial_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html',1,'sl::vec']]],
+  ['is_5fvectorial_5fv_22',['is_vectorial_v',['../d7/de6/group___type_traits.html#ga382e0fe0224cd1bb857c2c622d297f19',1,'sl::vec']]],
+  ['iterator_5ftype_23',['iterator_type',['../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#ab1d03dae175c5001dcd2af0e90f52152',1,'sl::vec::gen::range']]]
 ];

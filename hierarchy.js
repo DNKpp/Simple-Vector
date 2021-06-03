@@ -3,6 +3,9 @@ var hierarchy =
     [ "std::false_type", null, [
       [ "sl::vec::is_vectorial< T >", "dc/de6/structsl_1_1vec_1_1is__vectorial.html", null ]
     ] ],
+    [ "sl::vec::gen::fill< T >", "d0/dff/structsl_1_1vec_1_1gen_1_1fill.html", null ],
+    [ "sl::vec::gen::iota< T >", "d3/d7a/structsl_1_1vec_1_1gen_1_1iota.html", null ],
+    [ "sl::vec::gen::range< TIterator >", "d0/d4e/classsl_1_1vec_1_1gen_1_1range.html", null ],
     [ "std::true_type", null, [
       [ "sl::vec::is_vectorial< Vector< T, VDimensions > >", "d6/d08/structsl_1_1vec_1_1is__vectorial_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html", null ]
     ] ],

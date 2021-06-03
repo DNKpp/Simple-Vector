@@ -1,5 +1,6 @@
 var namespacesl_1_1vec =
 [
+    [ "gen", "d0/d27/namespacesl_1_1vec_1_1gen.html", "d0/d27/namespacesl_1_1vec_1_1gen" ],
     [ "vector_traits", "d8/d3c/structsl_1_1vec_1_1vector__traits.html", null ],
     [ "is_vectorial", "dc/de6/structsl_1_1vec_1_1is__vectorial.html", null ],
     [ "Vector", "da/d30/classsl_1_1vec_1_1_vector.html", "da/d30/classsl_1_1vec_1_1_vector" ],
