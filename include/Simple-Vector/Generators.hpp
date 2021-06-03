@@ -74,34 +74,32 @@ namespace sl::vec::gen
 
 	/**
 	 * \brief Generator which retrieves its values out of the given source iterator.
-	 * \tparam TIterator type of source iterator
+	 * \tparam TRange type of source range
 	 *
+	 * \details If the given range is a borrowed range then the generator will use that type as range_type, otherwise the whole source range will
+	 * be stored internally.
 	 * \attention Requesting values from beyond the last element of the source range is undefined.
 	 */
-	template <std::forward_iterator TIterator>
-		requires value_type<std::iter_value_t<TIterator>>
+	template <std::ranges::forward_range TRange>
 	class range
 	{
 	public:
-		using value_type = std::iter_value_t<TIterator>;
-		using iterator_type = TIterator;
+		using range_type = std::conditional_t
+		<
+			std::ranges::borrowed_range<TRange>,
+			TRange,
+			std::remove_cvref_t<TRange>
+		>;
+		using iterator_type = std::ranges::iterator_t<range_type>;
+		using value_type = std::ranges::range_value_t<TRange>;
 
 		/**
 		 * \brief Constructs the generator with a given range.
 		 * \param range The source range to be used
 		 */
-		template <std::ranges::forward_range TRange>
-		constexpr explicit range(TRange& range) :
-			m_Itr{ std::begin(range) }
-		{
-		}
-
-		/**
-		 * \brief Constructs the generator with a given iterator.
-		 * \param itr The source range to be used
-		 */
-		constexpr explicit range(TIterator itr) :
-			m_Itr{ std::move(itr) }
+		constexpr explicit range(TRange&& range) :
+			m_Range{ std::forward<TRange>(range) },
+			m_Iterator{ std::ranges::begin(m_Range) }
 		{
 		}
 
@@ -111,15 +109,16 @@ namespace sl::vec::gen
 		 */
 		constexpr value_type operator ()()
 		{
-			return *m_Itr++;
+			return *m_Iterator++;
 		}
 
 	private:
-		iterator_type m_Itr;
+		range_type m_Range;
+		iterator_type m_Iterator;
 	};
 
 	template <std::ranges::forward_range TRange>
-	range(TRange&) -> range<std::ranges::iterator_t<TRange>>;
+	range(TRange&&) -> range<TRange>;
 
 	/** @}*/
 }
