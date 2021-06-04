@@ -103,7 +103,7 @@ namespace sl::vec
 		{
 			transform_unseq
 			(
-				other | std::views::take(std::min(dimensions, VOtherDimensions)),
+				std::ranges::take_view{ other, std::min(dimensions, VOtherDimensions) },
 				std::ranges::begin(m_Values),
 				util::convert_invoke_result<value_type>(std::identity{})
 			);
