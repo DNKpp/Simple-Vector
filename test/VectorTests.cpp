@@ -106,21 +106,26 @@ TEMPLATE_PRODUCT_TEST_CASE
 	REQUIRE(std::ranges::equal(result, std::views::iota(1) | std::views::take(vector_dims_v<Source_t>)));
 }
 
+#if __cpp_nontype_template_args >= 201911L
+// well, clang sucks
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
 	"Vector types should be explicitly convertible between different dimension sizes.",
 	"[vector][construction]",
-	((class TSource, class TTarget, auto VExpectedRange), TSource, TTarget, VExpectedRange),
-	(Vector<int, 3>, Vector<int, 2>, std::to_array({ 1, 2 })),
-	(Vector<int, 3>, Vector<int, 5>, std::to_array({ 1, 2, 3, 0, 0 }))
+	((std::size_t VSourceDims, std::size_t VTargetDims, auto VExpectedRange), VSourceDims, VTargetDims, VExpectedRange),
+	(3, 2, std::to_array({ 1, 2 })),
+	(3, 5, std::to_array({ 1, 2, 3, 0, 0 }))
 )
 #pragma warning(default: 26444)
 {
-	constexpr auto result = static_cast<TTarget>(TSource{ gen::iota{ 1 } });
+	using SourceVector_t = Vector<int, VSourceDims>;
+	using TargetVector_t = Vector<int, VTargetDims>;
+	constexpr auto result = static_cast<TargetVector_t>(SourceVector_t{ gen::iota{ 1 } });
 
 	REQUIRE(std::ranges::equal(result, VExpectedRange));
 }
+#endif
 
 #pragma warning(disable: 26444)
 #if __cpp_nontype_template_args < 201911L
