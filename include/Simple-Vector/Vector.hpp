@@ -646,26 +646,12 @@ namespace sl::vec
 	constexpr vector_value_t<TVector> length_sq(const TVector& vector)
 	{
 		using T = vector_value_t<TVector>;
-
-		if (std::is_constant_evaluated())
-		{
-			return std::reduce
-			(
-				std::ranges::cbegin(vector),
-				std::ranges::cend(vector),
-				T{},
-				[](const T& val, const T& el) { return val + el * el; }
-			);
-		}
-
-		// ReSharper disable once CppUnreachableCode
-		return std::reduce
+		return transform_reduce_unseq
 		(
-			std::execution::unseq,
-			std::ranges::cbegin(vector),
-			std::ranges::cend(vector),
+			vector,
 			T{},
-			[](const T& val, const T& el) { return val + el * el; }
+			std::plus{},
+			[](const T& value) { return value * value; }
 		);
 	}
 
@@ -700,30 +686,13 @@ namespace sl::vec
 	constexpr vector_value_t<TVector1> dot_product(const TVector1& lhs, const TVector2& rhs)
 	{
 		using T = vector_value_t<TVector1>;
-		constexpr auto multiply = [](const T& el1, const auto& el2) { return static_cast<T>(el1 * el2); };
-		if (std::is_constant_evaluated())
-		{
-			return std::transform_reduce
-			(
-				std::cbegin(lhs),
-				std::cend(lhs),
-				std::cbegin(rhs),
-				T{},
-				std::plus<>{},
-				multiply
-			);
-		}
-
-		// ReSharper disable once CppUnreachableCode
-		return std::transform_reduce
+		return transform_reduce_unseq
 		(
-			std::execution::unseq,
-			std::cbegin(lhs),
-			std::cend(lhs),
-			std::cbegin(rhs),
+			lhs,
+			rhs,
 			T{},
-			std::plus<>{},
-			multiply
+			std::plus{},
+			util::convert_invoke_result<T>(std::multiplies{})
 		);
 	}
 
