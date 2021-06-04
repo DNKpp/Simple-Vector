@@ -8,6 +8,7 @@
 #include "Simple-Vector/Algorithm.hpp"
 
 #include <array>
+#include <functional>
 
 using namespace sl::vec;
 
@@ -110,7 +111,7 @@ TEMPLATE_TEST_CASE_SIG
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
-	"binary transform_unseq should invoke function for each element of Vector.",
+	"binary transform_unseq should invoke function for each element in range.",
 	"[algorithm]",
 	((std::size_t VSize), VSize),
 	(0),
@@ -123,6 +124,183 @@ TEMPLATE_TEST_CASE_SIG
 		std::array<int, VSize> src{};
 		int counter = 0;
 		transform_unseq(src, src, std::ranges::begin(src), invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"constexpr binary transform_reduce_unseq should invoke first binary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	constexpr int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"binary transform_reduce_unseq should invoke first binary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	const int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"constexpr binary transform_reduce_unseq should invoke second binary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	constexpr int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"binary transform_reduce_unseq should invoke second binary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	const int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"constexpr unary transform_reduce_unseq should invoke binary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	constexpr int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"unary transform_reduce_unseq should invoke binary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	const int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"constexpr unary transform_reduce_unseq should invoke unary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	constexpr int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, 0, std::multiplies{}, invoke_counter{ counter });
+		return counter;
+	}();
+
+	REQUIRE(invocations == VSize);
+}
+
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"unary transform_reduce_unseq should invoke unary operation for each element in range.",
+	"[algorithm]",
+	((std::size_t VSize), VSize),
+	(0),
+	(1),
+	(10)
+)
+{
+	const int invocations = []
+	{
+		std::array<int, VSize> src{};
+		int counter = 0;
+		transform_reduce_unseq(src, 0, std::multiplies{}, invoke_counter{ counter });
 		return counter;
 	}();
 
