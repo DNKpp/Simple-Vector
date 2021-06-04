@@ -103,7 +103,7 @@ TEMPLATE_PRODUCT_TEST_CASE
 	using Target_t = std::tuple_element_t<1, TestType>;
 	constexpr auto result = static_cast<Target_t>(Source_t{ gen::iota{ 1 } });
 
-	REQUIRE(std::ranges::equal(result, std::views::iota(1) | std::views::take(vector_dims_v<Source_t>)));
+	REQUIRE(result == Target_t{ gen::iota{ vector_dims_v<Target_t> } });
 }
 
 #if __cpp_nontype_template_args >= 201911L
