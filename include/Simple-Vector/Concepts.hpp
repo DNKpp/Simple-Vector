@@ -84,9 +84,6 @@ namespace sl::vec
 						mulable<std::remove_cvref_t<T>> &&
 						divable<std::remove_cvref_t<T>>;
 
-	template <auto V, class TSizeType>
-	concept cardinality = std::integral<TSizeType> && std::is_convertible_v<decltype(V), TSizeType> && 0 < V;
-
 	/** @}*/
 
 	/** \addtogroup TypeTraits
