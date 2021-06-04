@@ -76,6 +76,21 @@ namespace sl::vec
 	{
 		{ lhs % rhs } -> std::convertible_to<TTo>;
 	};
+	/**
+	 * \concept binary_invokable_with_all_overloads_implicit_convertible_to
+	 * \brief Checks if binary operation has all four overloads (one for each parameter constellation) and if all of those
+	 * overloads are implicitly convertible to the result type.
+	 * \tparam TBinaryOp Tpy of binary operation to check
+	 * \tparam TResult Expected type to which each overload should be implicitly convertible to
+	 * \param TArg1 Type of first parameter
+	 * \param TArg2 Type of second parameter
+	 */
+	template <class TBinaryOp, class TResult, class TArg1, class TArg2>
+	concept binary_invokable_with_all_overloads_implicit_convertible_to =
+	std::is_convertible_v<std::invoke_result_t<TBinaryOp&, TArg1, TArg1>, TResult> &&
+	std::is_convertible_v<std::invoke_result_t<TBinaryOp&, TArg1, TArg2>, TResult> &&
+	std::is_convertible_v<std::invoke_result_t<TBinaryOp&, TArg2, TArg1>, TResult> &&
+	std::is_convertible_v<std::invoke_result_t<TBinaryOp&, TArg2, TArg2>, TResult>;
 
 	template <class T>
 	concept value_type = std::regular<std::remove_cvref_t<T>> &&
