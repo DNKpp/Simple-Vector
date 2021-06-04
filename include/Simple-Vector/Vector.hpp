@@ -643,7 +643,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
-	constexpr vector_value_t<TVector> length_sq(const TVector& vector)
+	constexpr vector_value_t<TVector> length_squared(const TVector& vector)
 	{
 		using T = vector_value_t<TVector>;
 		return transform_reduce_unseq
@@ -665,7 +665,7 @@ namespace sl::vec
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
-	constexpr auto length(const TVector& vector) { return std::sqrt(length_sq(vector)); }
+	constexpr auto length(const TVector& vector) { return std::sqrt(length_squared(vector)); }
 
 	/**
 	 * \brief Calculates the dot product of to Vectors
