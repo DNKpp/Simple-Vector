@@ -481,26 +481,7 @@ TEMPLATE_TEST_CASE_SIG
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
-	"constexpr length_sq should calculate the squared length of given vectors",
-	"[vector][algorithm][constexpr]",
-	((std::size_t VDims, int VExpected), VDims, VExpected),
-	(1, 1),
-	(2, 5),
-	(3, 14)
-)
-#pragma warning(default: 26444)
-{
-	constexpr auto vec = make_iota_vector<int, VDims>(1);
-
-	constexpr auto length_sq = sl::vec::length_sq(vec);
-
-	REQUIRE(VExpected == length_sq);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"length_sq should calculate the squared length of given vectors",
+	"length_squared should calculate the squared length of given vectors",
 	"[vector][algorithm]",
 	((std::size_t VDims, int VExpected), VDims, VExpected),
 	(1, 1),
@@ -511,9 +492,9 @@ TEMPLATE_TEST_CASE_SIG
 {
 	const auto vec = make_iota_vector<int, VDims>(1);
 
-	auto length_sq = sl::vec::length_sq(vec);
+	auto squaredLength = sl::vec::length_squared(vec);
 
-	REQUIRE(VExpected == length_sq);
+	REQUIRE(VExpected == squaredLength);
 }
 
 #pragma warning(disable: 26444)
@@ -533,29 +514,6 @@ TEMPLATE_TEST_CASE_SIG
 	const auto length = sl::vec::length(vec);
 
 	REQUIRE(length == Approx(std::sqrt(VExpectedSq)));
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"constexpr dot_product should calculate the dot product of the two given vectors",
-	"[vector][algorithm][constexpr]",
-	((class TOther, std::size_t VDims, int VExpected), TOther, VDims, VExpected),
-	(int, 1, 2),
-	(int, 2, 8),
-	(int, 3, 20),
-	(float, 1, 2),
-	(float, 2, 8),
-	(float, 3, 20)
-)
-#pragma warning(default: 26444)
-{
-	constexpr auto vec1 = make_iota_vector<int, VDims>(1);
-	constexpr auto vec2 = make_iota_vector<TOther, VDims>(2);
-
-	constexpr int dotProd = sl::vec::dot_product(vec1, vec2);
-
-	REQUIRE(dotProd == VExpected);
 }
 
 #pragma warning(disable: 26444)
