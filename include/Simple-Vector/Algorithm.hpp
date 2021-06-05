@@ -160,6 +160,7 @@ namespace sl::vec
 					std::indirect_result_t<TUnaryOp&, std::ranges::iterator_t<TRange>>
 				>
 	/** \endcond */
+	[[nodiscard]]
 	constexpr T transform_reduce_unseq
 	(
 		TRange&& range,
@@ -234,6 +235,7 @@ namespace sl::vec
 					std::indirect_result_t<TBinaryOp2&, std::ranges::iterator_t<TRange1>, std::ranges::iterator_t<TRange2>>
 				>
 	/** \endcond */
+	[[nodiscard]]
 	constexpr T transform_reduce_unseq
 	(
 		TRange1&& range1,
