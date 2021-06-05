@@ -141,12 +141,22 @@ TEMPLATE_TEST_CASE_SIG
 	(10)
 )
 {
-	constexpr int invocations = []
+	constexpr int invocations = []() constexpr
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq
-			(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
+		// ReSharper disable once CppInitializedValueIsAlwaysRewritten
+		// ReSharper disable once CppEntityAssignedButNoRead
+		int result = 0; // gcc hates this trick <.< (otherwise on gcc-10 it doesn't compile)
+		// ReSharper disable once CppAssignedValueIsNeverUsed
+		result = transform_reduce_unseq
+		(
+			src,
+			src,
+			0,
+			invoke_counter{ [](auto lhs, auto rhs) { return lhs; }, counter },
+			std::multiplies{}
+		);
 		return counter;
 	}();
 
@@ -169,7 +179,13 @@ TEMPLATE_TEST_CASE_SIG
 		std::array<int, VSize> src{};
 		int counter = 0;
 		auto result = transform_reduce_unseq
-			(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
+		(
+			src,
+			src,
+			0,
+			invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter },
+			std::multiplies{}
+		);
 		return counter;
 	}();
 
@@ -191,8 +207,18 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq
-			(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		// ReSharper disable once CppInitializedValueIsAlwaysRewritten
+		// ReSharper disable once CppEntityAssignedButNoRead
+		int result = 0; // gcc hates this trick <.< (otherwise on gcc-10 it doesn't compile)
+		// ReSharper disable once CppAssignedValueIsNeverUsed
+		result = transform_reduce_unseq
+		(
+			src,
+			src,
+			0,
+			std::multiplies{},
+			invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }
+		);
 		return counter;
 	}();
 
@@ -215,7 +241,13 @@ TEMPLATE_TEST_CASE_SIG
 		std::array<int, VSize> src{};
 		int counter = 0;
 		auto result = transform_reduce_unseq
-			(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		(
+			src,
+			src,
+			0,
+			std::multiplies{},
+			invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }
+		);
 		return counter;
 	}();
 
@@ -237,8 +269,17 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq
-			(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
+		// ReSharper disable once CppInitializedValueIsAlwaysRewritten
+		// ReSharper disable once CppEntityAssignedButNoRead
+		int result = 0; // gcc hates this trick <.< (otherwise on gcc-10 it doesn't compile)
+		// ReSharper disable once CppAssignedValueIsNeverUsed
+		result = transform_reduce_unseq
+		(
+			src,
+			0,
+			invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter },
+			std::identity{}
+		);
 		return counter;
 	}();
 
@@ -261,7 +302,12 @@ TEMPLATE_TEST_CASE_SIG
 		std::array<int, VSize> src{};
 		int counter = 0;
 		auto result = transform_reduce_unseq
-			(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
+		(
+			src,
+			0,
+			invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter },
+			std::identity{}
+		);
 		return counter;
 	}();
 
@@ -283,7 +329,11 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq(src, 0, std::multiplies{}, invoke_counter{ counter });
+		// ReSharper disable once CppInitializedValueIsAlwaysRewritten
+		// ReSharper disable once CppEntityAssignedButNoRead
+		int result = 0; // gcc hates this trick <.< (otherwise on gcc-10 it doesn't compile)
+		// ReSharper disable once CppAssignedValueIsNeverUsed
+		result = transform_reduce_unseq(src, 0, std::multiplies{}, invoke_counter{ counter });
 		return counter;
 	}();
 
