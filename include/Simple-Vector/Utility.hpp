@@ -15,7 +15,7 @@
 namespace sl::vec::detail
 {
 	template <class TTargetType, std::copy_constructible TFunc>
-	struct convert_invoke_result_fn
+	struct cast_invoke_result_fn
 	{
 		template <class... TArgs>
 		constexpr TTargetType operator ()(TArgs&&... args)
@@ -29,11 +29,25 @@ namespace sl::vec::detail
 
 namespace sl::vec::util
 {
+	/** \addtogroup Utility
+	 * @{
+	 */
+	
+	/**
+	 * \brief Factory function creating a wrapper function object, which invokes the provided function object and casts
+	 * the result into the given type.
+	 * \tparam TTargetType Type to cast
+	 * \tparam TFunc Type of function object
+	 * \param func The wrapped function object
+	 * \return function object
+	 */
 	template <class TTargetType, std::copy_constructible TFunc>
-	constexpr auto convert_invoke_result(TFunc func) noexcept
+	constexpr auto cast_invoke_result(TFunc func) noexcept
 	{
-		return detail::convert_invoke_result_fn<TTargetType, TFunc>{ std::move(func) };
+		return detail::cast_invoke_result_fn<TTargetType, TFunc>{ std::move(func) };
 	}
+
+	/** @}*/
 }
 
 #endif
