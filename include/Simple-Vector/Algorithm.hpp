@@ -17,6 +17,10 @@
 
 namespace sl::vec
 {
+	/** \addtogroup Algorithm
+	 * @{
+	 */
+
 	/**
 	 * \brief Applies the given unary operation to each element and writes into result.
 	 * \tparam TRange Type of range
@@ -269,6 +273,8 @@ namespace sl::vec
 			std::ref(binaryOp2)
 		);
 	}
+
+	/** @}*/
 }
 
 #endif
