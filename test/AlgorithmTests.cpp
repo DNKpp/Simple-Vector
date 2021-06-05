@@ -18,7 +18,7 @@ namespace
 	class invoke_counter
 	{
 	public:
-		constexpr invoke_counter(int& counter) :
+		constexpr explicit invoke_counter(int& counter) :
 			m_Counter{ std::addressof(counter) }
 		{
 		}
@@ -145,7 +145,8 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
+		auto result = transform_reduce_unseq
+			(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
 		return counter;
 	}();
 
@@ -167,13 +168,13 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
+		auto result = transform_reduce_unseq
+			(src, src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::multiplies{});
 		return counter;
 	}();
 
 	REQUIRE(invocations == VSize);
 }
-
 
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
@@ -190,7 +191,8 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		auto result = transform_reduce_unseq
+			(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
 		return counter;
 	}();
 
@@ -212,7 +214,8 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
+		auto result = transform_reduce_unseq
+			(src, src, 0, std::multiplies{}, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
 		return counter;
 	}();
 
@@ -234,7 +237,8 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
+		auto result = transform_reduce_unseq
+			(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
 		return counter;
 	}();
 
@@ -256,7 +260,8 @@ TEMPLATE_TEST_CASE_SIG
 	{
 		std::array<int, VSize> src{};
 		int counter = 0;
-		auto result = transform_reduce_unseq(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
+		auto result = transform_reduce_unseq
+			(src, 0, invoke_counter{ [&](auto lhs, auto rhs) { return lhs; }, counter }, std::identity{});
 		return counter;
 	}();
 

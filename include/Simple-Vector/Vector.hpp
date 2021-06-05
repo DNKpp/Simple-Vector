@@ -99,7 +99,7 @@ namespace sl::vec
 		/** \cond Requires */
 			requires (!std::same_as<T2, value_type> || dimensions != VOtherDimensions)
 		/** \endcond */
-		explicit constexpr Vector(const Vector<T2, VOtherDimensions>& other)
+		constexpr explicit Vector(const Vector<T2, VOtherDimensions>& other)
 		{
 			transform_unseq
 			(
@@ -124,14 +124,9 @@ namespace sl::vec
 		/** \cond Requires */
 			requires std::convertible_to<std::invoke_result_t<TGenerator&>, value_type>
 		/** \endcond */
-		explicit constexpr Vector(TGenerator generator)
+		constexpr explicit Vector(TGenerator generator)
 		{
-			std::ranges::generate_n
-			(
-				std::begin(m_Values),
-				dimensions,
-				std::move(generator)
-			);
+			std::ranges::generate(m_Values, std::ref(generator));
 		}
 
 		/**
