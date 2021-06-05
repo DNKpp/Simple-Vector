@@ -10,7 +10,7 @@
 
 #include "Algorithm.hpp"
 #include "Concepts.hpp"
-#include "Utility.hpp"
+#include "Functional.hpp"
 
 #include <algorithm>
 #include <array>
@@ -105,7 +105,7 @@ namespace sl::vec
 			(
 				std::ranges::take_view{ other, std::min(dimensions, VOtherDimensions) },
 				std::ranges::begin(m_Values),
-				util::cast_invoke_result<value_type>(std::identity{})
+				cast_invoke_result<value_type>(std::identity{})
 			);
 		}
 
@@ -275,7 +275,7 @@ namespace sl::vec
 				m_Values,
 				other,
 				std::ranges::begin(m_Values),
-				util::cast_invoke_result<value_type>(std::plus{})
+				cast_invoke_result<value_type>(std::plus{})
 			);
 			return *this;
 		}
@@ -294,7 +294,7 @@ namespace sl::vec
 				m_Values,
 				other,
 				std::ranges::begin(m_Values),
-				util::cast_invoke_result<value_type>(std::minus{})
+				cast_invoke_result<value_type>(std::minus{})
 			);
 			return *this;
 		}
@@ -312,7 +312,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs + value; })
+				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs + value; })
 			);
 			return *this;
 		}
@@ -330,7 +330,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs - value; })
+				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs - value; })
 			);
 			return *this;
 		}
@@ -348,7 +348,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs * value; })
+				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs * value; })
 			);
 			return *this;
 		}
@@ -370,7 +370,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs / value; })
+				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs / value; })
 			);
 			return *this;
 		}
@@ -643,7 +643,7 @@ namespace sl::vec
 			vector,
 			T{},
 			std::plus{},
-			[](const T& value) { return value * value; }
+			square_fn
 		);
 	}
 
@@ -681,7 +681,7 @@ namespace sl::vec
 			rhs,
 			T{},
 			std::plus{},
-			util::cast_invoke_result<T>(std::multiplies{})
+			cast_invoke_result<T>(std::multiplies{})
 		);
 	}
 
