@@ -628,38 +628,6 @@ namespace sl::vec
 	}
 
 	/**
-	 * \brief Calculates the squared length of a Vector
-	 * \tparam TVector A vectorial type
-	 * \param vector Vector to be calculated from
-	 * \return scalar value
-	 */
-	template <vectorial TVector>
-	[[nodiscard]]
-	constexpr vector_value_t<TVector> length_squared(const TVector& vector)
-	{
-		using T = vector_value_t<TVector>;
-		return transform_reduce_unseq
-		(
-			vector,
-			T{},
-			std::plus{},
-			square_fn
-		);
-	}
-
-	/**
-	 * \brief Calculates the length of a Vector
-	 * \tparam TVector A vectorial type
-	 * \param vector Vector to be calculated from
-	 * \return scalar value
-	 *
-	 * \remarks Due to std::sqrt, this function will always return a floating point type.
-	 */
-	template <vectorial TVector>
-	[[nodiscard]]
-	constexpr auto length(const TVector& vector) { return std::sqrt(length_squared(vector)); }
-
-	/**
 	 * \brief Calculates the dot product of to Vectors
 	 * \tparam TVector1 A vectorial type
 	 * \tparam TVector2 Another vectorial type
@@ -684,6 +652,31 @@ namespace sl::vec
 			cast_invoke_result<T>(std::multiplies{})
 		);
 	}
+
+	/**
+	 * \brief Calculates the squared length of a Vector
+	 * \tparam TVector A vectorial type
+	 * \param vector Vector to be calculated from
+	 * \return scalar value
+	 */
+	template <vectorial TVector>
+	[[nodiscard]]
+	constexpr vector_value_t<TVector> length_squared(const TVector& vector)
+	{
+		return dot_product(vector, vector);
+	}
+
+	/**
+	 * \brief Calculates the length of a Vector
+	 * \tparam TVector A vectorial type
+	 * \param vector Vector to be calculated from
+	 * \return scalar value
+	 *
+	 * \remarks Due to std::sqrt, this function will always return a floating point type.
+	 */
+	template <vectorial TVector>
+	[[nodiscard]]
+	constexpr auto length(const TVector& vector) { return std::sqrt(length_squared(vector)); }
 
 	/**
 	 * \brief Calculates the normalization of a Vector
