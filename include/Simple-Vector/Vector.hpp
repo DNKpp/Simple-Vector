@@ -105,7 +105,7 @@ namespace sl::vec
 			(
 				std::ranges::take_view{ other, std::min(dimensions, VOtherDimensions) },
 				std::ranges::begin(m_Values),
-				util::convert_invoke_result<value_type>(std::identity{})
+				util::cast_invoke_result<value_type>(std::identity{})
 			);
 		}
 
@@ -275,7 +275,7 @@ namespace sl::vec
 				m_Values,
 				other,
 				std::ranges::begin(m_Values),
-				util::convert_invoke_result<value_type>(std::plus{})
+				util::cast_invoke_result<value_type>(std::plus{})
 			);
 			return *this;
 		}
@@ -294,7 +294,7 @@ namespace sl::vec
 				m_Values,
 				other,
 				std::ranges::begin(m_Values),
-				util::convert_invoke_result<value_type>(std::minus{})
+				util::cast_invoke_result<value_type>(std::minus{})
 			);
 			return *this;
 		}
@@ -312,7 +312,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::convert_invoke_result<value_type>([&value](const auto& lhs) { return lhs + value; })
+				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs + value; })
 			);
 			return *this;
 		}
@@ -330,7 +330,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::convert_invoke_result<value_type>([&value](const auto& lhs) { return lhs - value; })
+				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs - value; })
 			);
 			return *this;
 		}
@@ -348,7 +348,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::convert_invoke_result<value_type>([&value](const auto& lhs) { return lhs * value; })
+				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs * value; })
 			);
 			return *this;
 		}
@@ -370,7 +370,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				util::convert_invoke_result<value_type>([&value](const auto& lhs) { return lhs / value; })
+				util::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs / value; })
 			);
 			return *this;
 		}
@@ -632,9 +632,6 @@ namespace sl::vec
 	 * \tparam TVector A vectorial type
 	 * \param vector Vector to be calculated from
 	 * \return scalar value
-	 * 
-	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
-	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
 	template <vectorial TVector>
 	[[nodiscard]]
@@ -669,9 +666,6 @@ namespace sl::vec
 	 * \param lhs left-hand-side of calculation
 	 * \param rhs left-hand-side of calculation
 	 * \return scalar value
-	 *
-	 * \details If this function is called in a non-constant-evaluated context it uses the std::execution::unseq policy. For
-	 * further details read here: https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t
 	 */
 	template <vectorial TVector1, vectorial TVector2>
 	/** \cond Requires */
@@ -687,7 +681,7 @@ namespace sl::vec
 			rhs,
 			T{},
 			std::plus{},
-			util::convert_invoke_result<T>(std::multiplies{})
+			util::cast_invoke_result<T>(std::multiplies{})
 		);
 	}
 
