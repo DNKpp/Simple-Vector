@@ -3,10 +3,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef SIMPLE_VECTOR_UTILITY_HPP
-#define SIMPLE_VECTOR_UTILITY_HPP
+#ifndef SIMPLE_VECTOR_FUNCTIONAL_HPP
+#define SIMPLE_VECTOR_FUNCTIONAL_HPP
 
 #pragma once
+
+#include "Concepts.hpp"
 
 #include <concepts>
 #include <functional>
@@ -27,12 +29,12 @@ namespace sl::vec::detail
 	};
 }
 
-namespace sl::vec::util
+namespace sl::vec
 {
-	/** \addtogroup Utility
+	/** \addtogroup Functional
 	 * @{
 	 */
-	
+
 	/**
 	 * \brief Factory function creating a wrapper function object, which invokes the provided function object and casts
 	 * the result into the given type.
@@ -46,6 +48,14 @@ namespace sl::vec::util
 	{
 		return detail::cast_invoke_result_fn<TTargetType, TFunc>{ std::move(func) };
 	}
+
+	/**
+	 * \brief Function object, which is invokable with an mulable object and returns it multiplied by itself.
+	 */
+	constexpr auto square_fn = [](const mulable auto& value)
+	{
+		return value * value;
+	};
 
 	/** @}*/
 }
