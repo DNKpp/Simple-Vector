@@ -696,6 +696,26 @@ namespace sl::vec
 		return vec /= length(vec);
 	}
 
+	/**
+	 * \brief Projects vector onto the target Vector.
+	 * \tparam TVector Type of Vector
+	 * \param vector The Vector to be projected
+	 * \param target The Vector to be projected onto
+	 * \return newly constructed Vector
+	 */
+	template <vectorial TVector>
+	[[nodiscard]]
+	constexpr TVector projected(const TVector& vector, TVector target)
+	{
+		assert(vector != TVector{} && "vector must not be the null vector.");
+		assert(target != TVector{} && "target must not be the null vector.");
+
+		const auto dot = dot_product(vector, target);
+		const auto targetLengthSq = length_squared(target);
+		target *= (dot / targetLengthSq);
+		return target;
+	}
+
 	/** @}*/
 }
 

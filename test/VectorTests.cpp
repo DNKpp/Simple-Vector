@@ -563,3 +563,36 @@ TEMPLATE_TEST_CASE_SIG
 
 	REQUIRE(sl::vec::length(normalizedVec) == Approx(1));
 }
+
+#if __cpp_nontype_template_args >= 201911L
+// well, clang sucks
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"projected should project vector1 onto vector2",
+	"[vector][algorithm]",
+	((auto VSource, auto VTarget, auto VExpected), VSource, VTarget, VExpected),
+	(std::to_array({ 1. }), std::to_array({ 1. }), std::to_array({ 1. })),
+	(std::to_array({ 1. }), std::to_array({ -1. }), std::to_array({ 1. })),
+	(std::to_array({ 1., 1. }), std::to_array({ 2., 0. }), std::to_array({ 1., 0. })),
+	(std::to_array({ 1., 1. }), std::to_array({ -2., 0. }), std::to_array({ 1., 0. })),
+	(std::to_array({ 1., 4. }), std::to_array({ 2., 1. }), std::to_array({ 12./5., 6./5. })),
+	(std::to_array({ 3., 0. }), std::to_array({ 0., 3. }), std::to_array({ 0., 0. })),
+	(std::to_array({ 1., 0., 0. }), std::to_array({ 1., 0., 0. }), std::to_array({ 1., 0., 0. })),
+	(std::to_array({ 1., 1., 1. }), std::to_array({ 0., 5., 5. }), std::to_array({ 0., 1., 1. }))
+)
+#pragma warning(default: 26444)
+{
+	constexpr auto dims = std::size(VSource);
+	using Vector_t = Vector<double, dims>;
+	constexpr Vector_t source{ gen::range{ VSource }};
+	constexpr Vector_t target{ gen::range{ VTarget }};
+	constexpr Vector_t expected{ gen::range{ VExpected }};
+
+	const auto projectedVec = projected(source, target);
+
+	const auto delta = projectedVec - expected;
+
+	REQUIRE(std::ranges::all_of(delta, [](auto value) { return value == Approx(0); }));
+}
+#endif
