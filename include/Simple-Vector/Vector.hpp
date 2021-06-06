@@ -105,7 +105,7 @@ namespace sl::vec
 			(
 				std::ranges::take_view{ other, std::min(dimensions, VOtherDimensions) },
 				std::ranges::begin(m_Values),
-				cast_invoke_result<value_type>(std::identity{})
+				fn::cast_invoke_result<value_type>(std::identity{})
 			);
 		}
 
@@ -275,7 +275,7 @@ namespace sl::vec
 				m_Values,
 				other,
 				std::ranges::begin(m_Values),
-				cast_invoke_result<value_type>(std::plus{})
+				fn::cast_invoke_result<value_type>(std::plus{})
 			);
 			return *this;
 		}
@@ -294,7 +294,7 @@ namespace sl::vec
 				m_Values,
 				other,
 				std::ranges::begin(m_Values),
-				cast_invoke_result<value_type>(std::minus{})
+				fn::cast_invoke_result<value_type>(std::minus{})
 			);
 			return *this;
 		}
@@ -312,7 +312,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs + value; })
+				fn::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs + value; })
 			);
 			return *this;
 		}
@@ -330,7 +330,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs - value; })
+				fn::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs - value; })
 			);
 			return *this;
 		}
@@ -348,7 +348,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs * value; })
+				fn::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs * value; })
 			);
 			return *this;
 		}
@@ -370,7 +370,7 @@ namespace sl::vec
 			(
 				m_Values,
 				std::ranges::begin(m_Values),
-				cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs / value; })
+				fn::cast_invoke_result<value_type>([&value](const auto& lhs) { return lhs / value; })
 			);
 			return *this;
 		}
@@ -649,7 +649,7 @@ namespace sl::vec
 			rhs,
 			T{},
 			std::plus{},
-			cast_invoke_result<T>(std::multiplies{})
+			fn::cast_invoke_result<T>(std::multiplies{})
 		);
 	}
 
