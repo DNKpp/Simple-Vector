@@ -26,6 +26,53 @@ namespace
 			return static_cast<Vector<TValueType, VDims>>(Vector<int, VDims>{ gen::iota{ static_cast<int>(begin) } });
 		}
 	}
+
+	template <std::ranges::borrowed_range TRange>
+	class approx_range_matcher final : public Catch::MatcherBase<std::remove_cvref_t<TRange>>
+	{
+	public:
+		using range_type = std::remove_cvref_t<TRange>;
+		using view_type = std::views::all_t<TRange>;
+
+		explicit approx_range_matcher(const range_type& range) :
+			m_View{ range }
+		{
+		}
+
+		bool match(const range_type& other) const override
+		{
+			return std::ranges::equal
+			(
+				m_View,
+				other,
+				[](const auto& lhs, const auto& rhs)
+				{
+					constexpr auto inf = std::numeric_limits<std::ranges::range_value_t<range_type>>::infinity();
+
+					if (lhs == inf || rhs == inf)
+					{
+						return lhs == rhs;
+					}
+					return (lhs - rhs) == Approx(0);
+				}
+			);
+		}
+
+		[[nodiscard]]
+		std::string describe() const override
+		{
+			return "Approx equals: " + Catch::rangeToString(m_View);
+		}
+
+	private:
+		view_type m_View;
+	};
+
+	template <std::ranges::borrowed_range TRange>
+	auto approx_range(TRange&& range)
+	{
+		return approx_range_matcher<TRange>{ range };
+	}
 }
 
 #pragma warning(disable: 26444)
@@ -585,9 +632,7 @@ TEMPLATE_TEST_CASE_SIG
 
 	const auto projectedVec = projected(source, target);
 
-	const auto delta = projectedVec - expected;
-
-	REQUIRE(std::ranges::all_of(delta, [](auto value) { return value == Approx(0); }));
+	REQUIRE_THAT(projectedVec, approx_range(expected));
 }
 #endif
 
@@ -610,10 +655,8 @@ TEMPLATE_TEST_CASE_SIG
 	constexpr Vector_t end{ gen::range{ VEnd }};
 	constexpr Vector_t expected{ gen::range{ VExpected }};
 
-	constexpr auto projectedVec = lerp(begin, end, VLerpValue);
+	constexpr auto lerpedVec = lerp(begin, end, VLerpValue);
 
-	constexpr auto delta = projectedVec - expected;
-
-	REQUIRE(std::ranges::all_of(delta, [](auto value) { return value == Approx(0); }));
+	REQUIRE_THAT(lerpedVec, approx_range(expected));
 }
 #endif
