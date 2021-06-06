@@ -660,3 +660,22 @@ TEMPLATE_TEST_CASE_SIG
 	REQUIRE_THAT(lerpedVec, approx_range(expected));
 }
 #endif
+
+TEST_CASE("inversed should compute the inverse of each element", "[vector][algorithm]")
+{
+	const auto [src, expected] = GENERATE
+	(
+		table<Vector<double,
+		3>,
+		Vector<double,
+		3>>({
+			{ Vector{ 1., 1., 1. }, Vector{ 1., 1., 1. } },
+			{ Vector{ 1., 2., 3. }, Vector{ 1., 0.5, 1./3. } },
+			{ Vector{ 1., 2., 0. }, Vector{ 1., 0.5, std::numeric_limits<double>::infinity() } }
+			})
+	);
+
+	const auto inversedVec = inversed(src);
+
+	REQUIRE_THAT(inversedVec, approx_range(expected));
+}
