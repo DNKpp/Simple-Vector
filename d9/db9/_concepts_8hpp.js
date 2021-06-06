@@ -3,7 +3,7 @@ var _concepts_8hpp =
     [ "vector_value_t", "d9/db9/_concepts_8hpp.html#ga665271e3c6d337f71fc0cefbb50d9a84", null ],
     [ "add_assignable", "d9/db9/_concepts_8hpp.html#ga38c9355183d56a3ca5a078c0d766d35f", null ],
     [ "addable", "d9/db9/_concepts_8hpp.html#gac77cc64d28e7abddda814d99c45eaa76", null ],
-    [ "cardinality", "d9/db9/_concepts_8hpp.html#gadb76d9f4e10e4a6e6ba2fa415805894e", null ],
+    [ "binary_invokable_with_all_overloads_implicit_convertible_to", "d9/db9/_concepts_8hpp.html#ga51e238bb03eeb609100bb735730ac455", null ],
     [ "div_assignable", "d9/db9/_concepts_8hpp.html#ga8a6af81d447f60de260e68e19bf335f7", null ],
     [ "divable", "d9/db9/_concepts_8hpp.html#gaa319a86212a75ee48d9570645393232f", null ],
     [ "is_vectorial_v", "d9/db9/_concepts_8hpp.html#ga382e0fe0224cd1bb857c2c622d297f19", null ],

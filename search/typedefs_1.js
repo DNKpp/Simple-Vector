@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['storage_5ftype_144',['storage_type',['../da/d30/classsl_1_1vec_1_1_vector.html#a60936ceef385b70c3190c6c0f00ea415',1,'sl::vec::Vector']]]
+  ['range_5ftype_167',['range_type',['../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a22e5d91ecc6700cd2ad539fdeb34739e',1,'sl::vec::gen::range']]]
 ];

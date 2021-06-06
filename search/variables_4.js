@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['mod_5fassignable_133',['mod_assignable',['../dd/db9/group___concepts.html#gadc1f86771a30b6a9e17a6e9fb31d7523',1,'sl::vec']]],
-  ['modable_134',['modable',['../dd/db9/group___concepts.html#ga0b4cbe2ab03d17bbc94a7e8c0a69a785',1,'sl::vec']]],
-  ['mul_5fassignable_135',['mul_assignable',['../dd/db9/group___concepts.html#gae4140afd4c1c2791b846ff458e46c74b',1,'sl::vec']]],
-  ['mulable_136',['mulable',['../dd/db9/group___concepts.html#gacac0e5d5a1265fa954a3ff42c4c5589e',1,'sl::vec']]]
+  ['is_5fvectorial_5fv_155',['is_vectorial_v',['../d7/de6/group___type_traits.html#ga382e0fe0224cd1bb857c2c622d297f19',1,'sl::vec']]]
 ];

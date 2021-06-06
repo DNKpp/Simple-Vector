@@ -1,11 +1,8 @@
 var searchData=
 [
-  ['gen_49',['gen',['../d0/d27/namespacesl_1_1vec_1_1gen.html',1,'sl::vec']]],
-  ['simple_2dvector_20c_2b_2b20_20library_50',['Simple-Vector C++20 library',['../index.html',1,'']]],
-  ['simple_2dvector_2ehpp_51',['Simple-Vector.hpp',['../dc/df1/_simple-_vector_8hpp.html',1,'']]],
-  ['sl_52',['sl',['../dd/d2c/namespacesl.html',1,'']]],
-  ['storage_5ftype_53',['storage_type',['../da/d30/classsl_1_1vec_1_1_vector.html#a60936ceef385b70c3190c6c0f00ea415',1,'sl::vec::Vector']]],
-  ['sub_5fassignable_54',['sub_assignable',['../dd/db9/group___concepts.html#gab2730956e41a3793d058d9ac18f8af62',1,'sl::vec']]],
-  ['subable_55',['subable',['../dd/db9/group___concepts.html#ga7efe1435494ce42346e2804bddf2369f',1,'sl::vec']]],
-  ['vec_56',['vec',['../d1/d17/namespacesl_1_1vec.html',1,'sl']]]
+  ['range_55',['range',['../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#ac7fcb14c95337dba06123860e5bbad62',1,'sl::vec::gen::range::range()'],['../df/d58/group___generators.html#gae71f85f67509d1c559f0e85ee5adaeca',1,'sl::vec::gen::range(TRange &amp;&amp;) -&gt; range&lt; TRange &gt;'],['../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html',1,'sl::vec::gen::range&lt; TRange &gt;']]],
+  ['range_5ftype_56',['range_type',['../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a22e5d91ecc6700cd2ad539fdeb34739e',1,'sl::vec::gen::range']]],
+  ['rbegin_57',['rbegin',['../da/d30/classsl_1_1vec_1_1_vector.html#a587fce59d02f9e8009c8260ace7be2ef',1,'sl::vec::Vector::rbegin() noexcept'],['../da/d30/classsl_1_1vec_1_1_vector.html#a8952471e26cb0d60eb8a0ebac51b0316',1,'sl::vec::Vector::rbegin() const noexcept']]],
+  ['readme_2emd_58',['README.md',['../d9/dd6/_r_e_a_d_m_e_8md.html',1,'']]],
+  ['rend_59',['rend',['../da/d30/classsl_1_1vec_1_1_vector.html#ac6082e530215e917a1f67acaba219501',1,'sl::vec::Vector::rend() noexcept'],['../da/d30/classsl_1_1vec_1_1_vector.html#a521b33824d51b9f4ee33f8b6b9ffe168',1,'sl::vec::Vector::rend() const noexcept']]]
 ];

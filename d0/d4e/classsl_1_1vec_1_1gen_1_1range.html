@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Simple-Vector: sl::vec::gen::range&lt; TIterator &gt; Class Template Reference</title>
+<title>Simple-Vector: sl::vec::gen::range&lt; TRange &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('d0/d4e/classsl_1_1vec_1_1gen_1_1range.
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="../../d7/dd0/classsl_1_1vec_1_1gen_1_1range-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">sl::vec::gen::range&lt; TIterator &gt; Class Template Reference<div class="ingroups"><a class="el" href="../../df/d58/group___generators.html">Generators</a></div></div>  </div>
+<div class="title">sl::vec::gen::range&lt; TRange &gt; Class Template Reference<div class="ingroups"><a class="el" href="../../df/d58/group___generators.html">Generators</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -98,63 +98,77 @@ $(document).ready(function(){initNavTree('d0/d4e/classsl_1_1vec_1_1gen_1_1range.
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a406ed1720df035927c192f23f0843337"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a406ed1720df035927c192f23f0843337">value_type</a> = std::iter_value_t&lt; TIterator &gt;</td></tr>
-<tr class="separator:a406ed1720df035927c192f23f0843337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1d03dae175c5001dcd2af0e90f52152"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#ab1d03dae175c5001dcd2af0e90f52152">iterator_type</a> = TIterator</td></tr>
-<tr class="separator:ab1d03dae175c5001dcd2af0e90f52152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22e5d91ecc6700cd2ad539fdeb34739e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a22e5d91ecc6700cd2ad539fdeb34739e">range_type</a> = std::conditional_t&lt; std::ranges::borrowed_range&lt; TRange &gt;, TRange, std::remove_cvref_t&lt; TRange &gt; &gt;</td></tr>
+<tr class="separator:a22e5d91ecc6700cd2ad539fdeb34739e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a523c68af1c301f5291a923f38e8e084c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a523c68af1c301f5291a923f38e8e084c">iterator_type</a> = std::ranges::iterator_t&lt; <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a22e5d91ecc6700cd2ad539fdeb34739e">range_type</a> &gt;</td></tr>
+<tr class="separator:a523c68af1c301f5291a923f38e8e084c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a573f60b70a0d341c754c8e1a66ceea5b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a573f60b70a0d341c754c8e1a66ceea5b">value_type</a> = std::ranges::range_value_t&lt; TRange &gt;</td></tr>
+<tr class="separator:a573f60b70a0d341c754c8e1a66ceea5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7e9aa5d75d945edd1faec7b89f5457f4"><td class="memTemplParams" colspan="2">template&lt;std::ranges::forward_range TRange&gt; </td></tr>
-<tr class="memitem:a7e9aa5d75d945edd1faec7b89f5457f4"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a7e9aa5d75d945edd1faec7b89f5457f4">range</a> (TRange &amp;<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">range</a>)</td></tr>
-<tr class="memdesc:a7e9aa5d75d945edd1faec7b89f5457f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the generator with a given range.  <a href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a7e9aa5d75d945edd1faec7b89f5457f4">More...</a><br /></td></tr>
-<tr class="separator:a7e9aa5d75d945edd1faec7b89f5457f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaacb8baf11e4564ab151672b1489c941"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#aaacb8baf11e4564ab151672b1489c941">range</a> (TIterator itr)</td></tr>
-<tr class="memdesc:aaacb8baf11e4564ab151672b1489c941"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the generator with a given iterator.  <a href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#aaacb8baf11e4564ab151672b1489c941">More...</a><br /></td></tr>
-<tr class="separator:aaacb8baf11e4564ab151672b1489c941"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a624f3f2d8ec4987677b008728dcf5d"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a406ed1720df035927c192f23f0843337">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a4a624f3f2d8ec4987677b008728dcf5d">operator()</a> ()</td></tr>
-<tr class="memdesc:a4a624f3f2d8ec4987677b008728dcf5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">post-increments the stored iterator and returns a copy of the previously pointed element.  <a href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a4a624f3f2d8ec4987677b008728dcf5d">More...</a><br /></td></tr>
-<tr class="separator:a4a624f3f2d8ec4987677b008728dcf5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7fcb14c95337dba06123860e5bbad62"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#ac7fcb14c95337dba06123860e5bbad62">range</a> (TRange &amp;&amp;<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">range</a>)</td></tr>
+<tr class="memdesc:ac7fcb14c95337dba06123860e5bbad62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the generator with a given range.  <a href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#ac7fcb14c95337dba06123860e5bbad62">More...</a><br /></td></tr>
+<tr class="separator:ac7fcb14c95337dba06123860e5bbad62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9295c0de7fffb9041cbd6f88826a48e"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a573f60b70a0d341c754c8e1a66ceea5b">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#aa9295c0de7fffb9041cbd6f88826a48e">operator()</a> ()</td></tr>
+<tr class="memdesc:aa9295c0de7fffb9041cbd6f88826a48e"><td class="mdescLeft">&#160;</td><td class="mdescRight">post-increments the stored iterator and returns a copy of the previously pointed element.  <a href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#aa9295c0de7fffb9041cbd6f88826a48e">More...</a><br /></td></tr>
+<tr class="separator:aa9295c0de7fffb9041cbd6f88826a48e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;std::forward_iterator TIterator&gt;<br />
-class sl::vec::gen::range&lt; TIterator &gt;</h3>
+<div class="textblock"><h3>template&lt;std::ranges::forward_range TRange&gt;<br />
+class sl::vec::gen::range&lt; TRange &gt;</h3>
 
 <p>Generator which retrieves its values out of the given source iterator. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIterator</td><td>type of source iterator</td></tr>
+    <tr><td class="paramname">TRange</td><td>type of source range</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>Requesting values from beyond the last element of the source range is undefined. </dd></dl>
+<p>If the given range is a borrowed range then the generator will use that type as range_type, otherwise the whole source range will be stored internally. </p><dl class="section attention"><dt>Attention</dt><dd>Requesting values from beyond the last element of the source range is undefined. </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="ab1d03dae175c5001dcd2af0e90f52152"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1d03dae175c5001dcd2af0e90f52152">&#9670;&nbsp;</a></span>iterator_type</h2>
+<a id="a523c68af1c301f5291a923f38e8e084c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a523c68af1c301f5291a923f38e8e084c">&#9670;&nbsp;</a></span>iterator_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::forward_iterator TIterator&gt; </div>
+template&lt;std::ranges::forward_range TRange&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TIterator &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#ab1d03dae175c5001dcd2af0e90f52152">iterator_type</a> =  TIterator</td>
+          <td class="memname">using <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TRange &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a523c68af1c301f5291a923f38e8e084c">iterator_type</a> =  std::ranges::iterator_t&lt;<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a22e5d91ecc6700cd2ad539fdeb34739e">range_type</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a406ed1720df035927c192f23f0843337"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a406ed1720df035927c192f23f0843337">&#9670;&nbsp;</a></span>value_type</h2>
+<a id="a22e5d91ecc6700cd2ad539fdeb34739e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22e5d91ecc6700cd2ad539fdeb34739e">&#9670;&nbsp;</a></span>range_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::forward_iterator TIterator&gt; </div>
+template&lt;std::ranges::forward_range TRange&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TIterator &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a406ed1720df035927c192f23f0843337">value_type</a> =  std::iter_value_t&lt;TIterator&gt;</td>
+          <td class="memname">using <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TRange &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a22e5d91ecc6700cd2ad539fdeb34739e">range_type</a> =  std::conditional_t &lt; std::ranges::borrowed_range&lt;TRange&gt;, TRange, std::remove_cvref_t&lt;TRange&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a573f60b70a0d341c754c8e1a66ceea5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a573f60b70a0d341c754c8e1a66ceea5b">&#9670;&nbsp;</a></span>value_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::ranges::forward_range TRange&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TRange &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a573f60b70a0d341c754c8e1a66ceea5b">value_type</a> =  std::ranges::range_value_t&lt;TRange&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -162,13 +176,11 @@ template&lt;std::forward_iterator TIterator&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7e9aa5d75d945edd1faec7b89f5457f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e9aa5d75d945edd1faec7b89f5457f4">&#9670;&nbsp;</a></span>range() <span class="overload">[1/2]</span></h2>
+<a id="ac7fcb14c95337dba06123860e5bbad62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7fcb14c95337dba06123860e5bbad62">&#9670;&nbsp;</a></span>range()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;std::forward_iterator TIterator&gt; </div>
 <div class="memtemplate">
 template&lt;std::ranges::forward_range TRange&gt; </div>
 <table class="mlabels">
@@ -176,9 +188,9 @@ template&lt;std::ranges::forward_range TRange&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TIterator &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">range</a> </td>
+          <td class="memname">constexpr <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TRange &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">range</a> </td>
           <td>(</td>
-          <td class="paramtype">TRange &amp;&#160;</td>
+          <td class="paramtype">TRange &amp;&amp;&#160;</td>
           <td class="paramname"><em>range</em></td><td>)</td>
           <td></td>
         </tr>
@@ -200,56 +212,20 @@ template&lt;std::ranges::forward_range TRange&gt; </div>
 
 </div>
 </div>
-<a id="aaacb8baf11e4564ab151672b1489c941"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaacb8baf11e4564ab151672b1489c941">&#9670;&nbsp;</a></span>range() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;std::forward_iterator TIterator&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TIterator &gt;::<a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">range</a> </td>
-          <td>(</td>
-          <td class="paramtype">TIterator&#160;</td>
-          <td class="paramname"><em>itr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructs the generator with a given iterator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">itr</td><td>The source range to be used </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4a624f3f2d8ec4987677b008728dcf5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a624f3f2d8ec4987677b008728dcf5d">&#9670;&nbsp;</a></span>operator()()</h2>
+<a id="aa9295c0de7fffb9041cbd6f88826a48e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9295c0de7fffb9041cbd6f88826a48e">&#9670;&nbsp;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::forward_iterator TIterator&gt; </div>
+template&lt;std::ranges::forward_range TRange&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a406ed1720df035927c192f23f0843337">value_type</a> <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TIterator &gt;::operator() </td>
+          <td class="memname">constexpr <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#a573f60b70a0d341c754c8e1a66ceea5b">value_type</a> <a class="el" href="../../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html">sl::vec::gen::range</a>&lt; TRange &gt;::operator() </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

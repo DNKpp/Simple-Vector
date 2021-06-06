@@ -2,6 +2,9 @@ var annotated_dup =
 [
     [ "sl", "dd/d2c/namespacesl.html", [
       [ "vec", "d1/d17/namespacesl_1_1vec.html", [
+        [ "detail", "d8/d2d/namespacesl_1_1vec_1_1detail.html", [
+          [ "cast_invoke_result_fn", "d1/d55/structsl_1_1vec_1_1detail_1_1cast__invoke__result__fn.html", "d1/d55/structsl_1_1vec_1_1detail_1_1cast__invoke__result__fn" ]
+        ] ],
         [ "gen", "d0/d27/namespacesl_1_1vec_1_1gen.html", [
           [ "fill", "d0/dff/structsl_1_1vec_1_1gen_1_1fill.html", "d0/dff/structsl_1_1vec_1_1gen_1_1fill" ],
           [ "iota", "d3/d7a/structsl_1_1vec_1_1gen_1_1iota.html", "d3/d7a/structsl_1_1vec_1_1gen_1_1iota" ],

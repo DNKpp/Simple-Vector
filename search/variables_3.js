@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['is_5fvectorial_5fv_132',['is_vectorial_v',['../d7/de6/group___type_traits.html#ga382e0fe0224cd1bb857c2c622d297f19',1,'sl::vec']]]
+  ['func_154',['func',['../d1/d55/structsl_1_1vec_1_1detail_1_1cast__invoke__result__fn.html#a38065891ca30fe2ada4207493b70b070',1,'sl::vec::detail::cast_invoke_result_fn']]]
 ];

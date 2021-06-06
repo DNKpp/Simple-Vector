@@ -18,7 +18,7 @@ var group___vector =
       [ "crend", "da/d30/classsl_1_1vec_1_1_vector.html#ad05f52379b86db148b1dce679d05dc7c", null ],
       [ "end", "da/d30/classsl_1_1vec_1_1_vector.html#ad5087af2945f873ac6e2e95d4a23c2fe", null ],
       [ "end", "da/d30/classsl_1_1vec_1_1_vector.html#ac3b802a07c25fcf9ce1cfac2a4541afe", null ],
-      [ "operator%=", "da/d30/classsl_1_1vec_1_1_vector.html#a45ab969efb98883ff3087b3e9a5cd9e9", null ],
+      [ "operator%=", "da/d30/classsl_1_1vec_1_1_vector.html#a40b1468148810acdb9bc6dfc7c2511c7", null ],
       [ "operator*=", "da/d30/classsl_1_1vec_1_1_vector.html#a11163d11ccdcb5c4789e595acc4ebe0a", null ],
       [ "operator+=", "da/d30/classsl_1_1vec_1_1_vector.html#a34d403bdc1456dde7ccb79c3ac518c50", null ],
       [ "operator+=", "da/d30/classsl_1_1vec_1_1_vector.html#ae90c5cdd8fadd0b1eab886eebd44af8b", null ],
@@ -40,11 +40,13 @@ var group___vector =
       [ "y", "da/d30/classsl_1_1vec_1_1_vector.html#adfce4523172b60f2f2c03a5a327bc4fc", null ],
       [ "z", "da/d30/classsl_1_1vec_1_1_vector.html#ad87f300f727834c128e8a62ace7ca9d0", null ],
       [ "z", "da/d30/classsl_1_1vec_1_1_vector.html#a6754f5b8c6da553a580e8f48ae01e3b8", null ],
-      [ "dimensions", "da/d30/classsl_1_1vec_1_1_vector.html#a0057bfcde8ddc2f27cbee203bf8b1d8c", null ]
+      [ "dimensions", "da/d30/classsl_1_1vec_1_1_vector.html#ac470cb29dcaa91f196c5b23afdec6319", null ]
     ] ],
     [ "dot_product", "dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42", null ],
+    [ "inversed", "dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79", null ],
     [ "length", "dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7", null ],
-    [ "length_sq", "dc/d9b/group___vector.html#ga4f96cfc793f7ea533db3e4c0c1b58cf2", null ],
+    [ "length_squared", "dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c", null ],
+    [ "lerp", "dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95", null ],
     [ "normalized", "dc/d9b/group___vector.html#gaee726b2ac1c998aada265af6a4d4cdd7", null ],
     [ "operator%", "dc/d9b/group___vector.html#ga75a45fcf2c522356e30941f2dc720362", null ],
     [ "operator*", "dc/d9b/group___vector.html#ga6c26c115dbf4d90f4a3190f3e2a99dfb", null ],
@@ -52,9 +54,6 @@ var group___vector =
     [ "operator+", "dc/d9b/group___vector.html#gaeb90b4fa2156b804a938b62ef70efd1a", null ],
     [ "operator-", "dc/d9b/group___vector.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0", null ],
     [ "operator/", "dc/d9b/group___vector.html#gaa826e57202f17512e33643189818cb21", null ],
-    [ "transform_unseq", "dc/d9b/group___vector.html#ga2a818780d1d2e8d324fe9cfc4a91c224", null ],
-    [ "transform_unseq", "dc/d9b/group___vector.html#gaeb89deb5f4a5738c455dbff7ebc4c220", null ],
-    [ "transformed_unseq", "dc/d9b/group___vector.html#gab72ee388a22aa457487bad1cb2bcb628", null ],
-    [ "transformed_unseq", "dc/d9b/group___vector.html#ga00144b85909156a8c1c5bcdaa0099ab1", null ],
+    [ "projected", "dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083", null ],
     [ "Vector", "dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f", null ]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['transform_5funseq_119',['transform_unseq',['../dc/d9b/group___vector.html#ga2a818780d1d2e8d324fe9cfc4a91c224',1,'sl::vec::transform_unseq(TVector &amp;vec, TUnaryOperation &amp;&amp;unaryOp)'],['../dc/d9b/group___vector.html#gaeb89deb5f4a5738c455dbff7ebc4c220',1,'sl::vec::transform_unseq(TVector1 &amp;vec1, const TVector2 &amp;vec2, TBinaryOperation &amp;&amp;binaryOp)']]],
-  ['transformed_5funseq_120',['transformed_unseq',['../dc/d9b/group___vector.html#gab72ee388a22aa457487bad1cb2bcb628',1,'sl::vec::transformed_unseq(TVector vec, TUnaryOperation &amp;&amp;unaryOp)'],['../dc/d9b/group___vector.html#ga00144b85909156a8c1c5bcdaa0099ab1',1,'sl::vec::transformed_unseq(TVector1 vec1, const TVector2 &amp;vec2, TBinaryOperation &amp;&amp;binaryOp)']]]
+  ['range_138',['range',['../d0/d4e/classsl_1_1vec_1_1gen_1_1range.html#ac7fcb14c95337dba06123860e5bbad62',1,'sl::vec::gen::range::range()'],['../df/d58/group___generators.html#gae71f85f67509d1c559f0e85ee5adaeca',1,'sl::vec::gen::range()']]],
+  ['rbegin_139',['rbegin',['../da/d30/classsl_1_1vec_1_1_vector.html#a587fce59d02f9e8009c8260ace7be2ef',1,'sl::vec::Vector::rbegin() noexcept'],['../da/d30/classsl_1_1vec_1_1_vector.html#a8952471e26cb0d60eb8a0ebac51b0316',1,'sl::vec::Vector::rbegin() const noexcept']]],
+  ['rend_140',['rend',['../da/d30/classsl_1_1vec_1_1_vector.html#ac6082e530215e917a1f67acaba219501',1,'sl::vec::Vector::rend() noexcept'],['../da/d30/classsl_1_1vec_1_1_vector.html#a521b33824d51b9f4ee33f8b6b9ffe168',1,'sl::vec::Vector::rend() const noexcept']]]
 ];

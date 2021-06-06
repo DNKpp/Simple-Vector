@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7evector_72',['~Vector',['../da/d30/classsl_1_1vec_1_1_vector.html#ae99635f7f7e1f9f9cc979e130944f293',1,'sl::vec::Vector']]]
+  ['z_84',['z',['../da/d30/classsl_1_1vec_1_1_vector.html#ad87f300f727834c128e8a62ace7ca9d0',1,'sl::vec::Vector::z() const noexcept'],['../da/d30/classsl_1_1vec_1_1_vector.html#a6754f5b8c6da553a580e8f48ae01e3b8',1,'sl::vec::Vector::z() noexcept']]]
 ];
