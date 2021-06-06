@@ -26,12 +26,6 @@ namespace
 			return static_cast<Vector<TValueType, VDims>>(Vector<int, VDims>{ gen::iota{ static_cast<int>(begin) } });
 		}
 	}
-
-	template <class TValueType, std::size_t VDims>
-	constexpr Vector<TValueType, VDims> make_filled_vector(TValueType value = {}) noexcept
-	{
-		return Vector<TValueType, VDims>{ gen::fill{ value } };
-	}
 }
 
 #pragma warning(disable: 26444)
