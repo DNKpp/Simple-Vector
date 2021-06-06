@@ -29,7 +29,7 @@ namespace sl::vec::detail
 	};
 }
 
-namespace sl::vec
+namespace sl::vec::fn
 {
 	/** \addtogroup Functional
 	 * @{
@@ -52,7 +52,7 @@ namespace sl::vec
 	/**
 	 * \brief Function object, which is invokable with an mulable object and returns it multiplied by itself.
 	 */
-	constexpr auto square_fn = [](const mulable auto& value)
+	constexpr auto square = [](const mulable auto& value)
 	{
 		return value * value;
 	};
