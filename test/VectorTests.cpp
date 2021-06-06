@@ -596,3 +596,30 @@ TEMPLATE_TEST_CASE_SIG
 	REQUIRE(std::ranges::all_of(delta, [](auto value) { return value == Approx(0); }));
 }
 #endif
+
+#if __cpp_nontype_template_args >= 201911L
+// well, clang sucks
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"lerp should interpolate between vector1 and vector2",
+	"[vector][algorithm]",
+	((auto VBegin, auto VEnd, auto VLerpValue, auto VExpected), VBegin, VEnd, VLerpValue, VExpected),
+	(std::to_array({ 1. }), std::to_array({ 2 }), 1., std::to_array({ 2. })),
+	(std::to_array({ 1., 2., 3. }), std::to_array({ 3., 2., 1. }), 0.5, std::to_array({ 2., 2., 2. }))
+)
+#pragma warning(default: 26444)
+{
+	constexpr auto dims = std::size(VBegin);
+	using Vector_t = Vector<double, dims>;
+	constexpr Vector_t begin{ gen::range{ VBegin }};
+	constexpr Vector_t end{ gen::range{ VEnd }};
+	constexpr Vector_t expected{ gen::range{ VExpected }};
+
+	constexpr auto projectedVec = lerp(begin, end, VLerpValue);
+
+	constexpr auto delta = projectedVec - expected;
+
+	REQUIRE(std::ranges::all_of(delta, [](auto value) { return value == Approx(0); }));
+}
+#endif

@@ -716,6 +716,34 @@ namespace sl::vec
 		return target;
 	}
 
+	/**
+	 * \brief Projects vector onto the target Vector.
+	 * \tparam TVector Type of Vector
+	 * \tparam T Type of interpolation distance
+	 * \param vector1 The first Vector
+	 * \param vector2 The second Vector
+	 * \param t The interpolation distance (usually between [0, 1])
+	 * \return newly constructed Vector
+	 *
+	 * \remark Vector with integral value_type may work as expected if difference between both vectors is very small.
+	 */
+	template <vectorial TVector, class T>
+	/** \cond Requires */
+		requires std::is_arithmetic_v<T>
+	/** \endcond */
+	[[nodiscard]]
+	constexpr TVector lerp(TVector vector1, const TVector& vector2, T t)
+	{
+		transform_unseq
+		(
+			vector1,
+			vector2,
+			std::ranges::begin(vector1),
+			fn::cast_invoke_result<vector_value_t<TVector>>([t](auto a, auto b) { return std::lerp(a, b, t); })
+		);
+		return vector1;
+	}
+
 	/** @}*/
 }
 
