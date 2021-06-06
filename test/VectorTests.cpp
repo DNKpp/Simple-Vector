@@ -27,38 +27,52 @@ namespace
 		}
 	}
 
-	template <class TValueType, std::size_t VDims>
-	constexpr Vector<TValueType, VDims> make_filled_vector(TValueType value = {}) noexcept
-	{
-		return Vector<TValueType, VDims>{ gen::fill{ value } };
-	}
-
-	template <class TFunc = std::identity>
-	class InvocationCounter
+	template <std::ranges::borrowed_range TRange>
+	class approx_range_matcher final : public Catch::MatcherBase<std::remove_cvref_t<TRange>>
 	{
 	public:
-		constexpr InvocationCounter(int& counter) :
-			m_Counter{ std::addressof(counter) }
+		using range_type = std::remove_cvref_t<TRange>;
+		using view_type = std::views::all_t<TRange>;
+
+		explicit approx_range_matcher(const range_type& range) :
+			m_View{ range }
 		{
 		}
 
-		constexpr InvocationCounter(TFunc&& func, int& counter) :
-			m_Func{ std::forward<TFunc>(func) },
-			m_Counter{ std::addressof(counter) }
+		bool match(const range_type& other) const override
 		{
+			return std::ranges::equal
+			(
+				m_View,
+				other,
+				[](const auto& lhs, const auto& rhs)
+				{
+					constexpr auto inf = std::numeric_limits<std::ranges::range_value_t<range_type>>::infinity();
+
+					if (lhs == inf || rhs == inf)
+					{
+						return lhs == rhs;
+					}
+					return (lhs - rhs) == Approx(0);
+				}
+			);
 		}
 
-		template <class... TArgs>
-		constexpr auto operator ()(TArgs&&... args)
+		[[nodiscard]]
+		std::string describe() const override
 		{
-			++*m_Counter;
-			return std::invoke(m_Func, std::forward<TArgs>(args)...);
+			return "Approx equals: " + Catch::rangeToString(m_View);
 		}
 
 	private:
-		TFunc m_Func{};
-		int* m_Counter = nullptr;
+		view_type m_View;
 	};
+
+	template <std::ranges::borrowed_range TRange>
+	auto approx_range(TRange&& range)
+	{
+		return approx_range_matcher<TRange>{ range };
+	}
 }
 
 #pragma warning(disable: 26444)
@@ -130,24 +144,29 @@ TEMPLATE_PRODUCT_TEST_CASE
 	using Target_t = std::tuple_element_t<1, TestType>;
 	constexpr auto result = static_cast<Target_t>(Source_t{ gen::iota{ 1 } });
 
-	REQUIRE(std::ranges::equal(result, std::views::iota(1) | std::views::take(vector_dims_v<Source_t>)));
+	REQUIRE(result == Target_t{ gen::iota{ 1 } });
 }
 
+#if __cpp_nontype_template_args >= 201911L
+// well, clang sucks
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
 	"Vector types should be explicitly convertible between different dimension sizes.",
 	"[vector][construction]",
-	((class TSource, class TTarget, auto VExpectedRange), TSource, TTarget, VExpectedRange),
-	(Vector<int, 3>, Vector<int, 2>, std::to_array({ 1, 2 })) /*,
-	(Vector<int, 3>, Vector<int, 5>, std::to_array({ 1, 2, 3, 0, 0 }))*/
+	((std::size_t VSourceDims, std::size_t VTargetDims, auto VExpectedRange), VSourceDims, VTargetDims, VExpectedRange),
+	(3, 2, std::to_array({ 1, 2 })),
+	(3, 5, std::to_array({ 1, 2, 3, 0, 0 }))
 )
 #pragma warning(default: 26444)
 {
-	constexpr auto result = static_cast<TTarget>(TSource{ gen::iota{ 1 } });
+	using SourceVector_t = Vector<int, VSourceDims>;
+	using TargetVector_t = Vector<int, VTargetDims>;
+	constexpr auto result = static_cast<TargetVector_t>(SourceVector_t{ gen::iota{ 1 } });
 
 	REQUIRE(std::ranges::equal(result, VExpectedRange));
 }
+#endif
 
 #pragma warning(disable: 26444)
 #if __cpp_nontype_template_args < 201911L
@@ -295,138 +314,6 @@ TEST_CASE("Vector should be equality comparable.", "[vector]")
 	const auto neqResult = vec1 != vec2;
 	REQUIRE(eqResult == expected);
 	REQUIRE(neqResult != expected);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"constexpr unary transform_unseq should invoke function for each element of Vector.",
-	"[vector][algorithm][constexpr]",
-	((std::size_t VDims), VDims),
-	(1),
-	(3),
-	(10)
-)
-{
-	constexpr int invocations = []
-	{
-		Vector<int, VDims> vec;
-		int counter = 0;
-		transform_unseq(vec, InvocationCounter{ counter });
-		return counter;
-	}();
-
-	REQUIRE(invocations == VDims);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"unary transform_unseq should invoke function for each element of Vector.",
-	"[vector][algorithm]",
-	((std::size_t VDims), VDims),
-	(1),
-	(3),
-	(10)
-)
-{
-	int invocations = []
-	{
-		Vector<int, VDims> vec;
-		int counter = 0;
-		transform_unseq(vec, InvocationCounter{ counter });
-		return counter;
-	}();
-
-	REQUIRE(invocations == VDims);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"constexpr binary transform_unseq should invoke function for each element of Vector.",
-	"[vector][algorithm][constexpr]",
-	((std::size_t VDims), VDims),
-	(1),
-	(3),
-	(10)
-)
-{
-	constexpr int invocations = []
-	{
-		auto vec = make_filled_vector<int, VDims>();
-		int counter = 0;
-		transform_unseq(vec, vec, InvocationCounter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
-		return counter;
-	}();
-
-	REQUIRE(invocations == VDims);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"binary transform_unseq should invoke function for each element of Vector.",
-	"[vector][algorithm]",
-	((std::size_t VDims), VDims),
-	(1),
-	(3),
-	(10)
-)
-{
-	int invocations = []
-	{
-		auto vec = make_filled_vector<int, VDims>();
-		int counter = 0;
-		transform_unseq(vec, vec, InvocationCounter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
-		return counter;
-	}();
-
-	REQUIRE(invocations == VDims);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"unary transformed_unseq should invoke function for each element of Vector.",
-	"[vector][algorithm]",
-	((std::size_t VDims), VDims),
-	(1),
-	(3),
-	(10)
-)
-{
-	int invocations = []
-	{
-		Vector<int, VDims> vec;
-		int counter = 0;
-		vec = transformed_unseq(vec, InvocationCounter{ counter });
-		return counter;
-	}();
-
-	REQUIRE(invocations == VDims);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"binary transformed_unseq should invoke function for each element of Vector.",
-	"[vector][algorithm]",
-	((std::size_t VDims), VDims),
-	(1),
-	(3),
-	(10)
-)
-{
-	int invocations = []
-	{
-		auto vec = make_filled_vector<int, VDims>();
-		int counter = 0;
-		vec = transformed_unseq(vec, vec, InvocationCounter{ [&](auto lhs, auto rhs) { return lhs; }, counter });
-		return counter;
-	}();
-
-	REQUIRE(invocations == VDims);
 }
 
 #pragma warning(disable: 26444)
@@ -640,26 +527,7 @@ TEMPLATE_TEST_CASE_SIG
 #pragma warning(disable: 26444)
 TEMPLATE_TEST_CASE_SIG
 (
-	"constexpr length_sq should calculate the squared length of given vectors",
-	"[vector][algorithm][constexpr]",
-	((std::size_t VDims, int VExpected), VDims, VExpected),
-	(1, 1),
-	(2, 5),
-	(3, 14)
-)
-#pragma warning(default: 26444)
-{
-	constexpr auto vec = make_iota_vector<int, VDims>(1);
-
-	constexpr auto length_sq = sl::vec::length_sq(vec);
-
-	REQUIRE(VExpected == length_sq);
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"length_sq should calculate the squared length of given vectors",
+	"length_squared should calculate the squared length of given vectors",
 	"[vector][algorithm]",
 	((std::size_t VDims, int VExpected), VDims, VExpected),
 	(1, 1),
@@ -670,9 +538,9 @@ TEMPLATE_TEST_CASE_SIG
 {
 	const auto vec = make_iota_vector<int, VDims>(1);
 
-	auto length_sq = sl::vec::length_sq(vec);
+	auto squaredLength = sl::vec::length_squared(vec);
 
-	REQUIRE(VExpected == length_sq);
+	REQUIRE(VExpected == squaredLength);
 }
 
 #pragma warning(disable: 26444)
@@ -692,29 +560,6 @@ TEMPLATE_TEST_CASE_SIG
 	const auto length = sl::vec::length(vec);
 
 	REQUIRE(length == Approx(std::sqrt(VExpectedSq)));
-}
-
-#pragma warning(disable: 26444)
-TEMPLATE_TEST_CASE_SIG
-(
-	"constexpr dot_product should calculate the dot product of the two given vectors",
-	"[vector][algorithm][constexpr]",
-	((class TOther, std::size_t VDims, int VExpected), TOther, VDims, VExpected),
-	(int, 1, 2),
-	(int, 2, 8),
-	(int, 3, 20),
-	(float, 1, 2),
-	(float, 2, 8),
-	(float, 3, 20)
-)
-#pragma warning(default: 26444)
-{
-	constexpr auto vec1 = make_iota_vector<int, VDims>(1);
-	constexpr auto vec2 = make_iota_vector<TOther, VDims>(2);
-
-	constexpr int dotProd = sl::vec::dot_product(vec1, vec2);
-
-	REQUIRE(dotProd == VExpected);
 }
 
 #pragma warning(disable: 26444)
@@ -758,4 +603,79 @@ TEMPLATE_TEST_CASE_SIG
 	const auto normalizedVec = normalized(vec);
 
 	REQUIRE(sl::vec::length(normalizedVec) == Approx(1));
+}
+
+#if __cpp_nontype_template_args >= 201911L
+// well, clang sucks
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"projected should project vector1 onto vector2",
+	"[vector][algorithm]",
+	((auto VSource, auto VTarget, auto VExpected), VSource, VTarget, VExpected),
+	(std::to_array({ 1. }), std::to_array({ 1. }), std::to_array({ 1. })),
+	(std::to_array({ 1. }), std::to_array({ -1. }), std::to_array({ 1. })),
+	(std::to_array({ 1., 1. }), std::to_array({ 2., 0. }), std::to_array({ 1., 0. })),
+	(std::to_array({ 1., 1. }), std::to_array({ -2., 0. }), std::to_array({ 1., 0. })),
+	(std::to_array({ 1., 4. }), std::to_array({ 2., 1. }), std::to_array({ 12./5., 6./5. })),
+	(std::to_array({ 3., 0. }), std::to_array({ 0., 3. }), std::to_array({ 0., 0. })),
+	(std::to_array({ 1., 0., 0. }), std::to_array({ 1., 0., 0. }), std::to_array({ 1., 0., 0. })),
+	(std::to_array({ 1., 1., 1. }), std::to_array({ 0., 5., 5. }), std::to_array({ 0., 1., 1. }))
+)
+#pragma warning(default: 26444)
+{
+	constexpr auto dims = std::size(VSource);
+	using Vector_t = Vector<double, dims>;
+	constexpr Vector_t source{ gen::range{ VSource }};
+	constexpr Vector_t target{ gen::range{ VTarget }};
+	constexpr Vector_t expected{ gen::range{ VExpected }};
+
+	const auto projectedVec = projected(source, target);
+
+	REQUIRE_THAT(projectedVec, approx_range(expected));
+}
+#endif
+
+#if __cpp_nontype_template_args >= 201911L
+// well, clang sucks
+#pragma warning(disable: 26444)
+TEMPLATE_TEST_CASE_SIG
+(
+	"lerp should interpolate between vector1 and vector2",
+	"[vector][algorithm]",
+	((auto VBegin, auto VEnd, auto VLerpValue, auto VExpected), VBegin, VEnd, VLerpValue, VExpected),
+	(std::to_array({ 1. }), std::to_array({ 2 }), 1., std::to_array({ 2. })),
+	(std::to_array({ 1., 2., 3. }), std::to_array({ 3., 2., 1. }), 0.5, std::to_array({ 2., 2., 2. }))
+)
+#pragma warning(default: 26444)
+{
+	constexpr auto dims = std::size(VBegin);
+	using Vector_t = Vector<double, dims>;
+	constexpr Vector_t begin{ gen::range{ VBegin }};
+	constexpr Vector_t end{ gen::range{ VEnd }};
+	constexpr Vector_t expected{ gen::range{ VExpected }};
+
+	constexpr auto lerpedVec = lerp(begin, end, VLerpValue);
+
+	REQUIRE_THAT(lerpedVec, approx_range(expected));
+}
+#endif
+
+TEST_CASE("inversed should compute the inverse of each element", "[vector][algorithm]")
+{
+	const auto [src, expected] = GENERATE
+	(
+		table<Vector<double,
+		3>,
+		Vector<double,
+		3>>({
+			{ Vector{ 1., 1., 1. }, Vector{ 1., 1., 1. } },
+			{ Vector{ 1., 2., 3. }, Vector{ 1., 0.5, 1./3. } },
+			{ Vector{ 1., 2., 0. }, Vector{ 1., 0.5, std::numeric_limits<double>::infinity() } }
+			})
+	);
+
+	const auto inversedVec = inversed(src);
+
+	REQUIRE_THAT(inversedVec, approx_range(expected));
 }
