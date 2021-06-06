@@ -717,7 +717,7 @@ namespace sl::vec
 	}
 
 	/**
-	 * \brief Projects vector onto the target Vector.
+	 * \brief Computes the linear interpolation between both vectors for the parameter t (or extrapolation, when t is outside the range [0,1]).
 	 * \tparam TVector Type of Vector
 	 * \tparam T Type of interpolation distance
 	 * \param vector1 The first Vector
@@ -742,6 +742,28 @@ namespace sl::vec
 			fn::cast_invoke_result<vector_value_t<TVector>>([t](auto a, auto b) { return std::lerp(a, b, t); })
 		);
 		return vector1;
+	}
+
+	/**
+	 * \brief Computes the inverse of the vector (1./v[0], 1./v[1], ...).
+	 * \tparam TVector Type of Vector
+	 * \param vector The Vector to be inversed
+	 * \return newly constructed Vector
+	 */
+	template <vectorial TVector>
+	/** \cond Requires */
+		requires std::floating_point<vector_value_t<TVector>>
+	/** \endcond */
+	[[nodiscard]]
+	constexpr TVector inversed(TVector vector)
+	{
+		transform_unseq
+		(
+			vector,
+			std::ranges::begin(vector),
+			[](auto value) { return 1. / value; }
+		);
+		return vector;
 	}
 
 	/** @}*/
