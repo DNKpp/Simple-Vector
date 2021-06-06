@@ -49,14 +49,6 @@ namespace sl::vec::fn
 		return detail::cast_invoke_result_fn<TTargetType, TFunc>{ std::move(func) };
 	}
 
-	/**
-	 * \brief Function object, which is invokable with an mulable object and returns it multiplied by itself.
-	 */
-	constexpr auto square = [](const mulable auto& value)
-	{
-		return value * value;
-	};
-
 	/** @}*/
 }
 
