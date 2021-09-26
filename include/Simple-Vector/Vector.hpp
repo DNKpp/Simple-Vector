@@ -80,7 +80,8 @@ namespace sl::vec
 		/** \cond Requires */
 			requires (sizeof...(TArgs) == dimensions && (std::convertible_to<TArgs, T> && ...))
 		/** \endcond */
-		constexpr explicit Vector(TArgs&&...args) noexcept :
+		explicit (VDimensions <= 1)
+		constexpr Vector(TArgs&&...args) noexcept :
 			m_Values{ static_cast<T>(args)... }
 		{
 		}
