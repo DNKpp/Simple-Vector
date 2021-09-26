@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['transform_5freduce_5funseq_141',['transform_reduce_unseq',['../d9/d1c/group___algorithm.html#gab72dd9ad8a25559039376bccf54bbf4c',1,'sl::vec::transform_reduce_unseq(TRange &amp;&amp;range, T init, TBinaryOp binaryOp, TUnaryOp unaryOp)'],['../d9/d1c/group___algorithm.html#ga45e9fc086cca6bc797bd30cbe70f4895',1,'sl::vec::transform_reduce_unseq(TRange1 &amp;&amp;range1, TRange2 &amp;&amp;range2, T init, TBinaryOp1 binaryOp1, TBinaryOp2 binaryOp2)']]],
-  ['transform_5funseq_142',['transform_unseq',['../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da',1,'sl::vec::transform_unseq(TRange &amp;&amp;range, TOut result, TUnaryOp unaryOp)'],['../d9/d1c/group___algorithm.html#ga2f9c765e422a425691637e279c238b00',1,'sl::vec::transform_unseq(TRange1 &amp;&amp;range1, TRange2 &amp;&amp;range2, TOut result, TBinaryOp binaryOp)']]]
+  ['_7evector_109',['~Vector',['../da/d30/classsl_1_1vec_1_1_vector.html#ae99635f7f7e1f9f9cc979e130944f293',1,'sl::vec::Vector']]]
 ];

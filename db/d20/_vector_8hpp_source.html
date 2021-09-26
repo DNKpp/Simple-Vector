@@ -126,407 +126,389 @@ $(document).ready(function(){initNavTree('db/d20/_vector_8hpp_source.html','../.
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        template &lt;class... TArgs&gt;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            requires (sizeof...(TArgs) == dimensions &amp;&amp; (std::convertible_to&lt;TArgs, T&gt; &amp;&amp; ...))</div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad489e053e0c332cf39b04d55a044c5c1">   83</a></span>&#160;        constexpr explicit <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>(TArgs&amp;&amp;...args) noexcept :</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            m_Values{ <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(args)... }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2, auto VOtherDimensions&gt;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            requires (!std::same_as&lt;T2, value_type&gt; || dimensions != VOtherDimensions)</div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a820e114eba1e497faba7775fdd2557cf">  102</a></span>&#160;        constexpr explicit <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>(const <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt;T2, VOtherDimensions&gt;&amp; other)</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            (</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                std::ranges::take_view{ other, std::min(dimensions, VOtherDimensions) },</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;(std::identity{})</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            );</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        }</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keyword">template</span> &lt;std::invocable TGenerator&gt;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            requires std::convertible_to&lt;std::invoke_result_t&lt;TGenerator&amp;&gt;, <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&gt;</div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#adf1b7543adb60593e2dbde52d1ff51ad">  127</a></span>&#160;        constexpr <span class="keyword">explicit</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#adf1b7543adb60593e2dbde52d1ff51ad">Vector</a>(TGenerator generator)</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        {</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            std::ranges::generate(m_Values, std::ref(generator));</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        }</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a5b4a30f21d79f2b940764fd12a19904b">  136</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator =(<span class="keyword">const</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp;) noexcept = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a6654bfb43e5b1b04d58e73bed94a689a">  141</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator =(<a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp;&amp;) noexcept = default;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a174389ad9dbd16ca2428fb5240043176">  150</a></span>&#160;        constexpr <span class="keywordtype">bool</span> operator ==(const <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp;) const noexcept = default;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        template &lt;std::integral TIndex&gt;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a3242a9827063caa086dc51f816fb6b59">  162</a></span>&#160;        constexpr const <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; operator [](TIndex index) const noexcept</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        {</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            assert(std::in_range&lt;std::size_t&gt;(index) &amp;&amp; <span class="stringliteral">&quot;index must be in range of type std::size_t&quot;</span>);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            <span class="keywordflow">return</span> m_Values[<span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(index)];</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keyword">template</span> &lt;std::<span class="keywordtype">int</span>egral TIndex&gt;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a8950bc1964de33c715be6c208dae9dd8">  178</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; operator [](TIndex index) noexcept</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        {</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            assert(std::in_range&lt;std::size_t&gt;(index) &amp;&amp; <span class="stringliteral">&quot;index must be in range of type std::size_t&quot;</span>);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <span class="keywordflow">return</span> m_Values[<span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(index)];</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            requires (VDimensions2 == VDimensions)</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a9204ba303e66a76ac28380932e688016">  194</a></span>&#160;        constexpr <span class="keyword">const</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a9204ba303e66a76ac28380932e688016">x</a>() const noexcept { <span class="keywordflow">return</span> m_Values[0]; }</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            requires (VDimensions2 == VDimensions)</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ab2e1d509cff044d38959e613db42083d">  206</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ab2e1d509cff044d38959e613db42083d">x</a>() noexcept { <span class="keywordflow">return</span> m_Values[0]; }</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            requires (1 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#aa33f624c9c5052096c8086a37ae83435">  220</a></span>&#160;        constexpr <span class="keyword">const</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#aa33f624c9c5052096c8086a37ae83435">y</a>() <span class="keyword">const</span> noexcept { <span class="keywordflow">return</span> m_Values[1]; }</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            requires (1 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00234"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#adfce4523172b60f2f2c03a5a327bc4fc">  234</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#adfce4523172b60f2f2c03a5a327bc4fc">y</a>() noexcept { <span class="keywordflow">return</span> m_Values[1]; }</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            requires (2 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00248"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad87f300f727834c128e8a62ace7ca9d0">  248</a></span>&#160;        constexpr <span class="keyword">const</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad87f300f727834c128e8a62ace7ca9d0">z</a>() <span class="keyword">const</span> noexcept { <span class="keywordflow">return</span> m_Values[2]; }</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            requires (2 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a6754f5b8c6da553a580e8f48ae01e3b8">  262</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a>&amp; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a6754f5b8c6da553a580e8f48ae01e3b8">z</a>() noexcept { <span class="keywordflow">return</span> m_Values[2]; }</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ae90c5cdd8fadd0b1eab886eebd44af8b">  271</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator +=(<span class="keyword">const</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector&lt;T2, dimensions&gt;</a>&amp; other)</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        {</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            (</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                m_Values,</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;                other,</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;(std::plus{})</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            );</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        }</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
-<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#aa60787de845488de145f5796266e69b4">  290</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator -=(<span class="keyword">const</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector&lt;T2, dimensions&gt;</a>&amp; other)</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        {</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;            (</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                m_Values,</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                other,</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;(std::minus{})</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            );</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        }</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
-<div class="line"><a name="l00309"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a34d403bdc1456dde7ccb79c3ac518c50">  309</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator +=(<span class="keyword">const</span> T2&amp; value)</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        {</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            (</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                m_Values,</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs + value; })</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            );</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        }</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
-<div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a5e3e30e5765c00f3a73efdb863d77d12">  327</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator -=(<span class="keyword">const</span> T2&amp; value)</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        {</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            (</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                m_Values,</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs - value; })</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;            );</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        }</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
-<div class="line"><a name="l00345"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a11163d11ccdcb5c4789e595acc4ebe0a">  345</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator *=(<span class="keyword">const</span> T2&amp; value)</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        {</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;            (</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;                m_Values,</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs * value; })</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            );</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        }</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
-<div class="line"><a name="l00365"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a988ed10d2b7ca68a8b74dcc346fba263">  365</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator /=(<span class="keyword">const</span> T2&amp; value)</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        {</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;            assert(value != 0 &amp;&amp; <span class="stringliteral">&quot;division by 0 is undefined.&quot;</span>);</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160; </div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;            (</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;                m_Values,</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs / value; })</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;            );</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        }</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;            requires modable&lt;T&gt;</div>
-<div class="line"><a name="l00390"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a40b1468148810acdb9bc6dfc7c2511c7">  390</a></span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&amp; operator %=(<span class="keyword">const</span> T2&amp; rawValue)</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        {</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;            <span class="keyword">const</span> <span class="keyword">auto</span> value = <span class="keyword">static_cast&lt;</span><a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">value_type</a><span class="keyword">&gt;</span>(rawValue);</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;            assert(value != 0 &amp;&amp; <span class="stringliteral">&quot;division by 0 is undefined.&quot;</span>);</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;            (</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;                m_Values,</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;                std::ranges::begin(m_Values),</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;                [value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs % value; }</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;            );</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;        }</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00409"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a585990f8a6e52b06b3ff28a56c723e8a">  409</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a585990f8a6e52b06b3ff28a56c723e8a">begin</a>() noexcept { <span class="keywordflow">return</span> std::ranges::begin(m_Values); }</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00416"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a4018d5b0cd8236aaf1621ea71fa121d6">  416</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a4018d5b0cd8236aaf1621ea71fa121d6">begin</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::begin(m_Values); }</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00423"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#abf1434a8ea4218a54664d7aaea70c93c">  423</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#abf1434a8ea4218a54664d7aaea70c93c">cbegin</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::cbegin(m_Values); }</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00430"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac3b802a07c25fcf9ce1cfac2a4541afe">  430</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac3b802a07c25fcf9ce1cfac2a4541afe">end</a>() noexcept { <span class="keywordflow">return</span> std::ranges::end(m_Values); }</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00437"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad5087af2945f873ac6e2e95d4a23c2fe">  437</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad5087af2945f873ac6e2e95d4a23c2fe">end</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::end(m_Values); }</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00444"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac7f90cff9dad7e2669e04998c547ae58">  444</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac7f90cff9dad7e2669e04998c547ae58">cend</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::cend(m_Values); }</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160; </div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00451"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a587fce59d02f9e8009c8260ace7be2ef">  451</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a587fce59d02f9e8009c8260ace7be2ef">rbegin</a>() noexcept { <span class="keywordflow">return</span> std::ranges::rbegin(m_Values); }</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00458"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a8952471e26cb0d60eb8a0ebac51b0316">  458</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a8952471e26cb0d60eb8a0ebac51b0316">rbegin</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::rbegin(m_Values); }</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00465"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#af6ee917152189c2743aa7e5738246d2d">  465</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#af6ee917152189c2743aa7e5738246d2d">crbegin</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::crbegin(m_Values); }</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160; </div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00472"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac6082e530215e917a1f67acaba219501">  472</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac6082e530215e917a1f67acaba219501">rend</a>() noexcept { <span class="keywordflow">return</span> std::ranges::rend(m_Values); }</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160; </div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00479"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a521b33824d51b9f4ee33f8b6b9ffe168">  479</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a521b33824d51b9f4ee33f8b6b9ffe168">rend</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::rend(m_Values); }</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160; </div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        [[nodiscard]]</div>
-<div class="line"><a name="l00486"></a><span class="lineno"><a class="line" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad05f52379b86db148b1dce679d05dc7c">  486</a></span>&#160;        constexpr <span class="keyword">auto</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad05f52379b86db148b1dce679d05dc7c">crend</a>() const noexcept { <span class="keywordflow">return</span> std::ranges::crend(m_Values); }</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        storage_type m_Values{};</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    };</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160; </div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span>... T&gt;</div>
-<div class="line"><a name="l00497"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">  497</a></span>&#160;    <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>(T&amp;&amp;...) -&gt; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt;std::common_type_t&lt;T...&gt;, <span class="keyword">sizeof</span>...(T)&gt;;</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160; </div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;    <span class="keyword">template</span> &lt;value_type T, std::<span class="keywordtype">size_t</span> VDimensions&gt;</div>
-<div class="line"><a name="l00511"></a><span class="lineno"><a class="line" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html">  511</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="../../d8/d3c/structsl_1_1vec_1_1vector__traits.html">vector_traits</a>&lt;<a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt;T, VDimensions&gt;&gt;</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    {</div>
-<div class="line"><a name="l00513"></a><span class="lineno"><a class="line" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#af162f75783e86156e5da1442938095f7">  513</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#af162f75783e86156e5da1442938095f7">value_type</a> = <span class="keyword">typename</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">Vector&lt;T, VDimensions&gt;::value_type</a>;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160; </div>
-<div class="line"><a name="l00515"></a><span class="lineno"><a class="line" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#a76509b3b35603df244167709c92badd4">  515</a></span>&#160;        <span class="keyword">static</span> constexpr std::size_t dimensions = <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector&lt;T, VDimensions&gt;::dimensions</a>;</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;    };</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160; </div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    <span class="keyword">template</span> &lt;value_type T, auto VDimensions&gt;</div>
-<div class="line"><a name="l00524"></a><span class="lineno"><a class="line" href="../../d6/d08/structsl_1_1vec_1_1is__vectorial_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html">  524</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="../../dc/de6/structsl_1_1vec_1_1is__vectorial.html">is_vectorial</a>&lt;<a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt;T, VDimensions&gt;&gt; : std::true_type</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;    {</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    };</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160; </div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, add_assignable&lt;TVector&gt; T2&gt;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00544"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaeb90b4fa2156b804a938b62ef70efd1a">  544</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaeb90b4fa2156b804a938b62ef70efd1a">operator +</a>(TVector lhs, T2&amp;&amp; rhs)</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;    {</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;        lhs += std::forward&lt;T2&gt;(rhs);</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;    }</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160; </div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, sub_assignable&lt;TVector&gt; T2&gt;</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00560"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0">  560</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0">operator -</a>(TVector lhs, T2&amp;&amp; rhs)</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;    {</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;        lhs -= std::forward&lt;T2&gt;(rhs);</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;    }</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160; </div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, mul_assignable&lt;TVector&gt; T2&gt;</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00576"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">  576</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">operator *</a>(TVector lhs, T2&amp;&amp; rhs)</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;    {</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;        lhs *= std::forward&lt;T2&gt;(rhs);</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;    }</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160; </div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, mul_assignable&lt;TVector&gt; T2&gt;</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00592"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga6c26c115dbf4d90f4a3190f3e2a99dfb">  592</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">operator *</a>(T2&amp;&amp; lhs, TVector rhs)</div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;    {</div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;        rhs *= std::forward&lt;T2&gt;(lhs);</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;        <span class="keywordflow">return</span> rhs;</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;    }</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160; </div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, div_assignable&lt;TVector&gt; T2&gt;</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00608"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaa826e57202f17512e33643189818cb21">  608</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaa826e57202f17512e33643189818cb21">operator /</a>(TVector lhs, T2&amp;&amp; rhs)</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;    {</div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;        lhs /= std::forward&lt;T2&gt;(rhs);</div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;    }</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160; </div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, mod_assignable&lt;TVector&gt; T2&gt;</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00624"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga75a45fcf2c522356e30941f2dc720362">  624</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#ga75a45fcf2c522356e30941f2dc720362">operator %</a>(TVector lhs, T2&amp;&amp; rhs)</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;    {</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;        lhs %= std::forward&lt;T2&gt;(rhs);</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;    }</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160; </div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector1, vectorial TVector2&gt;</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;        requires mulable&lt;vector_value_t&lt;TVector2&gt;, vector_value_t&lt;TVector1&gt;&gt;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00643"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">  643</a></span>&#160;    constexpr <a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector1&gt;</a> <a class="code" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">dot_product</a>(<span class="keyword">const</span> TVector1&amp; lhs, <span class="keyword">const</span> TVector2&amp; rhs)</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;    {</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;        <span class="keyword">using</span> T = <a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector1&gt;</a>;</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../d9/d1c/group___algorithm.html#gab72dd9ad8a25559039376bccf54bbf4c">transform_reduce_unseq</a></div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;        (</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;            lhs,</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;            rhs,</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;            T{},</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;            std::plus{},</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;            fn::cast_invoke_result&lt;T&gt;(std::multiplies{})</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;        );</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;    }</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160; </div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00664"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">  664</a></span>&#160;    constexpr <a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector&gt;</a> <a class="code" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">length_squared</a>(<span class="keyword">const</span> TVector&amp; vector)</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;    {</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">dot_product</a>(vector, vector);</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    }</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160; </div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00679"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">  679</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">length</a>(<span class="keyword">const</span> TVector&amp; vector) { <span class="keywordflow">return</span> std::sqrt(<a class="code" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">length_squared</a>(vector)); }</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160; </div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;        requires std::floating_point&lt;vector_value_t&lt;TVector&gt;&gt;</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00692"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaee726b2ac1c998aada265af6a4d4cdd7">  692</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaee726b2ac1c998aada265af6a4d4cdd7">normalized</a>(TVector vec)</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;    {</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;        assert(vec != TVector{});</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160; </div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;        <span class="keywordflow">return</span> vec /= <a class="code" href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">length</a>(vec);</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;    }</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160; </div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00708"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083">  708</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083">projected</a>(<span class="keyword">const</span> TVector&amp; vector, TVector target)</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;    {</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;        assert(vector != TVector{} &amp;&amp; <span class="stringliteral">&quot;vector must not be the null vector.&quot;</span>);</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;        assert(target != TVector{} &amp;&amp; <span class="stringliteral">&quot;target must not be the null vector.&quot;</span>);</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> dot = <a class="code" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">dot_product</a>(vector, target);</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> targetLengthSq = <a class="code" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">length_squared</a>(target);</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;        target *= (dot / targetLengthSq);</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;        <span class="keywordflow">return</span> target;</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;    }</div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, <span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;        requires std::is_arithmetic_v&lt;T&gt;</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00735"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">  735</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">lerp</a>(TVector vector1, <span class="keyword">const</span> TVector&amp; vector2, T t)</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;    {</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;        <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;        (</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;            vector1,</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;            vector2,</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;            std::ranges::begin(vector1),</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;            <a class="code" href="../../d3/d7a/group___functional.html#gab24099ab5cf3968aa1170f5052226be6">fn::cast_invoke_result</a>&lt;<a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector&gt;</a>&gt;([t](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) { <span class="keywordflow">return</span> <a class="code" href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">std::lerp</a>(a, b, t); })</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;        );</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;        <span class="keywordflow">return</span> vector1;</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;    }</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160; </div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;        requires std::floating_point&lt;vector_value_t&lt;TVector&gt;&gt;</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;    [[nodiscard]]</div>
-<div class="line"><a name="l00758"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79">  758</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79">inversed</a>(TVector vector)</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;    {</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;        <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;        (</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;            vector,</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;            std::ranges::begin(vector),</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;            [](<span class="keyword">auto</span> value) { <span class="keywordflow">return</span> 1. / value; }</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;        );</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;        <span class="keywordflow">return</span> vector;</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;    }</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;}</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160; </div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        explicit (VDimensions &lt;= 1)</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        constexpr <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>(TArgs&amp;&amp;...args) noexcept :</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            m_Values{ <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(args)... }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2, auto VOtherDimensions&gt;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            requires (!std::same_as&lt;T2, value_type&gt; || dimensions != VOtherDimensions)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        constexpr <span class="keyword">explicit</span> <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>(<span class="keyword">const</span> Vector&lt;T2, VOtherDimensions&gt;&amp; other)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            (</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                std::ranges::take_view{ other, std::min(dimensions, VOtherDimensions) },</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;(std::identity{})</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            );</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keyword">template</span> &lt;std::invocable TGenerator&gt;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            requires std::convertible_to&lt;std::invoke_result_t&lt;TGenerator&amp;&gt;, <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&gt;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        constexpr <span class="keyword">explicit</span> <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>(TGenerator generator)</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        {</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            std::ranges::generate(m_Values, std::ref(generator));</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator =(<span class="keyword">const</span> <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp;) noexcept = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator =(<a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp;&amp;) noexcept = default;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        constexpr <span class="keywordtype">bool</span> operator ==(const <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp;) const noexcept = default;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        template &lt;std::integral TIndex&gt;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        constexpr const <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; operator [](TIndex index) const noexcept</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        {</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            assert(std::in_range&lt;std::size_t&gt;(index) &amp;&amp; <span class="stringliteral">&quot;index must be in range of type std::size_t&quot;</span>);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="keywordflow">return</span> m_Values[<span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(index)];</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        }</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keyword">template</span> &lt;std::<span class="keywordtype">int</span>egral TIndex&gt;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        constexpr <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; operator [](TIndex index) noexcept</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        {</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            assert(std::in_range&lt;std::size_t&gt;(index) &amp;&amp; <span class="stringliteral">&quot;index must be in range of type std::size_t&quot;</span>);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="keywordflow">return</span> m_Values[<span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(index)];</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            requires (VDimensions2 == VDimensions)</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        constexpr <span class="keyword">const</span> <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; x() const noexcept { <span class="keywordflow">return</span> m_Values[0]; }</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            requires (VDimensions2 == VDimensions)</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        constexpr <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; x() noexcept { <span class="keywordflow">return</span> m_Values[0]; }</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            requires (1 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        constexpr <span class="keyword">const</span> <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; y() <span class="keyword">const</span> noexcept { <span class="keywordflow">return</span> m_Values[1]; }</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            requires (1 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        constexpr <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; y() noexcept { <span class="keywordflow">return</span> m_Values[1]; }</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            requires (2 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        constexpr <span class="keyword">const</span> <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; z() <span class="keyword">const</span> noexcept { <span class="keywordflow">return</span> m_Values[2]; }</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        <span class="keyword">template</span> &lt;auto VDimensions2 = VDimensions&gt;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            requires (2 &lt; VDimensions) &amp;&amp; (VDimensions2 == VDimensions)</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        constexpr <a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a>&amp; z() noexcept { <span class="keywordflow">return</span> m_Values[2]; }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator +=(<span class="keyword">const</span> Vector&lt;T2, dimensions&gt;&amp; other)</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        {</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            (</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;                m_Values,</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;                other,</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;(std::plus{})</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            );</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        }</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator -=(<span class="keyword">const</span> Vector&lt;T2, dimensions&gt;&amp; other)</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;            (</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                m_Values,</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                other,</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;(std::minus{})</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;            );</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        }</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator +=(<span class="keyword">const</span> T2&amp; value)</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        {</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            (</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                m_Values,</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs + value; })</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            );</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        }</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator -=(<span class="keyword">const</span> T2&amp; value)</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        {</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;            (</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                m_Values,</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs - value; })</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;            );</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator *=(<span class="keyword">const</span> T2&amp; value)</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        {</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;            (</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;                m_Values,</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs * value; })</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;            );</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        }</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator /=(<span class="keyword">const</span> T2&amp; value)</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        {</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;            assert(value != 0 &amp;&amp; <span class="stringliteral">&quot;division by 0 is undefined.&quot;</span>);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160; </div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;            (</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;                m_Values,</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;                fn::cast_invoke_result&lt;value_type&gt;([&amp;value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs / value; })</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;            );</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        }</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160; </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <span class="keyword">template</span> &lt;std::convertible_to&lt;value_type&gt; T2&gt;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;            requires modable&lt;T&gt;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        constexpr <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>&amp; operator %=(<span class="keyword">const</span> T2&amp; rawValue)</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        {</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;            <span class="keyword">const</span> <span class="keyword">auto</span> value = <span class="keyword">static_cast&lt;</span><a class="code" href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">value_type</a><span class="keyword">&gt;</span>(rawValue);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;            assert(value != 0 &amp;&amp; <span class="stringliteral">&quot;division by 0 is undefined.&quot;</span>);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;            <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;            (</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;                m_Values,</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;                std::ranges::begin(m_Values),</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;                [value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; lhs) { <span class="keywordflow">return</span> lhs % value; }</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;            );</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;        }</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160; </div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;        constexpr <span class="keyword">auto</span> begin() noexcept { <span class="keywordflow">return</span> std::ranges::begin(m_Values); }</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160; </div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        constexpr <span class="keyword">auto</span> begin() const noexcept { <span class="keywordflow">return</span> std::ranges::begin(m_Values); }</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;        constexpr <span class="keyword">auto</span> cbegin() const noexcept { <span class="keywordflow">return</span> std::ranges::cbegin(m_Values); }</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;        constexpr <span class="keyword">auto</span> end() noexcept { <span class="keywordflow">return</span> std::ranges::end(m_Values); }</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        constexpr <span class="keyword">auto</span> end() const noexcept { <span class="keywordflow">return</span> std::ranges::end(m_Values); }</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;        constexpr <span class="keyword">auto</span> cend() const noexcept { <span class="keywordflow">return</span> std::ranges::cend(m_Values); }</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160; </div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;        constexpr <span class="keyword">auto</span> rbegin() noexcept { <span class="keywordflow">return</span> std::ranges::rbegin(m_Values); }</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160; </div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;        constexpr <span class="keyword">auto</span> rbegin() const noexcept { <span class="keywordflow">return</span> std::ranges::rbegin(m_Values); }</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160; </div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;        constexpr <span class="keyword">auto</span> crbegin() const noexcept { <span class="keywordflow">return</span> std::ranges::crbegin(m_Values); }</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160; </div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;        constexpr <span class="keyword">auto</span> rend() noexcept { <span class="keywordflow">return</span> std::ranges::rend(m_Values); }</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        constexpr <span class="keyword">auto</span> rend() const noexcept { <span class="keywordflow">return</span> std::ranges::rend(m_Values); }</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160; </div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;        [[nodiscard]]</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;        constexpr <span class="keyword">auto</span> crend() const noexcept { <span class="keywordflow">return</span> std::ranges::crend(m_Values); }</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160; </div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;        storage_type m_Values{};</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    };</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160; </div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span>... T&gt;</div>
+<div class="line"><a name="l00498"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">  498</a></span>&#160;    <a class="code" href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">Vector</a>(T&amp;&amp;...) -&gt; <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt;std::common_type_t&lt;T...&gt;, <span class="keyword">sizeof</span>...(T)&gt;;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160; </div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;    <span class="keyword">template</span> &lt;value_type T, std::<span class="keywordtype">size_t</span> VDimensions&gt;</div>
+<div class="line"><a name="l00512"></a><span class="lineno"><a class="line" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html">  512</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="../../d8/d3c/structsl_1_1vec_1_1vector__traits.html">vector_traits</a>&lt;<a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt;T, VDimensions&gt;&gt;</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;    {</div>
+<div class="line"><a name="l00514"></a><span class="lineno"><a class="line" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#af162f75783e86156e5da1442938095f7">  514</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#af162f75783e86156e5da1442938095f7">value_type</a> = <span class="keyword">typename</span> <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">Vector&lt;T, VDimensions&gt;::value_type</a>;</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160; </div>
+<div class="line"><a name="l00516"></a><span class="lineno"><a class="line" href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#a76509b3b35603df244167709c92badd4">  516</a></span>&#160;        <span class="keyword">static</span> constexpr std::size_t dimensions = <a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector&lt;T, VDimensions&gt;::dimensions</a>;</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    };</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160; </div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    <span class="keyword">template</span> &lt;value_type T, auto VDimensions&gt;</div>
+<div class="line"><a name="l00525"></a><span class="lineno"><a class="line" href="../../d6/d08/structsl_1_1vec_1_1is__vectorial_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html">  525</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="../../dc/de6/structsl_1_1vec_1_1is__vectorial.html">is_vectorial</a>&lt;<a class="code" href="../../da/d30/classsl_1_1vec_1_1_vector.html">Vector</a>&lt;T, VDimensions&gt;&gt; : std::true_type</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    {</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    };</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160; </div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, add_assignable&lt;TVector&gt; T2&gt;</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00545"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaeb90b4fa2156b804a938b62ef70efd1a">  545</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaeb90b4fa2156b804a938b62ef70efd1a">operator +</a>(TVector lhs, T2&amp;&amp; rhs)</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;    {</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        lhs += std::forward&lt;T2&gt;(rhs);</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;    }</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160; </div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, sub_assignable&lt;TVector&gt; T2&gt;</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00561"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0">  561</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0">operator -</a>(TVector lhs, T2&amp;&amp; rhs)</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;    {</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;        lhs -= std::forward&lt;T2&gt;(rhs);</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;    }</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160; </div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, mul_assignable&lt;TVector&gt; T2&gt;</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00577"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">  577</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">operator *</a>(TVector lhs, T2&amp;&amp; rhs)</div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;    {</div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;        lhs *= std::forward&lt;T2&gt;(rhs);</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;    }</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160; </div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, mul_assignable&lt;TVector&gt; T2&gt;</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00593"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga6c26c115dbf4d90f4a3190f3e2a99dfb">  593</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">operator *</a>(T2&amp;&amp; lhs, TVector rhs)</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;    {</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;        rhs *= std::forward&lt;T2&gt;(lhs);</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;        <span class="keywordflow">return</span> rhs;</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;    }</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160; </div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, div_assignable&lt;TVector&gt; T2&gt;</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00609"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaa826e57202f17512e33643189818cb21">  609</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaa826e57202f17512e33643189818cb21">operator /</a>(TVector lhs, T2&amp;&amp; rhs)</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;    {</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;        lhs /= std::forward&lt;T2&gt;(rhs);</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;    }</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160; </div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, mod_assignable&lt;TVector&gt; T2&gt;</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00625"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga75a45fcf2c522356e30941f2dc720362">  625</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#ga75a45fcf2c522356e30941f2dc720362">operator %</a>(TVector lhs, T2&amp;&amp; rhs)</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;    {</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;        lhs %= std::forward&lt;T2&gt;(rhs);</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;        <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;    }</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160; </div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector1, vectorial TVector2&gt;</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;        requires mulable&lt;vector_value_t&lt;TVector2&gt;, vector_value_t&lt;TVector1&gt;&gt;</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00644"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">  644</a></span>&#160;    constexpr <a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector1&gt;</a> <a class="code" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">dot_product</a>(<span class="keyword">const</span> TVector1&amp; lhs, <span class="keyword">const</span> TVector2&amp; rhs)</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;    {</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;        <span class="keyword">using</span> T = <a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector1&gt;</a>;</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../d9/d1c/group___algorithm.html#gab72dd9ad8a25559039376bccf54bbf4c">transform_reduce_unseq</a></div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;        (</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;            lhs,</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;            rhs,</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;            T{},</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;            std::plus{},</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;            fn::cast_invoke_result&lt;T&gt;(std::multiplies{})</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;        );</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;    }</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160; </div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00665"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">  665</a></span>&#160;    constexpr <a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector&gt;</a> <a class="code" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">length_squared</a>(<span class="keyword">const</span> TVector&amp; vector)</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;    {</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">dot_product</a>(vector, vector);</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;    }</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160; </div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00680"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">  680</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">length</a>(<span class="keyword">const</span> TVector&amp; vector) { <span class="keywordflow">return</span> std::sqrt(<a class="code" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">length_squared</a>(vector)); }</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160; </div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;        requires std::floating_point&lt;vector_value_t&lt;TVector&gt;&gt;</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00693"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaee726b2ac1c998aada265af6a4d4cdd7">  693</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaee726b2ac1c998aada265af6a4d4cdd7">normalized</a>(TVector vec)</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;    {</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;        assert(vec != TVector{});</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160; </div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;        <span class="keywordflow">return</span> vec /= <a class="code" href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">length</a>(vec);</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;    }</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160; </div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00709"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083">  709</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083">projected</a>(<span class="keyword">const</span> TVector&amp; vector, TVector target)</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    {</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;        assert(vector != TVector{} &amp;&amp; <span class="stringliteral">&quot;vector must not be the null vector.&quot;</span>);</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;        assert(target != TVector{} &amp;&amp; <span class="stringliteral">&quot;target must not be the null vector.&quot;</span>);</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> dot = <a class="code" href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">dot_product</a>(vector, target);</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> targetLengthSq = <a class="code" href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">length_squared</a>(target);</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;        target *= (dot / targetLengthSq);</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;        <span class="keywordflow">return</span> target;</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;    }</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160; </div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector, <span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;        requires std::is_arithmetic_v&lt;T&gt;</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00736"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">  736</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">lerp</a>(TVector vector1, <span class="keyword">const</span> TVector&amp; vector2, T t)</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;    {</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;        <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;        (</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;            vector1,</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;            vector2,</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;            std::ranges::begin(vector1),</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;            <a class="code" href="../../d3/d7a/group___functional.html#gab24099ab5cf3968aa1170f5052226be6">fn::cast_invoke_result</a>&lt;<a class="code" href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">vector_value_t&lt;TVector&gt;</a>&gt;([t](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) { <span class="keywordflow">return</span> <a class="code" href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">std::lerp</a>(a, b, t); })</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;        );</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;        <span class="keywordflow">return</span> vector1;</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    }</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160; </div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;    <span class="keyword">template</span> &lt;vectorial TVector&gt;</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;        requires std::floating_point&lt;vector_value_t&lt;TVector&gt;&gt;</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;    [[nodiscard]]</div>
+<div class="line"><a name="l00759"></a><span class="lineno"><a class="line" href="../../dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79">  759</a></span>&#160;    constexpr TVector <a class="code" href="../../dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79">inversed</a>(TVector vector)</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;    {</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;        <a class="code" href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">transform_unseq</a></div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;        (</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;            vector,</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;            std::ranges::begin(vector),</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;            [](<span class="keyword">auto</span> value) { <span class="keywordflow">return</span> 1. / value; }</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;        );</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;        <span class="keywordflow">return</span> vector;</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;    }</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160; </div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;}</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160; </div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_algorithm_8hpp_html"><div class="ttname"><a href="../../dc/d83/_algorithm_8hpp.html">Algorithm.hpp</a></div></div>
 <div class="ttc" id="a_concepts_8hpp_html"><div class="ttname"><a href="../../d9/db9/_concepts_8hpp.html">Concepts.hpp</a></div></div>
 <div class="ttc" id="a_functional_8hpp_html"><div class="ttname"><a href="../../de/d99/_functional_8hpp.html">Functional.hpp</a></div></div>
 <div class="ttc" id="aclasssl_1_1vec_1_1_vector_html"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html">sl::vec::Vector</a></div><div class="ttdoc">A mathematically vector implementation.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:39</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a4018d5b0cd8236aaf1621ea71fa121d6"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a4018d5b0cd8236aaf1621ea71fa121d6">sl::vec::Vector::begin</a></div><div class="ttdeci">constexpr auto begin() const noexcept</div><div class="ttdoc">Returns an const iterator to the first element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:416</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a521b33824d51b9f4ee33f8b6b9ffe168"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a521b33824d51b9f4ee33f8b6b9ffe168">sl::vec::Vector::rend</a></div><div class="ttdeci">constexpr auto rend() const noexcept</div><div class="ttdoc">Returns an const iterator to the reverse-end of the given range (i.e. the element before the first el...</div><div class="ttdef"><b>Definition:</b> Vector.hpp:479</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a585990f8a6e52b06b3ff28a56c723e8a"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a585990f8a6e52b06b3ff28a56c723e8a">sl::vec::Vector::begin</a></div><div class="ttdeci">constexpr auto begin() noexcept</div><div class="ttdoc">Returns an iterator to the first element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:409</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a587fce59d02f9e8009c8260ace7be2ef"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a587fce59d02f9e8009c8260ace7be2ef">sl::vec::Vector::rbegin</a></div><div class="ttdeci">constexpr auto rbegin() noexcept</div><div class="ttdoc">Returns an iterator to the reverse-beginning.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:451</div></div>
 <div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a60936ceef385b70c3190c6c0f00ea415"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a60936ceef385b70c3190c6c0f00ea415">sl::vec::Vector::storage_type</a></div><div class="ttdeci">std::array&lt; value_type, dimensions &gt; storage_type</div><div class="ttdoc">Used storage type.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:52</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a6754f5b8c6da553a580e8f48ae01e3b8"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a6754f5b8c6da553a580e8f48ae01e3b8">sl::vec::Vector::z</a></div><div class="ttdeci">constexpr value_type &amp; z() noexcept</div><div class="ttdoc">Accesses the third element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:262</div></div>
 <div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a712ec2bcdc0cdb3d3e1e24aee2ecad82"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a712ec2bcdc0cdb3d3e1e24aee2ecad82">sl::vec::Vector::value_type</a></div><div class="ttdeci">std::remove_cvref_t&lt; T &gt; value_type</div><div class="ttdoc">Alias for T, but without modifiers.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:48</div></div>
 <div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a7615b7e64f37157cecd64f9f7af2d87a"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a7615b7e64f37157cecd64f9f7af2d87a">sl::vec::Vector::Vector</a></div><div class="ttdeci">constexpr Vector() noexcept=default</div><div class="ttdoc">Default constructor.</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a8952471e26cb0d60eb8a0ebac51b0316"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a8952471e26cb0d60eb8a0ebac51b0316">sl::vec::Vector::rbegin</a></div><div class="ttdeci">constexpr auto rbegin() const noexcept</div><div class="ttdoc">Returns an const iterator to the reverse-beginning.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:458</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_a9204ba303e66a76ac28380932e688016"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#a9204ba303e66a76ac28380932e688016">sl::vec::Vector::x</a></div><div class="ttdeci">constexpr const value_type &amp; x() const noexcept</div><div class="ttdoc">Accesses the first element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:194</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_aa33f624c9c5052096c8086a37ae83435"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#aa33f624c9c5052096c8086a37ae83435">sl::vec::Vector::y</a></div><div class="ttdeci">constexpr const value_type &amp; y() const noexcept</div><div class="ttdoc">Accesses the second element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:220</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_ab2e1d509cff044d38959e613db42083d"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ab2e1d509cff044d38959e613db42083d">sl::vec::Vector::x</a></div><div class="ttdeci">constexpr value_type &amp; x() noexcept</div><div class="ttdoc">Accesses the first element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:206</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_abf1434a8ea4218a54664d7aaea70c93c"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#abf1434a8ea4218a54664d7aaea70c93c">sl::vec::Vector::cbegin</a></div><div class="ttdeci">constexpr auto cbegin() const noexcept</div><div class="ttdoc">Returns an const iterator to the first element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:423</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_ac3b802a07c25fcf9ce1cfac2a4541afe"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac3b802a07c25fcf9ce1cfac2a4541afe">sl::vec::Vector::end</a></div><div class="ttdeci">constexpr auto end() noexcept</div><div class="ttdoc">Returns an iterator to the end (i.e. the element after the last element).</div><div class="ttdef"><b>Definition:</b> Vector.hpp:430</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_ac6082e530215e917a1f67acaba219501"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac6082e530215e917a1f67acaba219501">sl::vec::Vector::rend</a></div><div class="ttdeci">constexpr auto rend() noexcept</div><div class="ttdoc">Returns an iterator to the reverse-end of the given range (i.e. the element before the first element)...</div><div class="ttdef"><b>Definition:</b> Vector.hpp:472</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_ac7f90cff9dad7e2669e04998c547ae58"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ac7f90cff9dad7e2669e04998c547ae58">sl::vec::Vector::cend</a></div><div class="ttdeci">constexpr auto cend() const noexcept</div><div class="ttdoc">Returns an const iterator to the end (i.e. the element after the last element).</div><div class="ttdef"><b>Definition:</b> Vector.hpp:444</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_ad05f52379b86db148b1dce679d05dc7c"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad05f52379b86db148b1dce679d05dc7c">sl::vec::Vector::crend</a></div><div class="ttdeci">constexpr auto crend() const noexcept</div><div class="ttdoc">Returns an const iterator to the reverse-end of the given range (i.e. the element before the first el...</div><div class="ttdef"><b>Definition:</b> Vector.hpp:486</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_ad5087af2945f873ac6e2e95d4a23c2fe"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad5087af2945f873ac6e2e95d4a23c2fe">sl::vec::Vector::end</a></div><div class="ttdeci">constexpr auto end() const noexcept</div><div class="ttdoc">Returns an const iterator to the end (i.e. the element after the last element).</div><div class="ttdef"><b>Definition:</b> Vector.hpp:437</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_ad87f300f727834c128e8a62ace7ca9d0"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#ad87f300f727834c128e8a62ace7ca9d0">sl::vec::Vector::z</a></div><div class="ttdeci">constexpr const value_type &amp; z() const noexcept</div><div class="ttdoc">Accesses the third element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:248</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_adf1b7543adb60593e2dbde52d1ff51ad"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#adf1b7543adb60593e2dbde52d1ff51ad">sl::vec::Vector::Vector</a></div><div class="ttdeci">constexpr Vector(TGenerator generator)</div><div class="ttdoc">Initializes each element with invocation results of the given generator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:127</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_adfce4523172b60f2f2c03a5a327bc4fc"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#adfce4523172b60f2f2c03a5a327bc4fc">sl::vec::Vector::y</a></div><div class="ttdeci">constexpr value_type &amp; y() noexcept</div><div class="ttdoc">Accesses the second element.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:234</div></div>
-<div class="ttc" id="aclasssl_1_1vec_1_1_vector_html_af6ee917152189c2743aa7e5738246d2d"><div class="ttname"><a href="../../da/d30/classsl_1_1vec_1_1_vector.html#af6ee917152189c2743aa7e5738246d2d">sl::vec::Vector::crbegin</a></div><div class="ttdeci">constexpr auto crbegin() const noexcept</div><div class="ttdoc">Returns an const iterator to the reverse-beginning.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:465</div></div>
 <div class="ttc" id="agroup___algorithm_html_ga49ebc6b5d149308482f42b40f17ea9da"><div class="ttname"><a href="../../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da">sl::vec::transform_unseq</a></div><div class="ttdeci">constexpr void transform_unseq(TRange &amp;&amp;range, TOut result, TUnaryOp unaryOp)</div><div class="ttdoc">Applies the given unary operation to each element and writes into result.</div><div class="ttdef"><b>Definition:</b> Algorithm.hpp:52</div></div>
 <div class="ttc" id="agroup___algorithm_html_gab72dd9ad8a25559039376bccf54bbf4c"><div class="ttname"><a href="../../d9/d1c/group___algorithm.html#gab72dd9ad8a25559039376bccf54bbf4c">sl::vec::transform_reduce_unseq</a></div><div class="ttdeci">constexpr T transform_reduce_unseq(TRange &amp;&amp;range, T init, TBinaryOp binaryOp, TUnaryOp unaryOp)</div><div class="ttdoc">Applies the unaryOp to each elements from the range and reduces the results (possibly permuted and ag...</div><div class="ttdef"><b>Definition:</b> Algorithm.hpp:169</div></div>
 <div class="ttc" id="agroup___concepts_html_ga2e88be6b52b8902ae0fe4cfdbdcbfdf6"><div class="ttname"><a href="../../dd/db9/group___concepts.html#ga2e88be6b52b8902ae0fe4cfdbdcbfdf6">sl::vec::value_type</a></div><div class="ttdeci">concept value_type</div><div class="ttdoc">Checks if the given type is regular and can be used in common arithmetically operations.</div><div class="ttdef"><b>Definition:</b> Concepts.hpp:162</div></div>
 <div class="ttc" id="agroup___functional_html_gab24099ab5cf3968aa1170f5052226be6"><div class="ttname"><a href="../../d3/d7a/group___functional.html#gab24099ab5cf3968aa1170f5052226be6">sl::vec::fn::cast_invoke_result</a></div><div class="ttdeci">constexpr auto cast_invoke_result(TFunc func) noexcept</div><div class="ttdoc">Factory function creating a wrapper function object, which invokes the provided function object and c...</div><div class="ttdef"><b>Definition:</b> Functional.hpp:47</div></div>
 <div class="ttc" id="agroup___type_traits_html_ga665271e3c6d337f71fc0cefbb50d9a84"><div class="ttname"><a href="../../d7/de6/group___type_traits.html#ga665271e3c6d337f71fc0cefbb50d9a84">sl::vec::vector_value_t</a></div><div class="ttdeci">typename vector_traits&lt; std::remove_cvref_t&lt; T &gt; &gt;::value_type vector_value_t</div><div class="ttdoc">Convenience alias type to the value_type of Vectors.</div><div class="ttdef"><b>Definition:</b> Concepts.hpp:188</div></div>
-<div class="ttc" id="agroup___vector_html_ga2dc2a8f0a2ce4ef44ed0f5874155b2c0"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0">sl::vec::operator-</a></div><div class="ttdeci">constexpr TVector operator-(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Minus operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:560</div></div>
-<div class="ttc" id="agroup___vector_html_ga3bad15a73c34d317a219aec78bf44a95"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">sl::vec::lerp</a></div><div class="ttdeci">constexpr TVector lerp(TVector vector1, const TVector &amp;vector2, T t)</div><div class="ttdoc">Computes the linear interpolation between both vectors for the parameter t (or extrapolation,...</div><div class="ttdef"><b>Definition:</b> Vector.hpp:735</div></div>
-<div class="ttc" id="agroup___vector_html_ga601a2f886d2a92c01bbc99cac50e57a7"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">sl::vec::length</a></div><div class="ttdeci">constexpr auto length(const TVector &amp;vector)</div><div class="ttdoc">Calculates the length of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:679</div></div>
-<div class="ttc" id="agroup___vector_html_ga75a45fcf2c522356e30941f2dc720362"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga75a45fcf2c522356e30941f2dc720362">sl::vec::operator%</a></div><div class="ttdeci">constexpr TVector operator%(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Modulo operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:624</div></div>
-<div class="ttc" id="agroup___vector_html_ga8d9c74aeee83cc8d64b2c235e03c099c"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">sl::vec::length_squared</a></div><div class="ttdeci">constexpr vector_value_t&lt; TVector &gt; length_squared(const TVector &amp;vector)</div><div class="ttdoc">Calculates the squared length of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:664</div></div>
-<div class="ttc" id="agroup___vector_html_ga93c9bc6c92625a71719b720117647c42"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">sl::vec::dot_product</a></div><div class="ttdeci">constexpr vector_value_t&lt; TVector1 &gt; dot_product(const TVector1 &amp;lhs, const TVector2 &amp;rhs)</div><div class="ttdoc">Calculates the dot product of to Vectors.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:643</div></div>
+<div class="ttc" id="agroup___vector_html_ga2dc2a8f0a2ce4ef44ed0f5874155b2c0"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga2dc2a8f0a2ce4ef44ed0f5874155b2c0">sl::vec::operator-</a></div><div class="ttdeci">constexpr TVector operator-(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Minus operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:561</div></div>
+<div class="ttc" id="agroup___vector_html_ga3bad15a73c34d317a219aec78bf44a95"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga3bad15a73c34d317a219aec78bf44a95">sl::vec::lerp</a></div><div class="ttdeci">constexpr TVector lerp(TVector vector1, const TVector &amp;vector2, T t)</div><div class="ttdoc">Computes the linear interpolation between both vectors for the parameter t (or extrapolation,...</div><div class="ttdef"><b>Definition:</b> Vector.hpp:736</div></div>
+<div class="ttc" id="agroup___vector_html_ga601a2f886d2a92c01bbc99cac50e57a7"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga601a2f886d2a92c01bbc99cac50e57a7">sl::vec::length</a></div><div class="ttdeci">constexpr auto length(const TVector &amp;vector)</div><div class="ttdoc">Calculates the length of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:680</div></div>
+<div class="ttc" id="agroup___vector_html_ga75a45fcf2c522356e30941f2dc720362"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga75a45fcf2c522356e30941f2dc720362">sl::vec::operator%</a></div><div class="ttdeci">constexpr TVector operator%(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Modulo operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:625</div></div>
+<div class="ttc" id="agroup___vector_html_ga8d9c74aeee83cc8d64b2c235e03c099c"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga8d9c74aeee83cc8d64b2c235e03c099c">sl::vec::length_squared</a></div><div class="ttdeci">constexpr vector_value_t&lt; TVector &gt; length_squared(const TVector &amp;vector)</div><div class="ttdoc">Calculates the squared length of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:665</div></div>
+<div class="ttc" id="agroup___vector_html_ga93c9bc6c92625a71719b720117647c42"><div class="ttname"><a href="../../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42">sl::vec::dot_product</a></div><div class="ttdeci">constexpr vector_value_t&lt; TVector1 &gt; dot_product(const TVector1 &amp;lhs, const TVector2 &amp;rhs)</div><div class="ttdoc">Calculates the dot product of to Vectors.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:644</div></div>
 <div class="ttc" id="agroup___vector_html_gaa431e7db3b0957e9d4784f47a2d3798f"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaa431e7db3b0957e9d4784f47a2d3798f">sl::vec::Vector</a></div><div class="ttdeci">Vector(T &amp;&amp;...) -&gt; Vector&lt; std::common_type_t&lt; T... &gt;, sizeof...(T)&gt;</div><div class="ttdoc">Vector deduction guide to make aggregate-like construction easier.</div></div>
-<div class="ttc" id="agroup___vector_html_gaa826e57202f17512e33643189818cb21"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaa826e57202f17512e33643189818cb21">sl::vec::operator/</a></div><div class="ttdeci">constexpr TVector operator/(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:608</div></div>
-<div class="ttc" id="agroup___vector_html_gaae1a660816c21d6ed2b4ce52aca14083"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083">sl::vec::projected</a></div><div class="ttdeci">constexpr TVector projected(const TVector &amp;vector, TVector target)</div><div class="ttdoc">Projects vector onto the target Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:708</div></div>
-<div class="ttc" id="agroup___vector_html_gab65fd0b6684d5fd5b9d8c10552f07a0a"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">sl::vec::operator*</a></div><div class="ttdeci">constexpr TVector operator*(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Multiplication operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:576</div></div>
-<div class="ttc" id="agroup___vector_html_gaeb90b4fa2156b804a938b62ef70efd1a"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaeb90b4fa2156b804a938b62ef70efd1a">sl::vec::operator+</a></div><div class="ttdeci">constexpr TVector operator+(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Sum operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:544</div></div>
-<div class="ttc" id="agroup___vector_html_gaee726b2ac1c998aada265af6a4d4cdd7"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaee726b2ac1c998aada265af6a4d4cdd7">sl::vec::normalized</a></div><div class="ttdeci">constexpr TVector normalized(TVector vec)</div><div class="ttdoc">Calculates the normalization of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:692</div></div>
-<div class="ttc" id="agroup___vector_html_gaeea0cce96b40fb0c4b78bcbd18fdfc79"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79">sl::vec::inversed</a></div><div class="ttdeci">constexpr TVector inversed(TVector vector)</div><div class="ttdoc">Computes the inverse of the vector (1./v[0], 1./v[1], ...).</div><div class="ttdef"><b>Definition:</b> Vector.hpp:758</div></div>
+<div class="ttc" id="agroup___vector_html_gaa826e57202f17512e33643189818cb21"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaa826e57202f17512e33643189818cb21">sl::vec::operator/</a></div><div class="ttdeci">constexpr TVector operator/(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:609</div></div>
+<div class="ttc" id="agroup___vector_html_gaae1a660816c21d6ed2b4ce52aca14083"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083">sl::vec::projected</a></div><div class="ttdeci">constexpr TVector projected(const TVector &amp;vector, TVector target)</div><div class="ttdoc">Projects vector onto the target Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:709</div></div>
+<div class="ttc" id="agroup___vector_html_gab65fd0b6684d5fd5b9d8c10552f07a0a"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gab65fd0b6684d5fd5b9d8c10552f07a0a">sl::vec::operator*</a></div><div class="ttdeci">constexpr TVector operator*(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Multiplication operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:577</div></div>
+<div class="ttc" id="agroup___vector_html_gaeb90b4fa2156b804a938b62ef70efd1a"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaeb90b4fa2156b804a938b62ef70efd1a">sl::vec::operator+</a></div><div class="ttdeci">constexpr TVector operator+(TVector lhs, T2 &amp;&amp;rhs)</div><div class="ttdoc">Sum operator.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:545</div></div>
+<div class="ttc" id="agroup___vector_html_gaee726b2ac1c998aada265af6a4d4cdd7"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaee726b2ac1c998aada265af6a4d4cdd7">sl::vec::normalized</a></div><div class="ttdeci">constexpr TVector normalized(TVector vec)</div><div class="ttdoc">Calculates the normalization of a Vector.</div><div class="ttdef"><b>Definition:</b> Vector.hpp:693</div></div>
+<div class="ttc" id="agroup___vector_html_gaeea0cce96b40fb0c4b78bcbd18fdfc79"><div class="ttname"><a href="../../dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79">sl::vec::inversed</a></div><div class="ttdeci">constexpr TVector inversed(TVector vector)</div><div class="ttdoc">Computes the inverse of the vector (1./v[0], 1./v[1], ...).</div><div class="ttdef"><b>Definition:</b> Vector.hpp:759</div></div>
 <div class="ttc" id="anamespacesl_1_1vec_html"><div class="ttname"><a href="../../d1/d17/namespacesl_1_1vec.html">sl::vec</a></div><div class="ttdef"><b>Definition:</b> Algorithm.hpp:19</div></div>
 <div class="ttc" id="astructsl_1_1vec_1_1is__vectorial_html"><div class="ttname"><a href="../../dc/de6/structsl_1_1vec_1_1is__vectorial.html">sl::vec::is_vectorial</a></div><div class="ttdoc">Checks whether T is a vector type.</div><div class="ttdef"><b>Definition:</b> Concepts.hpp:203</div></div>
-<div class="ttc" id="astructsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4_html_af162f75783e86156e5da1442938095f7"><div class="ttname"><a href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#af162f75783e86156e5da1442938095f7">sl::vec::vector_traits&lt; Vector&lt; T, VDimensions &gt; &gt;::value_type</a></div><div class="ttdeci">typename Vector&lt; T, VDimensions &gt;::value_type value_type</div><div class="ttdef"><b>Definition:</b> Vector.hpp:513</div></div>
+<div class="ttc" id="astructsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4_html_af162f75783e86156e5da1442938095f7"><div class="ttname"><a href="../../d0/d77/structsl_1_1vec_1_1vector__traits_3_01_vector_3_01_t_00_01_v_dimensions_01_4_01_4.html#af162f75783e86156e5da1442938095f7">sl::vec::vector_traits&lt; Vector&lt; T, VDimensions &gt; &gt;::value_type</a></div><div class="ttdeci">typename Vector&lt; T, VDimensions &gt;::value_type value_type</div><div class="ttdef"><b>Definition:</b> Vector.hpp:514</div></div>
 <div class="ttc" id="astructsl_1_1vec_1_1vector__traits_html"><div class="ttname"><a href="../../d8/d3c/structsl_1_1vec_1_1vector__traits.html">sl::vec::vector_traits</a></div><div class="ttdoc">Uniform interface to Vector types.</div><div class="ttdef"><b>Definition:</b> Concepts.hpp:180</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
