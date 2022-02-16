@@ -3,7 +3,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_approx.hpp>
+#include <catch2/catch_template_test_macros.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
 
 #include "Simple-Vector/Generators.hpp"
 #include "Simple-Vector/Vector.hpp"
@@ -28,7 +32,7 @@ namespace
 	}
 
 	template <std::ranges::borrowed_range TRange>
-	class approx_range_matcher final : public Catch::MatcherBase<std::remove_cvref_t<TRange>>
+	class approx_range_matcher final : public Catch::Matchers::MatcherBase<std::remove_cvref_t<TRange>>
 	{
 	public:
 		using range_type = std::remove_cvref_t<TRange>;
@@ -53,7 +57,7 @@ namespace
 					{
 						return lhs == rhs;
 					}
-					return (lhs - rhs) == Approx(0);
+					return (lhs - rhs) == Catch::Approx(0);
 				}
 			);
 		}
@@ -559,7 +563,7 @@ TEMPLATE_TEST_CASE_SIG
 
 	const auto length = sl::vec::length(vec);
 
-	REQUIRE(length == Approx(std::sqrt(VExpectedSq)));
+	REQUIRE(length == Catch::Approx(std::sqrt(VExpectedSq)));
 }
 
 #pragma warning(disable: 26444)
@@ -580,7 +584,7 @@ TEMPLATE_TEST_CASE_SIG
 	const auto vec1 = make_iota_vector<int, VDims>(1);
 	const auto vec2 = make_iota_vector<TOther, VDims>(2);
 
-	int dotProd = sl::vec::dot_product(vec1, vec2);
+	const int dotProd = sl::vec::dot_product(vec1, vec2);
 
 	REQUIRE(dotProd == VExpected);
 }
@@ -602,7 +606,7 @@ TEMPLATE_TEST_CASE_SIG
 
 	const auto normalizedVec = normalized(vec);
 
-	REQUIRE(sl::vec::length(normalizedVec) == Approx(1));
+	REQUIRE(sl::vec::length(normalizedVec) == Catch::Approx(1));
 }
 
 #if __cpp_nontype_template_args >= 201911L
