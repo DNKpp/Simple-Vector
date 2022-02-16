@@ -9,6 +9,7 @@
 #include "Simple-Vector/Generators.hpp"
 
 #include <numeric>
+#include <functional>
 
 using namespace sl::vec;
 
