@@ -18,6 +18,8 @@ target_compile_features(
 	${PROJECT_NAME}
 	INTERFACE
 	cxx_std_20
+	# latest msvc disabled ranges for c++20; force /std:c++latest instead
+	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<VERSION_GREATER_EQUAL:${MSVC_VERSION},1930>>:cxx_std_23>
 )
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
