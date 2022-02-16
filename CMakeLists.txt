@@ -5,6 +5,9 @@ project(Simple_Vector
 	VERSION 1.1.0
 )
 
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
+include("get_cpm")
+
 option(SIMPLE_VECTOR_BUILD_EXAMPLES "Enables example building" OFF)
 
 add_library(${PROJECT_NAME} INTERFACE)

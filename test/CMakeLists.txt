@@ -4,12 +4,7 @@ project(Simple_Vector_Test)
 
 include(FetchContent)
 
-FetchContent_Declare(
-	catch2
-	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-	GIT_TAG        origin/v2.x
-)
-FetchContent_MakeAvailable(catch2)
+CPMAddPackage("gh:catchorg/Catch2@2.13.8")
 
 add_executable(
 	${PROJECT_NAME}
