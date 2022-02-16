@@ -1,12 +1,8 @@
 # Simple-Vector C++20 library
 
-|windows msvc | windows clang-cl | ubuntu clang | ubuntu gcc|
--------------|------------------|--------------|--------------
-| ![MSVC](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20MSVC/badge.svg) | ![Clang-Cl](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20Clang-Cl/badge.svg) | ![Clang-10](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20Clang-10/badge.svg) | ![GCC-10](https://github.com/DNKpp/Simple-Vector/workflows/Build%20&%20Test%20-%20GCC-10/badge.svg) |
-|			|					| ![Clang-11](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-Clang-11.yml/badge.svg) | ![GCC-11](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-GCC-11.yml/badge.svg) |
-|			|					| ![Clang-12](https://github.com/DNKpp/Simple-Vector/actions/workflows/build_and_test-Clang-12.yml/badge.svg) |	|
-
+[![run tests](https://github.com/DNKpp/Simple-Vector/actions/workflows/run_tests.yml/badge.svg)](https://github.com/DNKpp/Simple-Vector/actions/workflows/run_tests.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ba448bbe4bc04b6289e24d302b68ef44)](https://www.codacy.com/gh/DNKpp/Simple-Vector/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DNKpp/Simple-Vector&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/DNKpp/Simple-Vector/branch/master/graph/badge.svg?token=4ZKAEU6V5A)](https://codecov.io/gh/DNKpp/Simple-Vector)
 
 ## Author
 Dominic Koepke  
