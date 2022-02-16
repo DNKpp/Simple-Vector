@@ -144,15 +144,13 @@ namespace sl::vec
 
 		/**
 		 * \brief Accesses a specific element
-		 * \tparam TIndex Integral type
 		 * \param index Index of the element.
 		 * \return const reference to the element
 		 *
 		 * \remarks Using index less than zero or greater-equal than dimensions, is undefined.
 		 */
-		template <std::integral TIndex>
 		[[nodiscard]]
-		constexpr const value_type& operator [](TIndex index) const noexcept
+		constexpr const value_type& operator [](std::integral auto index) const noexcept
 		{
 			assert(std::in_range<std::size_t>(index) && "index must be in range of type std::size_t");
 			return m_Values[static_cast<std::size_t>(index)];
@@ -160,7 +158,6 @@ namespace sl::vec
 
 		/**
 		 * \brief Accesses a specific element
-		 * \tparam TIndex Integral type
 		 * \param index Index of the element.
 		 * \return const reference to the element
 		 *
@@ -168,7 +165,7 @@ namespace sl::vec
 		 */
 		template <std::integral TIndex>
 		[[nodiscard]]
-		constexpr value_type& operator [](TIndex index) noexcept
+		constexpr value_type& operator [](std::integral auto index) noexcept
 		{
 			assert(std::in_range<std::size_t>(index) && "index must be in range of type std::size_t");
 			return m_Values[static_cast<std::size_t>(index)];
@@ -176,71 +173,75 @@ namespace sl::vec
 
 		/**
 		 * \brief Accesses the first element
-		 * \tparam VDimensions2 Do not change!
 		 * \return const reference to the first element
 		 */
-		template <auto VDimensions2 = VDimensions>
-			requires (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr const value_type& x() const noexcept { return m_Values[0]; }
+		constexpr const value_type& x() const noexcept
+		{
+			return m_Values[0];
+		}
 
 		/**
 		 * \brief Accesses the first element
-		 * \tparam VDimensions2 Do not change!
 		 * \return reference to the first element
 		 */
-		template <auto VDimensions2 = VDimensions>
-			requires (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr value_type& x() noexcept { return m_Values[0]; }
+		constexpr value_type& x() noexcept
+		{
+			return m_Values[0];
+		}
 
 		/**
 		 * \brief Accesses the second element
-		 * \tparam VDimensions2 Do not change!
 		 * \return const reference to the second element
 		 *
-		 * \remarks This functions is only available, if Vector has 1 or more dimension.
+		 * \remarks This functions is only available, if Vector has 2 or more dimension.
 		 */
-		template <auto VDimensions2 = VDimensions>
-			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr const value_type& y() const noexcept { return m_Values[1]; }
+		constexpr const value_type& y() const noexcept
+			requires (1 < VDimensions)
+		{
+			return m_Values[1];
+		}
 
 		/**
 		 * \brief Accesses the second element
-		 * \tparam VDimensions2 Do not change!
 		 * \return reference to the second element
 		 *
-		 * \remarks This functions is only available, if Vector has 1 or more dimension.
+		 * \remarks This functions is only available, if Vector has 2 or more dimension.
 		 */
-		template <auto VDimensions2 = VDimensions>
-			requires (1 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr value_type& y() noexcept { return m_Values[1]; }
+		constexpr value_type& y() noexcept
+			requires (1 < VDimensions)
+		{
+			return m_Values[1];
+		}
 
 		/**
 		 * \brief Accesses the third element
-		 * \tparam VDimensions2 Do not change!
 		 * \return const reference to the third element
 		 *
-		 * \remarks This functions is only available, if Vector has 2 or more dimension.
+		 * \remarks This functions is only available, if Vector has 3 or more dimension.
 		 */
-		template <auto VDimensions2 = VDimensions>
-			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr const value_type& z() const noexcept { return m_Values[2]; }
+		constexpr const value_type& z() const noexcept
+			requires (2 < VDimensions)
+		{
+			return m_Values[2];
+		}
 
 		/**
 		 * \brief Accesses the third element
-		 * \tparam VDimensions2 Do not change!
 		 * \return reference to the third element
 		 *
-		 * \remarks This functions is only available, if Vector has 2 or more dimension.
+		 * \remarks This functions is only available, if Vector has 3 or more dimension.
 		 */
-		template <auto VDimensions2 = VDimensions>
-			requires (2 < VDimensions) && (VDimensions2 == VDimensions)
 		[[nodiscard]]
-		constexpr value_type& z() noexcept { return m_Values[2]; }
+		constexpr value_type& z() noexcept
+			requires (2 < VDimensions)
+		{
+			return m_Values[2];
+		}
 
 		/**
 		 * \brief Adds other Vector element-wise
