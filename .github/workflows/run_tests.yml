@@ -3,7 +3,7 @@ name: run tests
 env:
   BUILD_DIR: out    # root build directory
   TEST_DIR: tests   # relative directory below BUILD_DIR
-  CMAKE_OPTIONS: -DSIMPLE_VECTOR_BUILD_TESTS=ON -DSIMPLE_VECTOR_BUILD_EXAMPLES=ON
+  CMAKE_OPTIONS: -DBUILD_TESTING=ON -DSIMPLE_VECTOR_BUILD_EXAMPLES=ON
 
 on:
   schedule:
