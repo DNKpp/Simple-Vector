@@ -29,7 +29,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
 	include(CTest)
 
-	set(TestsDir "${CMAKE_CURRENT_SOURCE_DIR}/test/")
+	set(TestsDir "${CMAKE_CURRENT_SOURCE_DIR}/tests/")
 
 	if (BUILD_TESTING)
 		add_subdirectory(${TestsDir})
