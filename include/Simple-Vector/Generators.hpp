@@ -97,8 +97,8 @@ namespace sl::vec::gen
 		 * \brief Constructs the generator with a given range.
 		 * \param range The source range to be used
 		 */
-		constexpr explicit range(TRange&& range) :
-			m_Range{ std::forward<TRange>(range) },
+		constexpr explicit range(TRange&& range)
+			: m_Range{ std::forward<TRange>(range) },
 			m_Iterator{ std::ranges::begin(m_Range) }
 		{
 		}

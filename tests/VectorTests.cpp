@@ -38,8 +38,8 @@ namespace
 		using range_type = std::remove_cvref_t<TRange>;
 		using view_type = std::views::all_t<TRange>;
 
-		explicit approx_range_matcher(const range_type& range) :
-			m_View{ range }
+		explicit approx_range_matcher(const range_type& range)
+			: m_View{ range }
 		{
 		}
 

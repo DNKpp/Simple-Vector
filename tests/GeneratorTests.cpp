@@ -8,8 +8,8 @@
 
 #include "Simple-Vector/Generators.hpp"
 
-#include <numeric>
 #include <functional>
+#include <numeric>
 
 using namespace sl::vec;
 

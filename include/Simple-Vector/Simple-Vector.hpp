@@ -10,8 +10,8 @@
 
 #include "Algorithm.hpp"
 #include "Concepts.hpp"
-#include "Generators.hpp"
 #include "Functional.hpp"
+#include "Generators.hpp"
 #include "Vector.hpp"
 
 #endif

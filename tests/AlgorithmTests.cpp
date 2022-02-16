@@ -18,13 +18,13 @@ namespace
 	class invoke_counter
 	{
 	public:
-		constexpr explicit invoke_counter(int& counter) :
-			m_Counter{ std::addressof(counter) }
+		constexpr explicit invoke_counter(int& counter)
+			: m_Counter{ std::addressof(counter) }
 		{
 		}
 
-		constexpr invoke_counter(TFunc func, int& counter) :
-			m_Func{ std::move(func) },
+		constexpr invoke_counter(TFunc func, int& counter)
+			: m_Func{ std::move(func) },
 			m_Counter{ std::addressof(counter) }
 		{
 		}

@@ -77,8 +77,8 @@ namespace sl::vec
 		template <class... TArgs>
 			requires (sizeof...(TArgs) == dimensions && (std::convertible_to<TArgs, T> && ...))
 		explicit (VDimensions <= 1)
-		constexpr Vector(TArgs&&...args) noexcept :
-			m_Values{ static_cast<T>(args)... }
+		constexpr Vector(TArgs&&...args) noexcept
+			: m_Values{ static_cast<T>(args)... }
 		{
 		}
 

@@ -273,7 +273,7 @@ namespace sl::vec
 			std::ref(binaryOp2)
 		);
 	}
-	
+
 	/** @}*/
 }
 
