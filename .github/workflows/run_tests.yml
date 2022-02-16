@@ -61,8 +61,8 @@ jobs:
       matrix:
         toolset: [v142, v143, clang-cl]
         include:
-          - toolset: v142
-            toolset_option: -T"v142"
+#          - toolset: v142
+#            toolset_option: -T"v142"
           - toolset: v143
             toolset_option: -T"v143"
  #         - toolset: clang-cl
