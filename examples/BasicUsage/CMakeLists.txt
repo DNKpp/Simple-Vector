@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 project(Simple_Vector_Example_Basic_Usage)
 
@@ -10,5 +10,5 @@ add_executable(
 target_link_libraries(
 	${PROJECT_NAME}
 	PUBLIC
-	Simple_Vector
+	Simple-Vector::Simple-Vector
 )

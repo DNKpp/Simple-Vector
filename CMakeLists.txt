@@ -1,41 +1,37 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
-project(Simple_Vector
+project(Simple-Vector
 	LANGUAGES CXX
-	VERSION 1.1.0
+	VERSION 1.3.0
 )
 
-option(SIMPLE_VECTOR_BUILD_EXAMPLES "Enables example building" OFF)
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
+include("get_cpm")
 
 add_library(${PROJECT_NAME} INTERFACE)
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(
 	${PROJECT_NAME}
 	INTERFACE
-	${CMAKE_CURRENT_SOURCE_DIR}/include
+	"${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
 target_compile_features(
 	${PROJECT_NAME}
 	INTERFACE
 	cxx_std_20
+	# msvc disabled ranges for c++20; force /std:c++latest instead
+	$<$<CXX_COMPILER_ID:MSVC>:cxx_std_23>
 )
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-
-	include(CTest)
-
-	set(TestsDir "${CMAKE_CURRENT_SOURCE_DIR}/test/")
-
-	if (BUILD_TESTING)
-		add_subdirectory(${TestsDir})
-	endif()
-
+OPTION(${PROJECT_NAME}_BUILD_TESTS "Determines whether tests will be build or not." OFF)
+if (${PROJECT_NAME}_BUILD_TESTS)
+	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests")
 endif()
 
-if (SIMPLE_VECTOR_BUILD_EXAMPLES)
-
-	set(ExamplesDir "${CMAKE_CURRENT_SOURCE_DIR}/examples/")
-
-	add_subdirectory(${ExamplesDir})
-
+OPTION(${PROJECT_NAME}_BUILD_EXAMPLES "Determines whether examples will be build or not." OFF)
+if (${PROJECT_NAME}_BUILD_EXAMPLES)
+	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/examples")
 endif()
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/docs")

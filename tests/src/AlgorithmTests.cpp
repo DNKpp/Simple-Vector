@@ -1,9 +1,9 @@
-//          Copyright Dominic Koepke 2021 - 2021.
+//          Copyright Dominic Koepke 2021 - 2022.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_template_test_macros.hpp>
 
 #include "Simple-Vector/Algorithm.hpp"
 
@@ -18,13 +18,13 @@ namespace
 	class invoke_counter
 	{
 	public:
-		constexpr explicit invoke_counter(int& counter) :
-			m_Counter{ std::addressof(counter) }
+		constexpr explicit invoke_counter(int& counter)
+			: m_Counter{ std::addressof(counter) }
 		{
 		}
 
-		constexpr invoke_counter(TFunc func, int& counter) :
-			m_Func{ std::move(func) },
+		constexpr invoke_counter(TFunc func, int& counter)
+			: m_Func{ std::move(func) },
 			m_Counter{ std::addressof(counter) }
 		{
 		}
