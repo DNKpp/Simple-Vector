@@ -13,7 +13,7 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(
 	${PROJECT_NAME}
 	INTERFACE
-	${CMAKE_CURRENT_SOURCE_DIR}/include
+	"${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
 target_compile_features(
@@ -33,3 +33,5 @@ OPTION(${PROJECT_NAME}_BUILD_EXAMPLES "Determines whether examples will be build
 if (${PROJECT_NAME}_BUILD_EXAMPLES)
 	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/examples")
 endif()
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/docs")
