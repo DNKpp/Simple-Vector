@@ -1,24 +1,20 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
-project(Simple_Vector_Test)
-
-include(FetchContent)
+include(CTest)
 
 CPMAddPackage("gh:catchorg/Catch2@3.0.0-preview4")
 
 add_executable(
-	${PROJECT_NAME}
-	
-	"VectorTests.cpp"
-	"GeneratorTests.cpp"
-	"AlgorithmTests.cpp"
+	${PROJECT_NAME}-Tests
 )
 
 target_link_libraries(
-	${PROJECT_NAME}
+	${PROJECT_NAME}-Tests
 	PRIVATE
-	Simple_Vector
+	${PROJECT_NAME}::${PROJECT_NAME}
 	Catch2::Catch2WithMain
 )
 
-add_test(SimpleVectorTestSuite ${PROJECT_NAME})
+add_subdirectory(src)
+
+add_test(${PROJECT_NAME}-TestSuite ${PROJECT_NAME}-Tests)
