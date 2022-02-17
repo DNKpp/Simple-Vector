@@ -22,8 +22,7 @@ Mail: [DNKpp2011@gmail.com](mailto:dnkpp2011@gmail.com)
 ## Description
 This library provides an implementation of a simple to use but versatile mathematically vector class. Due to the usage of lots of c++20 features, this library currently doesn't compile on any clang compiler.
 
-Supported Compilers:
-* msvc v142 (Visual Studio 2019)
+Tested Compilers:
 * msvc v143 (Visual Studio 2022)
 * gcc10
 * gcc11
@@ -78,7 +77,7 @@ This library can easily be integrated into your project via CMake target_link_li
 target_link_libraries(
 	<your_target_name>
 	PRIVATE
-	Simple_Vector
+	Simple-Vector::Simple-Vector
 )
 ```
 This will add the the include path "<simple_vector_install_dir>/include", thus you are able to include the headers via
@@ -99,12 +98,13 @@ include(FetchContent)
 FetchContent_Declare(
 	Simple_Vector
 	GIT_REPOSITORY	https://github.com/DNKpp/Simple-Vector
-	GIT_TAG		origin/v1.x
+	GIT_TAG		origin/vx.y.z
 )
 FetchContent_MakeAvailable(Simple_Vector)
 
 target_link_libraries(
 	<your_target_name>
-	PUBLIC Simple_Vector
+	PUBLIC
+	Simple-Vector::Simple-Vector
 )
 ```
