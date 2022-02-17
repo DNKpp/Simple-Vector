@@ -1,13 +1,6 @@
 var searchData=
 [
-  ['detail_44',['detail',['../d8/d2d/namespacesl_1_1vec_1_1detail.html',1,'sl::vec']]],
-  ['fn_45',['fn',['../d5/dce/namespacesl_1_1vec_1_1fn.html',1,'sl::vec']]],
-  ['gen_46',['gen',['../d0/d27/namespacesl_1_1vec_1_1gen.html',1,'sl::vec']]],
-  ['simple_2dvector_20c_2b_2b20_20library_47',['Simple-Vector C++20 library',['../index.html',1,'']]],
-  ['simple_2dvector_2ehpp_48',['Simple-Vector.hpp',['../dc/df1/_simple-_vector_8hpp.html',1,'']]],
-  ['sl_49',['sl',['../dd/d2c/namespacesl.html',1,'']]],
-  ['storage_5ftype_50',['storage_type',['../da/d30/classsl_1_1vec_1_1_vector.html#a60936ceef385b70c3190c6c0f00ea415',1,'sl::vec::Vector']]],
-  ['sub_5fassignable_51',['sub_assignable',['../dd/db9/group___concepts.html#gab2730956e41a3793d058d9ac18f8af62',1,'sl::vec']]],
-  ['subable_52',['subable',['../dd/db9/group___concepts.html#ga7efe1435494ce42346e2804bddf2369f',1,'sl::vec']]],
-  ['vec_53',['vec',['../d1/d17/namespacesl_1_1vec.html',1,'sl']]]
+  ['transform_5freduce_5funseq_0',['transform_reduce_unseq',['../d9/d1c/group___algorithm.html#gab72dd9ad8a25559039376bccf54bbf4c',1,'sl::vec::transform_reduce_unseq(TRange &amp;&amp;range, T init, TBinaryOp binaryOp, TUnaryOp unaryOp)'],['../d9/d1c/group___algorithm.html#ga45e9fc086cca6bc797bd30cbe70f4895',1,'sl::vec::transform_reduce_unseq(TRange1 &amp;&amp;range1, TRange2 &amp;&amp;range2, T init, TBinaryOp1 binaryOp1, TBinaryOp2 binaryOp2)']]],
+  ['transform_5funseq_1',['transform_unseq',['../d9/d1c/group___algorithm.html#ga49ebc6b5d149308482f42b40f17ea9da',1,'sl::vec::transform_unseq(TRange &amp;&amp;range, TOut result, TUnaryOp unaryOp)'],['../d9/d1c/group___algorithm.html#ga2f9c765e422a425691637e279c238b00',1,'sl::vec::transform_unseq(TRange1 &amp;&amp;range1, TRange2 &amp;&amp;range2, TOut result, TBinaryOp binaryOp)']]],
+  ['typetraits_2',['TypeTraits',['../d7/de6/group___type_traits.html',1,'']]]
 ];

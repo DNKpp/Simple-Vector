@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['projected_104',['projected',['../dc/d9b/group___vector.html#gaae1a660816c21d6ed2b4ce52aca14083',1,'sl::vec']]]
+  ['normalized_0',['normalized',['../dc/d9b/group___vector.html#ga33d182c97c6f3d581705a74b34ea5452',1,'sl::vec']]]
 ];

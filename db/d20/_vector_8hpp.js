@@ -1,11 +1,11 @@
 var _vector_8hpp =
 [
-    [ "dot_product", "db/d20/_vector_8hpp.html#ga93c9bc6c92625a71719b720117647c42", null ],
-    [ "inversed", "db/d20/_vector_8hpp.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79", null ],
+    [ "dot_product", "db/d20/_vector_8hpp.html#ga8b1122195c0caddbb2f31856ed3b273a", null ],
+    [ "inversed", "db/d20/_vector_8hpp.html#gae1a7e05057e47167d4fc11926e17f5c4", null ],
     [ "length", "db/d20/_vector_8hpp.html#ga601a2f886d2a92c01bbc99cac50e57a7", null ],
-    [ "length_squared", "db/d20/_vector_8hpp.html#ga8d9c74aeee83cc8d64b2c235e03c099c", null ],
-    [ "lerp", "db/d20/_vector_8hpp.html#ga3bad15a73c34d317a219aec78bf44a95", null ],
-    [ "normalized", "db/d20/_vector_8hpp.html#gaee726b2ac1c998aada265af6a4d4cdd7", null ],
+    [ "length_squared", "db/d20/_vector_8hpp.html#ga1b477b656a7bb94deb7adcf3fbbdc427", null ],
+    [ "lerp", "db/d20/_vector_8hpp.html#ga4f4312df3a7e37c7b34b51f3566619a3", null ],
+    [ "normalized", "db/d20/_vector_8hpp.html#ga33d182c97c6f3d581705a74b34ea5452", null ],
     [ "operator%", "db/d20/_vector_8hpp.html#ga75a45fcf2c522356e30941f2dc720362", null ],
     [ "operator*", "db/d20/_vector_8hpp.html#ga6c26c115dbf4d90f4a3190f3e2a99dfb", null ],
     [ "operator*", "db/d20/_vector_8hpp.html#gab65fd0b6684d5fd5b9d8c10552f07a0a", null ],

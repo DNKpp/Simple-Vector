@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['inversed_92',['inversed',['../dc/d9b/group___vector.html#gaeea0cce96b40fb0c4b78bcbd18fdfc79',1,'sl::vec']]],
-  ['iota_93',['iota',['../df/d58/group___generators.html#ga7ca789dfbf8bb5bae97efbaad51baabc',1,'sl::vec::gen']]]
+  ['end_0',['end',['../da/d30/classsl_1_1vec_1_1_vector.html#ac3b802a07c25fcf9ce1cfac2a4541afe',1,'sl::vec::Vector::end() noexcept'],['../da/d30/classsl_1_1vec_1_1_vector.html#ad5087af2945f873ac6e2e95d4a23c2fe',1,'sl::vec::Vector::end() const noexcept']]]
 ];

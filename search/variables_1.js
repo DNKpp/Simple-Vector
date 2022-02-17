@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['binary_5finvokable_5fwith_5fall_5foverloads_5fimplicit_5fconvertible_5fto_112',['binary_invokable_with_all_overloads_implicit_convertible_to',['../dd/db9/group___concepts.html#ga51e238bb03eeb609100bb735730ac455',1,'sl::vec']]]
+  ['func_0',['func',['../d1/d55/structsl_1_1vec_1_1detail_1_1cast__invoke__result__fn.html#a38065891ca30fe2ada4207493b70b070',1,'sl::vec::detail::cast_invoke_result_fn']]]
 ];

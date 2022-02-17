@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['dot_5fproduct_90',['dot_product',['../dc/d9b/group___vector.html#ga93c9bc6c92625a71719b720117647c42',1,'sl::vec']]]
+  ['cast_5finvoke_5fresult_0',['cast_invoke_result',['../d3/d7a/group___functional.html#gab24099ab5cf3968aa1170f5052226be6',1,'sl::vec::fn']]],
+  ['cbegin_1',['cbegin',['../da/d30/classsl_1_1vec_1_1_vector.html#abf1434a8ea4218a54664d7aaea70c93c',1,'sl::vec::Vector']]],
+  ['cend_2',['cend',['../da/d30/classsl_1_1vec_1_1_vector.html#ac7f90cff9dad7e2669e04998c547ae58',1,'sl::vec::Vector']]],
+  ['crbegin_3',['crbegin',['../da/d30/classsl_1_1vec_1_1_vector.html#af6ee917152189c2743aa7e5738246d2d',1,'sl::vec::Vector']]],
+  ['crend_4',['crend',['../da/d30/classsl_1_1vec_1_1_vector.html#ad05f52379b86db148b1dce679d05dc7c',1,'sl::vec::Vector']]]
 ];
