@@ -23,9 +23,9 @@ Mail: [DNKpp2011@gmail.com](mailto:dnkpp2011@gmail.com)
 This library provides an implementation of a simple to use but versatile mathematically vector class. Due to the usage of lots of c++20 features, this library currently doesn't compile on any clang compiler.
 
 Tested Compilers:
-* msvc v143 (Visual Studio 2022)
-* gcc10
-* gcc11
+*   msvc v143 (Visual Studio 2022)
+*   gcc10
+*   gcc11
 
 One of the main intentions behind this vector implementation is being able to do as much during compile-time as possible, thus all functions are declared as constexpr.
 
