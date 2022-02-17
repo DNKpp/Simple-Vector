@@ -24,12 +24,12 @@ target_compile_features(
 	$<$<CXX_COMPILER_ID:MSVC>:cxx_std_23>
 )
 
-OPTION(S${PROJECT_NAME}_BUILD_TESTS "Determines whether tests will be build or not." OFF)
-if (BUILD_TESTING)
+OPTION(${PROJECT_NAME}_BUILD_TESTS "Determines whether tests will be build or not." OFF)
+if (${PROJECT_NAME}_BUILD_TESTS)
 	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests")
 endif()
 
-OPTION(S${PROJECT_NAME}_BUILD_EXAMPLES "Determines whether examples will be build or not." OFF)
+OPTION(${PROJECT_NAME}_BUILD_EXAMPLES "Determines whether examples will be build or not." OFF)
 if (${PROJECT_NAME}_BUILD_EXAMPLES)
 	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/examples")
 endif()
